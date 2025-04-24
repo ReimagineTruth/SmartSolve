@@ -63,7 +63,7 @@ The design is inspired by Headspace, featuring a calm, minimal, and supportive a
 
    If this project is hosted in a repository, clone it to your local machine:
    ```bash
-   git clone https://github.com/your-username/smartsolve-landing-page.git
+   git clone https://github.com/wainfoundation/SmartSolve.git
    ```
    Alternatively, download the project files as a ZIP and extract them.
 
