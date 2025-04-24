@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading | SmartSolve</title>
+  <meta name="description" content="Loading SmartSolve, your smart solution for planning and living better with Pi.">
+  <meta name="keywords" content="SmartSolve, loading, Pi network">
+  <meta name="author" content="SmartSolve Team">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+  <style>
+    :root {
+      --primary: #A3CFFA;
+      --secondary: #A8D5BA;
+      --gradient: linear-gradient(45deg, #A3CFFA, #A8D5BA);
+      --text: #2A3B5A;
+      --background: #F5F5F5;
+      --card-bg: #FFFFFF;
+      --hover-bg: #E6F0FA;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --dark-bg: #2A3B5A;
+      --dark-text: #EDEFF2;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--gradient);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    body.dark-mode {
+      background: var(--dark-bg);
+      color: var(--dark-text);
+    }
+    a:focus, button:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *:before, *:after {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 1rem;
+      background: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      z-index: 1002;
+      transition: top 0.3s ease;
+    }
+    .skip-link:focus {
+      top: 1rem;
+    }
+    .splash-container {
+      text-align: center;
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      max-width: 400px;
+      width: 90%;
+      animation: fadeIn 1s ease-in-out;
+    }
+    body.dark-mode .splash-container {
+      background: #2a3b5a;
+      color: var(--dark-text);
+    }
+    .splash-container .logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .logo-icon {
+      font-size: 2.5rem;
+      margin-right: 0.5rem;
+      color: var(--primary);
+      animation: pulse 2s infinite ease-in-out;
+    }
+    .splash-container p {
+      font-size: 1rem;
+      color: var(--text);
+      opacity: 0.8;
+      margin-bottom: 1.5rem;
+    }
+    .loader {
+      font-size: 2rem;
+      color: var(--primary);
+      animation: spin 1s linear infinite;
+    }
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    @media (max-width: 480px) {
+      .splash-container {
+        padding: 1.5rem;
+      }
+      .splash-container .logo {
+        font-size: 1.8rem;
+      }
+      .logo-icon {
+        font-size: 2rem;
+      }
+      .splash-container p {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to Content</a>
+
+  <!-- Splash Content -->
+  <div class="splash-container" id="main-content">
+    <div class="logo">
+      <i class="fas fa-brain logo-icon"></i> SmartSolve
+    </div>
+    <p>Loading your smarter life...</p>
+    <i class="fas fa-spinner loader" aria-hidden="true"></i>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Redirect to index.html after 3 seconds
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 3000);
+  </script>
+</body>
+</html>
