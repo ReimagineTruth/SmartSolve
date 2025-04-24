@@ -23,13 +23,11 @@
       --dark-bg: #2A3B5A;
       --dark-text: #EDEFF2;
     }
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
       font-family: 'Inter', sans-serif;
       background-color: var(--background);
@@ -37,31 +35,26 @@
       line-height: 1.6;
       overflow-x: hidden;
     }
-
     body.dark-mode {
       background-color: var(--dark-bg);
       color: var(--dark-text);
     }
-
     body.dark-mode .app-bar,
     body.dark-mode .card,
     body.dark-mode .section {
       background-color: #2a3b5a;
       color: var(--dark-text);
     }
-
     a:focus, button:focus, input:focus {
       outline: 2px solid var(--primary);
       outline-offset: 2px;
     }
-
     @media (prefers-reduced-motion: reduce) {
       *, *:before, *:after {
         transition: none !important;
         animation: none !important;
       }
     }
-
     .skip-link {
       position: absolute;
       top: -100px;
@@ -73,11 +66,9 @@
       z-index: 1002;
       transition: top 0.3s ease;
     }
-
     .skip-link:focus {
       top: 1rem;
     }
-
     .app-bar {
       background: var(--card-bg);
       position: fixed;
@@ -91,7 +82,6 @@
       align-items: center;
       z-index: 1000;
     }
-
     .app-bar .logo {
       font-family: 'Poppins', sans-serif;
       font-size: 1.5rem;
@@ -100,34 +90,28 @@
       display: flex;
       align-items: center;
     }
-
     .logo-icon {
       margin-right: 8px;
       color: var(--primary);
       transition: transform 0.3s ease;
     }
-
     .app-bar .logo:hover .logo-icon {
       transform: scale(1.1);
     }
-
     .app-bar nav {
       display: flex;
       gap: 1.5rem;
     }
-
     .app-bar nav a {
       text-decoration: none;
       color: var(--text);
       font-weight: 500;
       transition: color 0.3s ease;
     }
-
     .app-bar nav a:hover,
     .app-bar nav a:focus {
       color: var(--primary);
     }
-
     .app-bar .pi-signin {
       background: var(--primary);
       color: white;
@@ -135,19 +119,16 @@
       border-radius: 20px;
       transition: background 0.3s ease, transform 0.3s ease;
     }
-
     .app-bar .pi-signin:hover,
     .app-bar .pi-signin:focus {
       background: var(--secondary);
       transform: scale(1.05);
     }
-
     .section {
       padding: 5rem 1rem 3rem;
       text-align: center;
       background: var(--background);
     }
-
     .section h2 {
       font-family: 'Poppins', sans-serif;
       font-size: clamp(1.8rem, 4vw, 2.5rem);
@@ -155,7 +136,6 @@
       margin-bottom: 1rem;
       color: var(--primary);
     }
-
     .section p.subtitle {
       font-size: clamp(0.95rem, 2vw, 1.1rem);
       max-width: 600px;
@@ -163,7 +143,6 @@
       color: var(--text);
       opacity: 0.8;
     }
-
     .cards {
       display: flex;
       flex-wrap: wrap;
@@ -172,7 +151,6 @@
       max-width: 1200px;
       margin: 0 auto;
     }
-
     .card {
       background: var(--card-bg);
       padding: 1.5rem;
@@ -187,40 +165,34 @@
       flex-direction: column;
       justify-content: space-between;
     }
-
     .card:hover {
       transform: translateY(-5px);
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
     }
-
     .card h3 {
       font-family: 'Poppins', sans-serif;
       font-size: 1.3rem;
       margin-bottom: 0.5rem;
       color: var(--text);
     }
-
     .card .price {
       font-size: 1.6rem;
       font-weight: 700;
       color: var(--text);
       margin-bottom: 0.5rem;
     }
-
     .card .price span {
       font-size: 0.9rem;
       font-weight: 400;
       color: var(--text);
       opacity: 0.7;
     }
-
     .card ul {
       list-style: none;
       margin: 1rem 0;
       flex-grow: 1;
       text-align: left;
     }
-
     .card ul li {
       font-size: 0.9rem;
       color: var(--text);
@@ -229,13 +201,11 @@
       align-items: flex-start;
       gap: 8px;
     }
-
     .card ul li i {
       color: var(--primary);
       font-size: 0.9rem;
       margin-top: 2px;
     }
-
     .btn {
       padding: 0.8rem 2rem;
       border-radius: 20px;
@@ -248,20 +218,16 @@
       background: var(--primary);
       color: white;
     }
-
     .btn:hover {
       background: var(--secondary);
       transform: scale(1.05);
     }
-
     .btn.secondary {
       background: var(--secondary);
     }
-
     .btn.secondary:hover {
       background: var(--primary);
     }
-
     #hero {
       background: var(--gradient);
       color: var(--text);
@@ -272,7 +238,6 @@
       align-items: center;
       padding: 5rem 1rem 3rem;
     }
-
     #hero h1 {
       font-family: 'Poppins', sans-serif;
       font-size: clamp(2rem, 5vw, 3.5rem);
@@ -280,7 +245,6 @@
       margin-bottom: 1rem;
       text-align: center;
     }
-
     #hero p {
       font-size: clamp(1rem, 2vw, 1.2rem);
       max-width: 600px;
@@ -288,14 +252,12 @@
       text-align: center;
       opacity: 0.9;
     }
-
     #why-smartsolve ul {
       list-style: none;
       max-width: 600px;
       margin: 0 auto;
       text-align: left;
     }
-
     #why-smartsolve ul li {
       font-size: 1rem;
       margin: 0.5rem 0;
@@ -303,13 +265,11 @@
       align-items: flex-start;
       gap: 8px;
     }
-
     #why-smartsolve ul li i {
       color: var(--primary);
       font-size: 1rem;
       margin-top: 2px;
     }
-
     #subscription-landing .card.popular::before {
       content: 'Most Popular';
       position: absolute;
@@ -324,12 +284,10 @@
       font-weight: 600;
       animation: pulse 2s infinite ease-in-out;
     }
-
     @keyframes pulse {
       0%, 100% { transform: scale(1) translateX(-50%); }
       50% { transform: scale(1.05) translateX(-50%); }
     }
-
     #features .feature-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -337,7 +295,6 @@
       max-width: 1200px;
       margin: 0 auto;
     }
-
     #features .feature-card {
       background: var(--card-bg);
       padding: 1.5rem;
@@ -346,41 +303,34 @@
       text-align: left;
       transition: transform 0.3s ease;
     }
-
     #features .feature-card:hover {
       transform: translateY(-5px);
     }
-
     #features .feature-card i {
       font-size: 2rem;
       color: var(--primary);
       margin-bottom: 1rem;
     }
-
     #features .feature-card h3 {
       font-family: 'Poppins', sans-serif;
       font-size: 1.2rem;
       margin-bottom: 0.5rem;
       color: var(--text);
     }
-
     #features .feature-card p {
       font-size: 0.9rem;
       color: var(--text);
       opacity: 0.7;
     }
-
     #pi-powered {
       background: var(--card-bg);
     }
-
     #community ul {
       list-style: none;
       max-width: 600px;
       margin: 0 auto;
       text-align: left;
     }
-
     #community ul li {
       font-size: 1rem;
       margin: 0.5rem 0;
@@ -388,30 +338,25 @@
       align-items: flex-start;
       gap: 8px;
     }
-
     #community ul li i {
       color: var(--primary);
       font-size: 1rem;
       margin-top: 2px;
     }
-
     #cta-section {
       background: var(--gradient);
       color: white;
       padding: 3rem 1rem;
     }
-
     #cta-section h2 {
       color: white;
     }
-
     #cta-section .btn-container {
       display: flex;
       gap: 1rem;
       justify-content: center;
       flex-wrap: wrap;
     }
-
     footer {
       background: var(--footer-bg);
       padding: 2rem 1rem;
@@ -419,7 +364,6 @@
       color: var(--text);
       text-align: left;
     }
-
     .footer-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -427,7 +371,6 @@
       max-width: 1200px;
       margin: 0 auto 2rem;
     }
-
     .footer-links h3 {
       font-family: 'Poppins', sans-serif;
       font-size: 1rem;
@@ -437,119 +380,197 @@
       display: flex;
       align-items: center;
     }
-
     .footer-links h3 i {
       margin-right: 8px;
     }
-
     .footer-links ul {
       list-style: none;
     }
-
     .footer-links ul li {
       margin: 0.5rem 0;
     }
-
     .footer-links a {
       text-decoration: none;
       color: var(--text);
       font-size: 0.9rem;
       transition: color 0.3s ease;
     }
-
     .footer-links a:hover {
       color: var(--primary);
     }
-
     .footer-bottom {
       border-top: 1px solid rgba(0, 0, 0, 0.05);
       padding-top: 1rem;
       text-align: center;
     }
-
     .footer-bottom p {
       margin-bottom: 0.5rem;
     }
-
     .footer-bottom .social-links {
       justify-content: center;
       display: flex;
       gap: 1rem;
     }
-
     .social-links a {
       color: var(--primary);
       font-size: 1.2rem;
       transition: color 0.3s ease, transform 0.3s ease;
     }
-
     .social-links a:hover,
     .social-links a:focus {
       color: var(--secondary);
       transform: scale(1.2);
     }
-
+    /* FAQ Section */
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .faq-item {
+      margin: 1rem 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .faq-question {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.2rem;
+      color: var(--text);
+      cursor: pointer;
+      padding: 1rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-question::after {
+      content: '\f078';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      color: var(--primary);
+    }
+    .faq-question.active::after {
+      content: '\f077';
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.8;
+    }
+    .faq-answer.active {
+      max-height: 200px;
+      padding: 1rem 0;
+    }
+    body.dark-mode .faq-question,
+    body.dark-mode .faq-answer {
+      color: var(--dark-text);
+    }
+    /* Testimonials Section */
+    .testimonial-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+    .testimonial-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      object-fit: cover;
+    }
+    .testimonial-role {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.7;
+      margin-bottom: 0.5rem;
+    }
+    .testimonial-card p {
+      font-size: 0.95rem;
+      text-align: center;
+      flex-grow: 1;
+    }
+    /* Verified Users Section */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .stat-card h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .stat-card p {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.8;
+    }
     @media (max-width: 768px) {
       .section {
         padding: 4rem 1rem 2rem;
       }
-
       .section h2 {
         font-size: 2rem;
       }
-
       .section p.subtitle {
         font-size: 1rem;
       }
-
       .cards {
         flex-direction: column;
         align-items: center;
       }
-
       .card {
         max-width: 90%;
       }
-
       .footer-container {
         grid-template-columns: 1fr;
       }
-
       .footer-links h3::after {
         content: '\f078';
         font-family: 'Font Awesome 6 Free';
         font-weight: 900;
       }
-
       .footer-links h3.active::after {
         content: '\f077';
       }
-
       .footer-links ul {
         max-height: 0;
         opacity: 0;
         transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
       }
-
       .footer-links ul.active {
         max-height: 300px;
         opacity: 1;
       }
-
       .app-bar nav {
         display: none;
       }
+      .faq-answer.active {
+        max-height: 300px;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
     }
-
     @media (max-width: 480px) {
       .app-bar {
         padding: 0.8rem;
       }
-
       .app-bar .logo {
         font-size: 1.3rem;
       }
-
       .section h2 {
         font-size: 1.8rem;
       }
@@ -566,9 +587,9 @@
       <i class="fas fa-brain logo-icon"></i> SmartSolve
     </div>
     <nav>
-      <a href="#features">Features</a>
-      <a href="#subscription-landing">Plans</a>
-      <a href="#pi-signin" class="pi-signin">Sign in with Pi</a>
+      <a href="features.html">Features</a>
+      <a href="pricing.html">Plans</a>
+      <a href="signin.html" class="pi-signin">Sign in with Pi</a>
     </nav>
   </header>
 
@@ -577,7 +598,7 @@
     <div id="main-content">
       <h1>Simplify your life with SmartSolve.</h1>
       <p>From to-do lists to meal plans, budgeting to mental wellness—SmartSolve brings everything together in one powerful Pi-powered app.</p>
-      <a href="#pi-signin" class="btn">Get Started for Free</a>
+      <a href="signin.html" class="btn">Get Started for Free</a>
     </div>
   </section>
 
@@ -610,7 +631,7 @@
           <li><i class="fas fa-check"></i>View-only Local Services</li>
           <li><i class="fas fa-times"></i>Ads enabled</li>
         </ul>
-        <a href="#pi-signin" class="btn">Get Started</a>
+        <a href="signin.html" class="btn">Get Started</a>
       </div>
       <!-- Standard Plan -->
       <div class="card popular">
@@ -624,7 +645,7 @@
           <li><i class="fas fa-check"></i>Post Local Service Requests</li>
           <li><i class="fas fa-check"></i>Ad-Free</li>
         </ul>
-        <a href="#pi-signin" class="btn">Get Started</a>
+        <a href="signin.html" class="btn">Get Started</a>
       </div>
       <!-- Premium Plan -->
       <div class="card">
@@ -637,7 +658,7 @@
           <li><i class="fas fa-check"></i>Kids Mode</li>
           <li><i class="fas fa-check"></i>Group Chat for Families</li>
         </ul>
-        <a href="#pi-signin" class="btn">Get Started</a>
+        <a href="signin.html" class="btn">Get Started</a>
       </div>
       <!-- Pro Plan -->
       <div class="card">
@@ -650,7 +671,7 @@
           <li><i class="fas fa-check"></i>Sync with TruthWeb & Cloudy</li>
           <li><i class="fas fa-check"></i>Virtual Assistant Booking</li>
         </ul>
-        <a href="#pi-signin" class="btn">Get Started</a>
+        <a href="signin.html" class="btn">Get Started</a>
       </div>
     </div>
   </section>
@@ -684,6 +705,11 @@
         <h3>Local Services in Pi</h3>
         <p>Browse, post, or offer services in your area, all within the Pi ecosystem.</p>
       </div>
+      <div class="feature-card">
+        <i class="fas fa-chart-line"></i>
+        <h3>Smart Analytics Dashboard</h3>
+        <p>Visualize your productivity, spending, and wellness trends with real-time insights.</p>
+      </div>
     </div>
   </section>
 
@@ -704,12 +730,106 @@
     </ul>
   </section>
 
+  <!-- FAQ Section -->
+  <section class="section" id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <p class="subtitle">Got questions? We’ve got answers.</p>
+    <div class="faq-container">
+      <div class="faq-item">
+        <h3 class="faq-question">What is SmartSolve?</h3>
+        <div class="faq-answer">
+          <p>SmartSolve is an all-in-one app powered by the Pi Network, designed to simplify daily life. It helps with task planning, budgeting, meal planning, mental wellness, and accessing local services using Pi as currency.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">How do I sign in with Pi?</h3>
+        <div class="faq-answer">
+          <p>Sign in using your Pi Wallet through the Pi SDK integration. Click "Sign in with Pi" on the <a href="signin.html">signin page</a>, authenticate with your Pi credentials, and you’re ready to go!</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Is the free plan really free?</h3>
+        <div class="faq-answer">
+          <p>Yes! The free plan offers basic features like limited to-do lists, budget tracking, and meal suggestions at no cost. Upgrade to Standard, Premium, or Pro plans for advanced features starting at 3 Pi/month.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">Can I use SmartSolve without Pi?</h3>
+        <div class="faq-answer">
+          <p>SmartSolve is deeply integrated with the Pi Network, so a Pi Wallet is required to sign in and access features. The free plan is accessible without additional Pi payments.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">What makes the Premium plan different?</h3>
+        <div class="faq-answer">
+          <p>The Premium plan includes everything in Standard, plus family sharing, full grocery planning, kids mode, and group chat features, ideal for households managing multiple schedules.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-question">How secure is my data?</h3>
+        <div class="faq-answer">
+          <p>We prioritize your privacy and security. All data is encrypted, and we comply with industry-standard security protocols. Read our <a href="privacy.html">Privacy Policy</a> for details.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="section" id="testimonials">
+    <h2>What Our Users Say</h2>
+    <p class="subtitle">Hear from Pioneers who are living smarter with SmartSolve.</p>
+    <div class="cards">
+      <div class="card testimonial-card">
+        <img src="https://via.placeholder.com/80" alt="User 1" class="testimonial-img">
+        <h3>Anna K.</h3>
+        <p class="testimonial-role">Freelancer, Pi Pioneer</p>
+        <p>"SmartSolve’s budgeting tools helped me save 10 Pi a month! The meal planner is a game-changer for my busy schedule."</p>
+      </div>
+      <div class="card testimonial-card">
+        <img src="https://via.placeholder.com/80" alt="User 2" class="testimonial-img">
+        <h3>Marcus T.</h3>
+        <p class="testimonial-role">Small Business Owner</p>
+        <p>"The Pro plan’s business tools are fantastic. I track my Pi income and collaborate with my team seamlessly."</p>
+      </div>
+      <div class="card testimonial-card">
+        <img src="https://via.placeholder.com/80" alt="User 3" class="testimonial-img">
+        <h3>Sofia R.</h3>
+        <p class="testimonial-role">Parent & Pi Enthusiast</p>
+        <p>"The family calendar and kids mode make life so much easier. SmartSolve keeps us organized and stress-free."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Verified Users Section -->
+  <section class="section" id="verified-users">
+    <h2>Our Verified Pioneers</h2>
+    <p class="subtitle">Join thousands of verified users thriving with SmartSolve.</p>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>10,000+</h3>
+        <p>Verified Pioneers</p>
+      </div>
+      <div class="stat-card">
+        <h3>50,000+</h3>
+        <p>Tasks Planned</p>
+      </div>
+      <div class="stat-card">
+        <h3>5,000+</h3>
+        <p>Meals Planned</p>
+      </div>
+      <div class="stat-card">
+        <h3>1,000+</h3>
+        <p>Local Services Posted</p>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA Section -->
   <section class="section" id="cta-section">
     <h2>Start Smart. Start Now.</h2>
     <div class="btn-container">
-      <a href="#pi-signin" class="btn">Get Started for Free</a>
-      <a href="#subscription-landing" class="btn secondary">View Plans</a>
+      <a href="signin.html" class="btn">Get Started for Free</a>
+      <a href="pricing.html" class="btn secondary">View Plans</a>
     </div>
   </section>
 
@@ -719,51 +839,52 @@
       <div class="footer-links">
         <h3 id="footer-plans" aria-expanded="true" aria-controls="footer-plans-links"><i class="fas fa-star"></i> Our Plans</h3>
         <ul id="footer-plans-links" class="active">
-          <li><a href="#subscription-landing">Get Started for Free</a></li>
-          <li><a href="#subscription-landing">Standard Plan</a></li>
-          <li><a href="#subscription-landing">Premium Plan</a></li>
-          <li><a href="#subscription-landing">Pro Plan</a></li>
-          <li><a href="#family-plan">Family Plan</a></li>
-          <li><a href="#business-plan">Business Plan</a></li>
+          <li><a href="pricing.html">Get Started for Free</a></li>
+          <li><a href="pricing.html">Standard Plan</a></li>
+          <li><a href="pricing.html">Premium Plan</a></li>
+          <li><a href="pricing.html">Pro Plan</a></li>
+          <li><a href="family-plan.html">Family Plan</a></li>
+          <li><a href="business-plan.html">Business Plan</a></li>
         </ul>
       </div>
       <div class="footer-links">
         <h3 id="footer-features" aria-expanded="true" aria-controls="footer-features-links"><i class="fas fa-cogs"></i> Features</h3>
         <ul id="footer-features-links" class="active">
-          <li><a href="#features">Smart To-Do & Reminders</a></li>
-          <li><a href="#features">Budget & Finance Management</a></li>
-          <li><a href="#features">Meal Planning & Recipes</a></li>
-          <li><a href="#features">Mental Wellness Support</a></li>
-          <li><a href="#features">Local Services in Pi</a></li>
+          <li><a href="features.html">Smart To-Do & Reminders</a></li>
+          <li><a href="features.html">Budget & Finance Management</a></li>
+          <li><a href="features.html">Meal Planning & Recipes</a></li>
+          <li><a href="features.html">Mental Wellness Support</a></li>
+          <li><a href="features.html">Local Services in Pi</a></li>
+          <li><a href="features.html">Smart Analytics Dashboard</a></li>
         </ul>
       </div>
       <div class="footer-links">
         <h3 id="footer-pi" aria-expanded="true" aria-controls="footer-pi-links"><i class="fas fa-coins"></i> Pi Network</h3>
         <ul id="footer-pi-links" class="active">
-          <li><a href="#pi-wallet">Pi Wallet</a></li>
-          <li><a href="#pi-learn">Learn About Pi</a></li>
-          <li><a href="#pi-ecosystem">Pi Ecosystem</a></li>
+          <li><a href="pi-wallet.html">Pi Wallet</a></li>
+          <li><a href="pi-learn.html">Learn About Pi</a></li>
+          <li><a href="pi-ecosystem.html">Pi Ecosystem</a></li>
         </ul>
       </div>
       <div class="footer-links">
         <h3 id="footer-about" aria-expanded="true" aria-controls="footer-about-links"><i class="fas fa-building"></i> About Us</h3>
         <ul id="footer-about-links" class="active">
-          <li><a href="#about">About SmartSolve</a></li>
-          <li><a href="#team">Our Team</a></li>
-          <li><a href="#press">Press</a></li>
-          <li><a href="#careers">Careers</a></li>
-          <li><a href="#sitemap">Sitemap</a></li>
+          <li><a href="about.html">About SmartSolve</a></li>
+          <li><a href="team.html">Our Team</a></li>
+          <li><a href="press.html">Press</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="sitemap.html">Sitemap</a></li>
         </ul>
       </div>
       <div class="footer-links">
         <h3 id="footer-support" aria-expanded="true" aria-controls="footer-support-links"><i class="fas fa-question-circle"></i> Support</h3>
         <ul id="footer-support-links" class="active">
-          <li><a href="#help">Help Center</a></li>
-          <li><a href="#contact">Contact Us</a></li>
-          <li><a href="#resources">Wellness Resources</a></li>
-          <li><a href="#accessibility">Accessibility Statement</a></li>
-          <li><a href="#security">Security</a></li>
-          <li><a href="#privacy">Privacy Policy</a></li>
+          <li><a href="help.html">Help Center</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="resources.html">Wellness Resources</a></li>
+          <li><a href="accessibility.html">Accessibility Statement</a></li>
+          <li><a href="security.html">Security</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
         </ul>
       </div>
     </div>
@@ -792,24 +913,23 @@
       });
     });
 
-    // Dynamic Copyright Year
-    document.getElementById('copyright-year').textContent = new Date().getFullYear();
-
-    // Smooth Scroll for Internal Links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.querySelector(anchor.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
+    // FAQ Collapsible
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+        const answer = question.nextElementSibling;
+        const isActive = answer.classList.contains('active');
+        answer.classList.toggle('active');
+        question.classList.toggle('active');
       });
     });
 
+    // Dynamic Copyright Year
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
     // Placeholder for Pi SDK Integration (Sign-in)
-    document.querySelectorAll('a[href="#pi-signin"]').forEach(btn => {
+    document.querySelectorAll('a[href="signin.html"]').forEach(btn => {
       btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        alert('Sign in with Pi Wallet (Pi SDK integration placeholder)');
+        alert('Redirecting to Sign in with Pi Wallet (Pi SDK integration placeholder)');
         // Pi SDK: Pi.authenticate() would go here
         // Refer to https://x.ai/api for implementation details
       });
