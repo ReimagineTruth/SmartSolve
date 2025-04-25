@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account | SmartSolve</title>
+  <meta name="description" content="Manage your SmartSolve account, view your plan, and check payment history.">
+  <meta name="keywords" content="SmartSolve, account, Lifetime Plan, Pi Network, productivity platform">
+  <meta name="author" content="SmartSolve Team">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+  <style>
+    :root {
+      --primary: #A3CFFA;
+      --secondary: #A8D5BA;
+      --gradient: linear-gradient(45deg, #A3CFFA, #A8D5BA);
+      --text: #2A3B5A;
+      --background: #F5F5F5;
+      --card-bg: #FFFFFF;
+      --hover-bg: #E6F0FA;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --footer-bg: #EDEFF2;
+      --dark-bg: #2A3B5A;
+      --dark-text: #EDEFF2;
+      --highlight-bg: #FFD700;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    body.dark-mode {
+      background-color: var(--dark-bg);
+      color: var(--dark-text);
+    }
+    body.dark-mode .app-bar,
+    body.dark-mode .card,
+    body.dark-mode .section {
+      background-color: #2a3b5a;
+      color: var(--dark-text);
+    }
+    a:focus, button:focus, input:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *:before, *:after {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 1rem;
+      background: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      z-index: 1002;
+      transition: top 0.3s ease;
+    }
+    .skip-link:focus {
+      top: 1rem;
+    }
+    .app-bar {
+      background: var(--card-bg);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+    .app-bar .logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+    }
+    .logo-icon {
+      margin-right: 8px;
+      color: var(--primary);
+      transition: transform 0.3s ease;
+    }
+    .app-bar .logo:hover .logo-icon {
+      transform: scale(1.1);
+    }
+    .app-bar nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .app-bar nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    .app-bar nav a:hover,
+    .app-bar nav a:focus {
+      color: var(--primary);
+    }
+    .app-bar .pi-signin {
+      background: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .app-bar .pi-signin:hover,
+    .app-bar .pi-signin:focus {
+      background: var(--secondary);
+      transform: scale(1.05);
+    }
+    .section {
+      padding: 5rem 1rem 3rem;
+      text-align: center;
+      background: var(--background);
+    }
+    .section h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    .section p.subtitle {
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      color: var(--text);
+      opacity: 0.8;
+    }
+    .account-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      text-align: left;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card.lifetime {
+      background: var(--gradient);
+      color: var(--text);
+    }
+    .card.lifetime h3,
+    .card.lifetime p {
+      color: var(--text);
+      opacity: 1;
+    }
+    .card .badge {
+      display: inline-block;
+      background: var(--highlight-bg);
+      color: var(--text);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+      font-weight: 600;
+      margin-left: 1rem;
+    }
+    .card h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.8;
+      margin-bottom: 1rem;
+    }
+    .card label {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--text);
+      margin: 0.5rem 0;
+    }
+    .card input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .card table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .card table th,
+    .card table td {
+      padding: 0.5rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    .card table th {
+      background: var(--hover-bg);
+    }
+    .btn {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 0.8rem 2rem;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: background 0.3s ease, transform 0.3s ease;
+      margin-top: 1rem;
+      text-align: center;
+      width: 100%;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: var(--secondary);
+      transform: scale(1.05);
+    }
+    .btn.lifetime {
+      background: var(--highlight-bg);
+      color: var(--text);
+    }
+    .btn.lifetime:hover {
+      background: #FFC107;
+    }
+    .terms-card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      max-width: 800px;
+      margin: 2rem auto;
+      text-align: center;
+    }
+    .terms-card p {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.8;
+    }
+    .terms-card a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .terms-card a:hover {
+      color: var(--secondary);
+    }
+    footer {
+      background: var(--footer-bg);
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      color: var(--text);
+      text-align: left;
+    }
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto 2rem;
+    }
+    .footer-links h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    .footer-links h3 i {
+      margin-right: 8px;
+    }
+    .footer-links ul {
+      list-style: none;
+    }
+    .footer-links ul li {
+      margin: 0.5rem 0;
+    }
+    .footer-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      padding-top: 1rem;
+      text-align: center;
+    }
+    .footer-bottom p {
+      margin-bottom: 0.5rem;
+    }
+    .footer-bottom .social-links {
+      justify-content: center;
+      display: flex;
+      gap: 1rem;
+    }
+    .social-links a {
+      color: var(--primary);
+      font-size: 1.2rem;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .social-links a:hover,
+    .social-links a:focus {
+      color: var(--secondary);
+      transform: scale(1.2);
+    }
+    @media (max-width: 768px) {
+      .section {
+        padding: 4rem 1rem 2rem;
+      }
+      .section h2 {
+        font-size: 2rem;
+      }
+      .section p.subtitle {
+        font-size: 1rem;
+      }
+      .account-container {
+        grid-template-columns: 1fr;
+      }
+      .footer-container {
+        grid-template-columns: 1fr;
+      }
+      .footer-links h3::after {
+        content: '\f078';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+      }
+      .footer-links h3.active::after {
+        content: '\f077';
+      }
+      .footer-links ul {
+        max-height: 0;
+        opacity: 0;
+        transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+      }
+      .footer-links ul.active {
+        max-height: 300px;
+        opacity: 1;
+      }
+      .app-bar nav {
+        display: none;
+      }
+    }
+    @media (max-width: 480px) {
+      .app-bar {
+        padding: 0.8rem;
+      }
+      .app-bar .logo {
+        font-size: 1.3rem;
+      }
+      .section h2 {
+        font-size: 1.8rem;
+      }
+      .card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to Content</a>
+
+  <!-- App Bar -->
+  <header class="app-bar">
+    <div class="logo">
+      <i class="fas fa-brain logo-icon"></i> SmartSolve
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="pricing.html">Plans</a>
+      <a href="account.html">Account</a>
+      <a href="settings.html">Settings</a>
+      <a href="signin.html" class="pi-signin" id="pi-signin">Sign in with Pi</a>
+    </nav>
+  </header>
+
+  <!-- Account Section -->
+  <section class="section" id="account">
+    <div id="main-content">
+      <h2>Your Account</h2>
+      <p class="subtitle">Manage your profile, view your plan status, and check payment history.</p>
+      <div class="account-container">
+        <!-- Profile -->
+        <div class="card">
+          <h3>Profile</h3>
+          <p>Update your personal information.</p>
+          <label for="username">Username:</label>
+          <input type="text" id="username" placeholder="Enter your username">
+          <label for="email">Email:</label>
+          <input type="text" id="email" placeholder="Enter your email">
+          <button class="btn" id="save-profile" aria-label="Save Profile">Save Profile</button>
+        </div>
+        <!-- Plan Status -->
+        <div class="card">
+          <h3>Plan Status</h3>
+          <p>Current Plan: <strong>Free</strong></p>
+          <p>Upgrade to the 🔓 Lifetime Plan for a one-time payment of 99 Pi and unlock exclusive perks! 🎉</p>
+          <button class="btn lifetime" id="upgrade-lifetime" aria-label="Upgrade to Lifetime Plan">Upgrade to Lifetime</button>
+          <!-- Example for Lifetime Plan user -->
+          <!--
+          <p>Current Plan: <strong>Lifetime</strong> <span class="badge">🎉 Lifetime Member</span></p>
+          <p>Thank you for being a Lifetime Member! Enjoy priority support and exclusive features.</p>
+          -->
+        </div>
+        <!-- Payment History -->
+        <div class="card">
+          <h3>Payment History</h3>
+          <p>View your recent transactions.</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Plan</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2025-04-01</td>
+                <td>Standard</td>
+                <td>3 Pi</td>
+                <td>Completed</td>
+              </tr>
+              <!-- Add more rows dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="terms-card">
+        <p>Account changes are subject to our <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-links">
+        <h3 id="footer-plans" aria-expanded="true" aria-controls="footer-plans-links"><i class="fas fa-star"></i> Our Plans</h3>
+        <ul id="footer-plans-links" class="active">
+          <li><a href="pricing.html">Get Started for Free</a></li>
+          <li><a href="pricing.html">Standard Plan</a></li>
+          <li><a href="pricing.html">Premium Plan</a></li>
+          <li><a href="pricing.html">Pro Plan</a></li>
+          <li><a href="pricing.html">Lifetime Plan</a></li>
+          <li><a href="family-plan.html">Family Plan</a></li>
+          <li><a href="business-plan.html">Business Plan</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3 id="footer-features" aria-expanded="true" aria-controls="footer-features-links"><i class="fas fa-cogs"></i> Features</h3>
+        <ul id="footer-features-links" class="active">
+          <li><a href="features.html">Smart To-Do & Reminders</a></li>
+          <li><a href="features.html">Budget & Finance Management</a></li>
+          <li><a href="features.html">Meal Planning & Recipes</a></li>
+          <li><a href="features.html">Mental Wellness Support</a></li>
+          <li><a href="features.html">Local Services in Pi</a></li>
+          <li><a href="features.html">Smart Analytics Dashboard</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3 id="footer-pi" aria-expanded="true" aria-controls="footer-pi-links"><i class="fas fa-coins"></i> Pi Network</h3>
+        <ul id="footer-pi-links" class="active">
+          <li><a href="pi-wallet.html">Pi Wallet</a></li>
+          <li><a href="pi-learn.html">Learn About Pi</a></li>
+          <li><a href="pi-ecosystem.html">Pi Ecosystem</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3 id="footer-about" aria-expanded="true" aria-controls="footer-about-links"><i class="fas fa-building"></i> About Us</h3>
+        <ul id="footer-about-links" class="active">
+          <li><a href="about.html">About SmartSolve</a></li>
+          <li><a href="team.html">Our Team</a></li>
+          <li><a href="press.html">Press</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="sitemap.html">Sitemap</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3 id="footer-support" aria-expanded="true" aria-controls="footer-support-links"><i class="fas fa-question-circle"></i> Support</h3>
+        <ul id="footer-support-links" class="active">
+          <li><a href="help.html">Help Center</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="resources.html">Wellness Resources</a></li>
+          <li><a href="accessibility.html">Accessibility Statement</a></li>
+          <li><a href="security.html">Security</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="copyright-year"></span> SmartSolve. All rights reserved.</p>
+      <div class="social-links">
+        <a href="https://instagram.com" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://twitter.com" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://facebook.com" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Footer Collapsible Sections
+    document.querySelectorAll('.footer-links h3').forEach(header => {
+      header.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          const ul = header.nextElementSibling;
+          const isActive = ul.classList.contains('active');
+          ul.classList.toggle('active');
+          header.classList.toggle('active');
+          header.setAttribute('aria-expanded', !isActive);
+        }
+      });
+    });
+
+    // Dynamic Copyright Year
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
+    // Action Handler
+    const handleAction = (action, data = {}) => {
+      console.log(`Performing ${action}`, data);
+      // Placeholder for Pi SDK or backend API
+      /*
+      if (action === 'save-profile' && typeof Pi !== 'undefined') {
+        // Update profile via backend
+      } else if (action === 'upgrade-lifetime' && typeof Pi !== 'undefined') {
+        Pi.createPayment({
+          amount: 99,
+          memo: 'SmartSolve Lifetime Plan',
+          metadata: { plan: 'lifetime' }
+        }).then(() => {
+          window.location.href = 'payment-success.html';
+        }).catch(error => {
+          console.error('Payment failed:', error);
+          alert('Payment failed.');
+        });
+      } else {
+        console.warn('Pi SDK not loaded or action not supported.');
+        window.location.href = 'signin.html';
+      }
+      */
+      window.location.href = 'signin.html'; // Fallback
+    };
+
+    // Event Listeners
+    const actions = [
+      { id: 'save-profile', action: 'save-profile', data: () => ({
+        username: document.getElementById('username').value,
+        email: document.getElementById('email').value
+      }) },
+      { id: 'upgrade-lifetime', action: 'upgrade-lifetime' }
+    ];
+
+    actions.forEach(({ id, action, data }) => {
+      const button = document.getElementById(id);
+      if (button) {
+        button.addEventListener('click', () => handleAction(action, data ? data() : {}));
+      } else {
+        console.warn(`Button with ID ${id} not found.`);
+      }
+    });
+
+    // Sign-in Button
+    const signInButton = document.getElementById('pi-signin');
+    if (signInButton) {
+      signInButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('Initiating Pi Wallet sign-in');
+        handleAction('sign-in');
+      });
+    }
+  </script>
+</body>
+</html>
