@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Plan Workspace | SmartSolve</title>
+  <meta name="description" content="Manage your tasks, budget, and meals with SmartSolve’s Free Plan.">
+  <meta name="keywords" content="SmartSolve, workspace, free plan, Pi Network">
+  <meta name="author" content="SmartSolve Team">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+  <style>
+    :root {
+      --primary: #A3CFFA;
+      --secondary: #A8D5BA;
+      --gradient: linear-gradient(45deg, #A3CFFA, #A8D5BA);
+      --text: #2A3B5A;
+      --background: #F5F5F5;
+      --card-bg: #FFFFFF;
+      --hover-bg: #E6F0FA;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --footer-bg: #EDEFF2;
+      --dark-bg: #2A3B5A;
+      --dark-text: #EDEFF2;
+      --locked-bg: #E0E0E0;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    body.dark-mode {
+      background-color: var(--dark-bg);
+      color: var(--dark-text);
+    }
+    body.dark-mode .app-bar,
+    body.dark-mode .card,
+    body.dark-mode .sidebar,
+    body.dark-mode .section {
+      background-color: #2a3b5a;
+      color: var(--dark-text);
+    }
+    a:focus, button:focus, input:focus, textarea:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *:before, *:after {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 1rem;
+      background: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      z-index: 1002;
+      transition: top 0.3s ease;
+    }
+    .skip-link:focus {
+      top: 1rem;
+    }
+    .app-bar {
+      background: var(--card-bg);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+    .app-bar .logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+    }
+    .logo-icon {
+      margin-right: 8px;
+      color: var(--primary);
+      transition: transform 0.3s ease;
+    }
+    .app-bar .logo:hover .logo-icon {
+      transform: scale(1.1);
+    }
+    .app-bar .profile {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+    .app-bar .profile img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .hamburger {
+      display: none;
+      font-size: 1.5rem;
+      color: var(--text);
+      cursor: pointer;
+    }
+    .sidebar {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 200px;
+      background: var(--card-bg);
+      padding: 1rem;
+      height: calc(100vh - 60px);
+      box-shadow: var(--shadow);
+      z-index: 999;
+    }
+    .sidebar nav {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .sidebar a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 0.5rem;
+      border-radius: 10px;
+      transition: background 0.3s ease;
+    }
+    .sidebar a:hover,
+    .sidebar a:focus {
+      background: var(--hover-bg);
+    }
+    .sidebar a.locked {
+      color: #999;
+      cursor: not-allowed;
+      position: relative;
+    }
+    .sidebar a.locked::after {
+      content: 'Upgrade';
+      position: absolute;
+      right: 10px;
+      font-size: 0.8rem;
+      color: var(--primary);
+    }
+    .main-content {
+      margin-left: 220px;
+      padding: 5rem 1rem 3rem;
+      flex: 1;
+    }
+    .section {
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .section h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    .section p.subtitle {
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      margin-bottom: 2rem;
+      color: var(--text);
+      opacity: 0.8;
+    }
+    .card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      text-align: left;
+      margin-bottom: 1.5rem;
+    }
+    .card h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.2rem;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.8;
+      margin-bottom: 1rem;
+    }
+    .task-list {
+      list-style: none;
+    }
+    .task-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0.5rem 0;
+      font-size: 0.9rem;
+    }
+    .task-list li input[type="checkbox"] {
+      accent-color: var(--primary);
+    }
+    .expense-form,
+    .task-form {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .expense-form input,
+    .task-form input {
+      padding: 0.8rem;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      flex: 1;
+    }
+    .meal-ideas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .meal-card {
+      background: var(--card-bg);
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .local-services {
+      text-align: center;
+    }
+    .local-services p {
+      font-style: italic;
+    }
+    .btn {
+      padding: 0.8rem 2rem;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: transform 0.3s ease, background 0.3s ease;
+      display: inline-block;
+      margin: 0.5rem 0;
+      background: var(--primary);
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: var(--secondary);
+      transform: scale(1.05);
+    }
+    .upgrade-btn {
+      background: var(--gradient);
+      font-size: 1rem;
+      padding: 1rem 2.5rem;
+      margin: 2rem 0;
+    }
+    .ad-banner {
+      background: var(--hover-bg);
+      padding: 1rem;
+      border-radius: 20px;
+      margin: 1rem auto;
+      max-width: 800px;
+      text-align: center;
+    }
+    .ad-banner a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .ad-banner a:hover {
+      color: var(--secondary);
+    }
+    footer {
+      background: var(--footer-bg);
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      color: var(--text);
+      text-align: left;
+    }
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto 2rem;
+    }
+    .footer-links h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    .footer-links h3 i {
+      margin-right: 8px;
+    }
+    .footer-links ul {
+      list-style: none;
+    }
+    .footer-links ul li {
+      margin: 0.5rem 0;
+    }
+    .footer-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      padding-top: 1rem;
+      text-align: center;
+    }
+    .footer-bottom p {
+      margin-bottom: 0.5rem;
+    }
+    .footer-bottom .social-links {
+      justify-content: center;
+      display: flex;
+      gap: 1rem;
+    }
+    .social-links a {
+      color: var(--primary);
+      font-size: 1.2rem;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .social-links a:hover,
+    .social-links a:focus {
+      color: var(--secondary);
+      transform: scale(1.2);
+    }
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        top: 60px;
+        left: -100%;
+        transition: left 0.3s ease;
+      }
+      .sidebar.active {
+        left: 0;
+      }
+      .main-content {
+        margin-left: 0;
+      }
+      .hamburger {
+        display: block;
+      }
+      .app-bar .profile {
+        display: none;
+      }
+      .meal-ideas {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 480px) {
+      .app-bar {
+        padding: 0.8rem;
+      }
+      .app-bar .logo {
+        font-size: 1.3rem;
+      }
+      .section h2 {
+        font-size: 1.8rem;
+      }
+      .card {
+        padding: 1rem;
+      }
+      .expense-form,
+      .task-form {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to Content</a>
+
+  <!-- App Bar -->
+  <header class="app-bar">
+    <div class="logo">
+      <i class="fas fa-brain logo-icon"></i> SmartSolve
+    </div>
+    <div class="hamburger">
+      <i class="fas fa-bars"></i>
+    </div>
+    <div class="profile" aria-label="User Profile">
+      <img src="https://via.placeholder.com/32" alt="User Avatar">
+      <span>Pi User</span>
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <nav>
+      <a href="#dashboard"><i class="fas fa-home"></i> Dashboard</a>
+      <a href="#todo"><i class="fas fa-tasks"></i> To-Do List</a>
+      <a href="#budget"><i class="fas fa-wallet"></i> Budget Tracker</a>
+      <a href="#meals"><i class="fas fa-utensils"></i> Meals</a>
+      <a href="#services"><i class="fas fa-map-marker-alt"></i> Local Services</a>
+      <a href="#calendar" class="locked"><i class="fas fa-calendar"></i> Calendar</a>
+      <a href="#ai" class="locked"><i class="fas fa-robot"></i> AI Tools</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Dashboard -->
+    <section class="section" id="dashboard">
+      <div id="main-content">
+        <h2>Your Free Plan Workspace</h2>
+        <p class="subtitle">Manage your day with SmartSolve’s Free Plan (0 Pi/month).</p>
+        <!-- Banner Ad -->
+        <div class="ad-banner">
+          <p>Ad: Discover premium features with SmartSolve Pro!</p>
+          <a href="pricing.html">Learn More</a>
+        </div>
+        <div class="card">
+          <h3>Daily Quote</h3>
+          <p>“Start small, but start today.”</p>
+        </div>
+        <div class="card">
+          <h3>Quick To-Do Overview</h3>
+          <p>Tasks today: 2/10</p>
+          <ul class="task-list">
+            <li><input type="checkbox" id="task1"> <label for="task1">Buy groceries</label></li>
+            <li><input type="checkbox" id="task2"> <label for="task2">Call doctor</label></li>
+          </ul>
+          <a href="#todo" class="btn">View All Tasks</a>
+        </div>
+        <a href="pricing.html" class="btn upgrade-btn">Upgrade to Unlock More</a>
+      </div>
+    </section>
+
+    <!-- To-Do List -->
+    <section class="section" id="todo" style="display: none;">
+      <h2>To-Do List</h2>
+      <p class="subtitle">Add up to 10 tasks per day.</p>
+      <div class="card">
+        <h3>Your Tasks (2/10)</h3>
+        <ul class="task-list">
+          <li><input type="checkbox" id="task1-todo"> <label for="task1-todo">Buy groceries</label></li>
+          <li><input type="checkbox" id="task2-todo"> <label for="task2-todo">Call doctor</label></li>
+        </ul>
+        <form class="task-form">
+          <input type="text" placeholder="New task" aria-label="New task" required>
+          <button type="submit" class="btn">Add Task</button>
+        </form>
+        <p><em>Recurring tasks available with Premium Plan.</em></p>
+      </div>
+      <a href="pricing.html" class="btn upgrade-btn">Upgrade to Unlock More</a>
+    </section>
+
+    <!-- Budget Tracker -->
+    <section class="section" id="budget" style="display: none;">
+      <h2>Budget Tracker</h2>
+      <p class="subtitle">Track your expenses with basic input.</p>
+      <div class="card">
+        <h3>Recent Expenses</h3>
+        <ul class="task-list">
+          <li>Groceries: $50</li>
+          <li>Transport: $20</li>
+        </ul>
+        <form class="expense-form">
+          <input type="text" placeholder="Description" aria-label="Description" required>
+          <input type="number" placeholder="Amount" aria-label="Amount" required>
+          <button type="submit" class="btn">Add Expense</button>
+        </form>
+        <p><em>Categories and analytics available with Standard Plan.</em></p>
+      </div>
+      <a href="pricing.html" class="btn upgrade-btn">Upgrade to Unlock More</a>
+    </section>
+
+    <!-- Meals -->
+    <section class="section" id="meals" style="display: none;">
+      <h2>Today’s 2 Meal Ideas</h2>
+      <p class="subtitle">Enjoy these daily meal suggestions.</p>
+      <div class="meal-ideas">
+        <div class="meal-card">
+          <h3>Vegetable Stir-Fry</h3>
+          <p>Quick and healthy stir-fry with fresh veggies.</p>
+        </div>
+        <div class="meal-card">
+          <h3>Chicken Salad</h3>
+          <p>Light and protein-packed salad for lunch.</p>
+        </div>
+      </div>
+      <div class="card">
+        <p><em>Full recipes and grocery lists available with Premium Plan.</em></p>
+        <a href="pricing.html" class="btn">Unlock Meal Planning</a>
+      </div>
+      <a href="pricing.html" class="btn upgrade-btn">Upgrade to Unlock More</a>
+    </section>
+
+    <!-- Local Services -->
+    <section class="section" id="services" style="display: none;">
+      <h2>Local Services</h2>
+      <p class="subtitle">Explore services in the Pi ecosystem (view-only).</p>
+      <div class="card local-services">
+        <p>Map/Directory placeholder: View local Pi-based services.</p>
+        <p><em>Interact with services with Pro Plan.</em></p>
+        <a href="pricing.html" class="btn">Unlock Interactions</a>
+      </div>
+      <a href="pricing.html" class="btn upgrade-btn">Upgrade to Unlock More</a>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-links">
+        <h3 id="footer-plans" aria-expanded="true" aria-controls="footer-plans-links"><i class="fas fa-star"></i> Our Plans</h3>
+        <ul id="footer-plans-links" class="active">
+          <li><a href="pricing.html">Get Started for Free</a></li>
+          <li><a href="pricing.html">Standard Plan</a></li>
+          <li><a href="pricing.html">Premium Plan</a></li>
+          <li><a href="pricing.html">Pro Plan</a></li>
+          <li><a href="family-plan.html">Family Plan</a></li>
+          <li><a href="business-plan.html">Business Plan</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3 id="footer-features" aria-expanded="true" aria-controls="footer-features-links"><i class="fas fa-cogs"></i> Features</h3>
+        <ul id="footer-features-links" class="active">
+          <li><a href="features.html">Smart To-Do & Reminders</a></li>
+          <li><a href="features.html">Budget & Finance Management</a></li>
+          <li><a href="features.html">Meal Planning & Recipes</a></li>
+          <li><a href="features.html">Mental Wellness Support</a></li>
+          <li><a href="features.html">Local Services in Pi</a></li>
+          <li><a href="features.html">Smart Analytics Dashboard</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3 id="footer-pi" aria-expanded="true" aria-controls="footer-pi-links"><i class="fas fa-coins"></i> Pi Network</h3>
+        <ul id="footer-pi-links" class="active">
+          <li><a href="pi-wallet.html">Pi Wallet</a></li>
+          <li><a href="pi-learn.html">Learn About Pi</a></li>
+          <li><a href="pi-ecosystem.html">Pi Ecosystem</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3 id="footer-about" aria-expanded="true" aria-controls="footer-about-links"><i class="fas fa-building"></i> About Us</h3>
+        <ul id="footer-about-links" class="active">
+          <li><a href="about.html">About SmartSolve</a></li>
+          <li><a href="team.html">Our Team</a></li>
+          <li><a href="press.html">Press</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="sitemap.html">Sitemap</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3 id="footer-support" aria-expanded="true" aria-controls="footer-support-links"><i class="fas fa-question-circle"></i> Support</h3>
+        <ul id="footer-support-links" class="active">
+          <li><a href="help.html">Help Center</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="resources.html">Wellness Resources</a></li>
+          <li><a href="accessibility.html">Accessibility Statement</a></li>
+          <li><a href="security.html">Security</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="copyright-year"></span> SmartSolve. All rights reserved.</p>
+      <div class="social-links">
+        <a href="https://instagram.com" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://twitter.com" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://facebook.com" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Footer Collapsible Sections
+    document.querySelectorAll('.footer-links h3').forEach(header => {
+      header.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          const ul = header.nextElementSibling;
+          const isActive = ul.classList.contains('active');
+          ul.classList.toggle('active');
+          header.classList.toggle('active');
+          header.setAttribute('aria-expanded', !isActive);
+        }
+      });
+    });
+
+    // Dynamic Copyright Year
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
+    // Hamburger Menu Toggle
+    document.querySelector('.hamburger').addEventListener('click', () => {
+      document.querySelector('.sidebar').classList.toggle('active');
+    });
+
+    // Sidebar Navigation
+    document.querySelectorAll('.sidebar a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        if (link.classList.contains('locked')) {
+          e.preventDefault();
+          alert('Upgrade to a paid plan to access this feature.');
+          window.location.href = 'pricing.html';
+        } else {
+          e.preventDefault();
+          document.querySelectorAll('.section').forEach(section => {
+            section.style.display = 'none';
+          });
+          document.querySelector(link.getAttribute('href')).style.display = 'block';
+          if (window.innerWidth <= 768) {
+            document.querySelector('.sidebar').classList.remove('active');
+          }
+        }
+      });
+    });
+
+    // Task Form Submission
+    let taskCount = 2; // Example starting count
+    document.querySelector('.task-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (taskCount >= 10) {
+        alert('Task limit reached (10/day). Upgrade for unlimited tasks.');
+        window.location.href = 'pricing.html';
+      } else {
+        const task = document.querySelector('.task-form input').value;
+        if (task) {
+          taskCount++;
+          alert('Task added: ' + task + ' (Placeholder)');
+          // Add to task list (backend integration needed)
+          document.querySelector('.task-form input').value = '';
+          document.querySelector('#todo h3').textContent = `Your Tasks (${taskCount}/10)`;
+        }
+      }
+    });
+
+    // Expense Form Submission
+    document.querySelector('.expense-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const desc = document.querySelector('.expense-form input[placeholder="Description"]').value;
+      const amount = document.querySelector('.expense-form input[placeholder="Amount"]').value;
+      if (desc && amount) {
+        alert(`Expense added: ${desc} - $${amount} (Placeholder)`);
+        // Add to expense list (backend integration needed)
+        document.querySelectorAll('.expense-form input').forEach(input => input.value = '');
+      }
+    });
+
+    // Show Dashboard by Default
+    document.querySelector('#dashboard').style.display = 'block';
+  </script>
+</body>
+</html>
