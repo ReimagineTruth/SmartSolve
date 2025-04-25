@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Plan Workspace | SmartSolve</title>
+  <meta name="description" content="Collaborate with family and manage tasks, budgets, and meals with SmartSolve’s Premium Plan.">
+  <meta name="keywords" content="SmartSolve, workspace, premium plan, Pi Network, family dashboard">
+  <meta name="author" content="SmartSolve Team">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+  <style>
+    :root {
+      --primary: #A3CFFA;
+      --secondary: #A8D5BA;
+      --gradient: linear-gradient(45deg, #A3CFFA, #A8D5BA);
+      --text: #2A3B5A;
+      --background: #F5F5F5;
+      --card-bg: #FFFFFF;
+      --hover-bg: #E6F0FA;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --footer-bg: #EDEFF2;
+      --dark-bg: #2A3B5A;
+      --dark-text: #EDEFF2;
+      --locked-bg: #E0E0E0;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    body.dark-mode {
+      background-color: var(--dark-bg);
+      color: var(--dark-text);
+    }
+    body.dark-mode .app-bar,
+    body.dark-mode .card,
+    body.dark-mode .sidebar,
+    body.dark-mode .section {
+      background-color: #2a3b5a;
+      color: var(--dark-text);
+    }
+    a:focus, button:focus, input:focus, textarea:focus, select:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *:before, *:after {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 1rem;
+      background: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      z-index: 1002;
+      transition: top 0.3s ease;
+    }
+    .skip-link:focus {
+      top: 1rem;
+    }
+    .app-bar {
+      background: var(--card-bg);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+    .app-bar .logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+    }
+    .logo-icon {
+      margin-right: 8px;
+      color: var(--primary);
+      transition: transform 0.3s ease;
+    }
+    .app-bar .logo:hover .logo-icon {
+      transform: scale(1.1);
+    }
+    .app-bar .profile {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+    .app-bar .profile img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .family-switcher {
+      padding: 0.5rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+    }
+    .hamburger {
+      display: none;
+      font-size: 1.5rem;
+      color: var(--text);
+      cursor: pointer;
+    }
+    .sidebar {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 200px;
+      background: var(--card-bg);
+      padding: 1rem;
+      height: calc(100vh - 60px);
+      box-shadow: var(--shadow);
+      z-index: 999;
+    }
+    .sidebar nav {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .sidebar a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 0.5rem;
+      border-radius: 10px;
+      transition: background 0.3s ease;
+    }
+    .sidebar a:hover,
+    .sidebar a:focus {
+      background: var(--hover-bg);
+    }
+    .sidebar a.locked {
+      color: #999;
+      cursor: not-allowed;
+      position: relative;
+    }
+    .sidebar a.locked::after {
+      content: 'Pro';
+      position: absolute;
+      right: 10px;
+      font-size: 0.8rem;
+      color: var(--primary);
+    }
+    .main-content {
+      margin-left: 220px;
+      padding: 5rem 1rem 3rem;
+      flex: 1;
+    }
+    .section {
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .section h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    .section p.subtitle {
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      margin-bottom: 2rem;
+      color: var(--text);
+      opacity: 0.8;
+    }
+    .card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      text-align: left;
+      margin-bottom: 1.5rem;
+    }
+    .card h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.2rem;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.8;
+      margin-bottom: 1rem;
+    }
+    .task-list {
+      list-style: none;
+    }
+    .task-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0.5rem 0;
+      font-size: 0.9rem;
+    }
+    .task-list li input[type="checkbox"] {
+      accent-color: var(--primary);
+    }
+    .task-form, .expense-form, .service-form, .invite-form {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .task-form input, .expense-form input, .expense-form select, .service-form input, .service-form textarea, .invite-form input {
+      padding: 0.8rem;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      flex: 1;
+    }
+    .meal-planner, .grocery-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .meal-card, .grocery-item {
+      background: var(--card-bg);
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .mood-options {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+    .mood-btn {
+      background: var(--hover-bg);
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+    .mood-btn:hover {
+      background: var(--primary);
+      color: white;
+    }
+    .local-services ul, .family-members ul, .chat-messages {
+      list-style: none;
+      text-align: left;
+    }
+    .chat-messages li {
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      border-radius: 10px;
+      background: var(--hover-bg);
+    }
+    .chat-form {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .chat-form input {
+      flex: 1;
+      padding: 0.8rem;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+    .kids-task-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0.5rem 0;
+      font-size: 1.2rem;
+    }
+    .sticker {
+      font-size: 1.5rem;
+      margin-left: auto;
+    }
+    .privacy-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .privacy-controls label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn {
+      padding: 0.8rem 2rem;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: transform 0.3s ease, background 0.3s ease;
+      display: inline-block;
+      margin: 0.5rem 0;
+      background: var(--primary);
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: var(--secondary);
+      transform: scale(1.05);
+    }
+    .pro-btn {
+      background: var(--gradient);
+      font-size: 1rem;
+      padding: 1rem 2.5rem;
+      margin: 2rem 0;
+    }
+    #calendar {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    footer {
+      background: var(--footer-bg);
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      color: var(--text);
+      text-align: left;
+    }
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto 2rem;
+    }
+    .footer-links h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    .footer-links h3 i {
+      margin-right: 8px;
+    }
+    .footer-links ul {
+      list-style: none;
+    }
+    .footer-links ul li {
+      margin: 0.5rem 0;
+    }
+    .footer-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      padding-top: 1rem;
+      text-align: center;
+    }
+    .footer-bottom p {
+      margin-bottom: 0.5rem;
+    }
+    .footer-bottom .social-links {
+      justify-content: center;
+      display: flex;
+      gap: 1rem;
+    }
+    .social-links a {
+      color: var(--primary);
+      font-size: 1.2rem;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .social-links a:hover,
+    .social-links a:focus {
+      color: var(--secondary);
+      transform: scale(1.2);
+    }
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        top: 60px;
+        left: -100%;
+        transition: left 0.3s ease;
+      }
+      .sidebar.active {
+        left: 0;
+      }
+      .main-content {
+        margin-left: 0;
+      }
+      .hamburger {
+        display: block;
+      }
+      .app-bar .profile, .app-bar .family-switcher {
+        display: none;
+      }
+      .meal-planner, .grocery-list {
+        grid-template-columns: 1fr;
+      }
+      .task-form, .expense-form, .service-form, .invite-form, .chat-form {
+        flex-direction: column;
+      }
+    }
+    @media (max-width: 480px) {
+      .app-bar {
+        padding: 0.8rem;
+      }
+      .app-bar .logo {
+        font-size: 1.3rem;
+      }
+      .section h2 {
+        font-size: 1.8rem;
+      }
+      .card {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to Content</a>
+
+  <!-- App Bar -->
+  <header class="app-bar">
+    <div class="logo">
+      <i class="fas fa-brain logo-icon"></i> SmartSolve
+    </div>
+    <div class="hamburger">
+      <i class="fas fa-bars"></i>
+    </div>
+    <div class="profile" aria-label="User Profile">
+      <img src="https://via.placeholder.com/32" alt="User Avatar">
+      <span>Pi User</span>
+    </div>
+    <select class="family-switcher" aria-label="Switch family member">
+      <option value="self">Myself</option>
+      <option value="child">Child</option>
+    </select>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <nav>
+      <a href="#dashboard"><i class="fas fa-home"></i> Dashboard</a>
+      <a href="#todo"><i class="fas fa-tasks"></i> To-Do List</a>
+      <a href="#calendar"><i class="fas fa-calendar"></i> Calendar</a>
+      <a href="#budget"><i class="fas fa-wallet"></i> Budget Tracker</a>
+      <a href="#meals"><i class="fas fa-utensils"></i> Meal Planner</a>
+      <a href="#mood"><i class="fas fa-heart"></i> Mood Assistant</a>
+      <a href="#services"><i class="fas fa-map-marker-alt"></i> Local Services</a>
+      <a href="#family"><i class="fas fa-users"></i> Family Dashboard</a>
+      <a href="#kids" class="child-only"><i class="fas fa-child"></i> Kids Mode</a>
+      <a href="#chat"><i class="fas fa-comments"></i> Group Chat</a>
+      <a href="#business" class="locked"><i class="fas fa-briefcase"></i> Business Tools</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Dashboard -->
+    <section class="section" id="dashboard">
+      <div id="main-content">
+        <h2>Your Premium Plan Workspace</h2>
+        <p class="subtitle">Family collaboration for 6 Pi/month.</p>
+        <div class="card">
+          <h3>Quick Overview</h3>
+          <p>Personal tasks: 2 | Family tasks: 1 | Budget: $70 | Mood: 😊</p>
+          <p>Family notifications: New grocery list item added.</p>
+          <a href="#todo" class="btn">View Tasks</a>
+          <a href="#family" class="btn">Family Dashboard</a>
+        </div>
+        <a href="pricing.html" class="btn pro-btn">Upgrade to Pro for Business Tools</a>
+      </div>
+    </section>
+
+    <!-- To-Do List -->
+    <section class="section" id="todo" style="display: none;">
+      <h2>Unlimited To-Do List</h2>
+      <p class="subtitle">Share tasks with family members.</p>
+      <div class="card">
+        <h3>Your Tasks</h3>
+        <form class="task-form">
+          <input type="text" placeholder="New task" aria-label="New task" required>
+          <select aria-label="Priority">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+          <input type="date" aria-label="Due date">
+          <select aria-label="Share with">
+            <option value="self">Myself</option>
+            <option value="family">Family</option>
+          </select>
+          <button type="submit" class="btn">Add Task</button>
+        </form>
+        <ul class="task-list">
+          <li><input type="checkbox" id="task1"> <label for="task1">Buy groceries (High, Family)</label></li>
+          <li><input type="checkbox" id="task2"> <label for="task2">Call doctor (Medium)</label></li>
+        </ul>
+        <h3>Privacy Controls</h3>
+        <div class="privacy-controls">
+          <label><input type="checkbox" checked> Share tasks with family</label>
+        </div>
+      </div>
+      <a href="pricing.html" class="btn pro-btn">Upgrade to Pro for Business Tools</a>
+    </section>
+
+    <!-- Calendar -->
+    <section class="section" id="calendar" style="display: none;">
+      <h2>Shared Calendar</h2>
+      <p class="subtitle">View personal and family events.</p>
+      <div class="card">
+        <div id="calendar"></div>
+        <h3>Privacy Controls</h3>
+        <div class="privacy-controls">
+          <label><input type="checkbox" checked> Share events with family</label>
+        </div>
+      </div>
+      <a href="pricing.html" class="btn pro-btn">Upgrade to Pro for Business Tools</a>
+    </section>
+
+    <!-- Budget Tracker -->
+    <section class="section" id="budget" style="display: none;">
+      <h2>Budget Tracker</h2>
+      <p class="subtitle">Track expenses with categories and insights.</p>
+      <div class="card">
+        <h3>Add Expense</h3>
+        <form class="expense-form">
+          <input type="text" placeholder="Description" aria-label="Description" required>
+          <input type="number" placeholder="Amount" aria-label="Amount" required>
+          <select aria-label="Category">
+            <option value="groceries">Groceries</option>
+            <option value="transport">Transport</option>
+            <option value="entertainment">Entertainment</option>
+          </select>
+          <button type="submit" class="btn">Add Expense</button>
+        </form>
+        <h3>Spending Insights</h3>
+        <canvas id="budgetChart" height="200"></canvas>
+      </div>
+      <a href="pricing.html" class="btn pro-btn">Upgrade to Pro for Business Tools</a>
+    </section>
+
+    <!-- Meal Planner -->
+    <section class="section" id="meals" style="display: none;">
+      <h2>Meal Planner</h2>
+      <p class="subtitle">Plan meals and share grocery lists with family.</p>
+      <div class="card">
+        <h3>Weekly Plan</h3>
+        <div class="meal-planner">
+          <div class="meal-card">
+            <h3>Monday: Stir-Fry</h3>
+            <p>Vegetable stir-fry with rice.</p>
+            <button class="btn">View Recipe</button>
+          </div>
+          <div class="meal-card">
+            <h3>Tuesday: Salad</h3>
+            <p>Chicken salad with vinaigrette.</p>
+            <button class="btn">View Recipe</button>
+          </div>
+        </div>
+        <h3>Shared Grocery List</h3>
+        <div class="grocery-list">
+          <div class="grocery-item">Rice</div>
+          <div class="grocery-item">Chicken</div>
+        </div>
+        <button class="btn">Generate Grocery List</button>
+        <h3>Privacy Controls</h3>
+        <div class="privacy-controls">
+          <label><input type="checkbox" checked> Share grocery list with family</label>
+        </div>
+      </div>
+      <a href="pricing.html" class="btn pro-btn">Upgrade to Pro for Business Tools</a>
+    </section>
+
+    <!-- Mood Assistant -->
+    <section class="section" id="mood" style="display: none;">
+      <h2>AI Mood Assistant</h2>
+      <p class="subtitle">Log your mood with privacy controls.</p>
+      <div class="card">
+        <h3>How are you feeling?</h3>
+        <div class="mood-options">
+          <button class="mood-btn" data-mood="happy">😊</button>
+          <button class="mood-btn" data-mood="neutral">😐</button>
+          <button class="mood-btn" data-mood="sad">😔</button>
+        </div>
+        <p id="mood-feedback">Keep shining! Try journaling daily.</p>
+        <h3>Privacy Controls</h3>
+        <div class="privacy-controls">
+          <label><input type="checkbox"> Share mood with family</label>
+        </div>
+      </div>
+      <a href="pricing.html" class="btn pro-btn">Upgrade to Pro for Business Tools</a>
+    </section>
+
+    <!-- Local Services -->
+    <section class="section" id="services" style="display: none;">
+      <h2>Local Services</h2>
+      <p class="subtitle">Explore and post service requests in the Pi ecosystem.</p>
+      <div class="card">
+        <h3>Available Services</h3>
+        <ul>
+          <li>Pi Merchant: Local retail</li>
+          <li>Pi Delivery: Delivery service</li>
+        </ul>
+        <h3>Post a Service Request</h3>
+        <form class="service-form">
+          <input type="text" placeholder="Service title" aria-label="Service title" required>
+          <textarea placeholder="Description" aria-label="Description" required></textarea>
+          <button type="submit" class="btn">Post Request</button>
+        </form>
+      </div>
+      <a href="pricing.html" class="btn pro-btn">Upgrade to Pro for Business Tools</a>
+    </section>
+
+    <!-- Family Dashboard -->
+    <section class="section" id="family" style="display: none;">
+      <h2>Family Dashboard</h2>
+      <p class="subtitle">Manage shared tasks, calendar, and grocery lists.</p>
+      <div class="card">
+        <h3>Family Members</h3>
+        <ul class="family-members">
+          <li>Pi User (Admin)</li>
+          <li>Child (Kid)</li>
+        </ul>
+        <form class="invite-form">
+          <input type="text" placeholder="Pi User ID" aria-label="Pi User ID" required>
+          <select aria-label="Role">
+            <option value="member">Member</option>
+            <option value="child">Child</option>
+          </select>
+          <button type="submit" class="btn">Invite</button>
+        </form>
+        <h3>Shared Lists</h3>
+        <p>Tasks: Buy groceries (Family)</p>
+        <p>Grocery: Rice, Chicken</p>
+      </div>
+      <a href="pricing.html" class="btn pro-btn">Upgrade to Pro for Business Tools</a>
+    </section>
+
+    <!-- Kids Mode -->
+    <section class="section" id="kids" style="display: none;">
+      <h2>Kids Mode</h2>
+      <p class="subtitle">Simple tasks with fun stickers!</p>
+      <div class="card">
+        <h3>Your Tasks</h3>
+        <ul class="kids-task-list">
+          <li><input type="checkbox" id="kid-task1"> <label for="kid-task1">Clean room</label> <span class="sticker">🌟</span></li>
+          <li><input type="checkbox" id="kid-task2"> <label for="kid-task2">Do homework</label> <span class="sticker">🏆</span></li>
+        </ul>
+        <p>Earn stickers for completing tasks!</p>
+      </div>
+      <a href="pricing.html" class="btn pro-btn">Upgrade to Pro for Business Tools</a>
+    </section>
+
+    <!-- Group Chat -->
+    <section class="section" id="chat" style="display: none;">
+      <h2>Group Chat</h2>
+      <p class="subtitle">Chat with family members.</p>
+      <div class="card">
+        <h3>Messages</h3>
+        <ul class="chat-messages">
+          <li>Pi User: Don’t forget groceries!</li>
+          <li>Child: Got it!</li>
+        </ul>
+        <form class="chat-form">
+          <input type="text" placeholder="Type a message" aria-label="Message" required>
+          <button type="submit" class="btn">Send</button>
+        </form>
+        <h3>Privacy Controls</h3>
+        <div class="privacy-controls">
+          <label><input type="checkbox" checked> Share chat with family</label>
+        </div>
+      </div>
+      <a href="pricing.html" class="btn pro-btn">Upgrade to Pro for Business Tools</a>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-links">
+        <h3 id="footer-plans" aria-expanded="true" aria-controls="footer-plans-links"><i class="fas fa-star"></i> Our Plans</h3>
+        <ul id="footer-plans-links" class="active">
+          <li><a href="pricing.html">Get Started for Free</a></li>
+          <li><a href="pricing.html">Standard Plan</a></li>
+          <li><a href="pricing.html">Premium Plan</a></li>
+          <li><a href="pricing.html">Pro Plan</a></li>
+          <li><a href="family-plan.html">Family Plan</a></li>
+          <li><a href="business-plan.html">Business Plan</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3 id="footer-features" aria-expanded="true" aria-controls="footer-features-links"><i class="fas fa-cogs"></i> Features</h3>
+        <ul id="footer-features-links" class="active">
+          <li><a href="features.html">Smart To-Do & Reminders</a></li>
+          <li><a href="features.html">Budget & Finance Management</a></li>
+          <li><a href="features.html">Meal Planning & Recipes</a></li>
+          <li><a href="features.html">Mental Wellness Support</a></li>
+          <li><a href="features.html">Local Services in Pi</a></li>
+          <li><a href="features.html">Smart Analytics Dashboard</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3 id="footer-pi" aria-expanded="true" aria-controls="footer-pi-links"><i class="fas fa-coins"></i> Pi Network</h3>
+        <ul id="footer-pi-links" class="active">
+          <li><a href="pi-wallet.html">Pi Wallet</a></li>
+          <li><a href="pi-learn.html">Learn About Pi</a></li>
+          <li><a href="pi-ecosystem.html">Pi Ecosystem</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3 id="footer-about" aria-expanded="true" aria-controls="footer-about-links"><i class="fas fa-building"></i> About Us</h3>
+        <ul id="footer-about-links" class="active">
+          <li><a href="about.html">About SmartSolve</a></li>
+          <li><a href="team.html">Our Team</a></li>
+          <li><a href="press.html">Press</a></li>
+          <li><a href="careers.html">Careers</a></li>
+          <li><a href="sitemap.html">Sitemap</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3 id="footer-support" aria-expanded="true" aria-controls="footer-support-links"><i class="fas fa-question-circle"></i> Support</h3>
+        <ul id="footer-support-links" class="active">
+          <li><a href="help.html">Help Center</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="resources.html">Wellness Resources</a></li>
+          <li><a href="accessibility.html">Accessibility Statement</a></li>
+          <li><a href="security.html">Security</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="copyright-year"></span> SmartSolve. All rights reserved.</p>
+      <div class="social-links">
+        <a href="https://instagram.com" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://twitter.com" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://facebook.com" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+  <script>
+    // Footer Collapsible Sections
+    document.querySelectorAll('.footer-links h3').forEach(header => {
+      header.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          const ul = header.nextElementSibling;
+          const isActive = ul.classList.contains('active');
+          ul.classList.toggle('active');
+          header.classList.toggle('active');
+          header.setAttribute('aria-expanded', !isActive);
+        }
+      });
+    });
+
+    // Dynamic Copyright Year
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
+    // Hamburger Menu Toggle
+    document.querySelector('.hamburger').addEventListener('click', () => {
+      document.querySelector('.sidebar').classList.toggle('active');
+    });
+
+    // Sidebar Navigation
+    document.querySelectorAll('.sidebar a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        if (link.classList.contains('locked')) {
+          e.preventDefault();
+          alert('Upgrade to Pro for business tools.');
+          window.location.href = 'pricing.html';
+        } else if (link.classList.contains('child-only') && !document.querySelector('.family-switcher').value.includes('child')) {
+          e.preventDefault();
+          alert('Switch to a child account to access Kids Mode.');
+        } else {
+          e.preventDefault();
+          document.querySelectorAll('.section').forEach(section => {
+            section.style.display = 'none';
+          });
+          document.querySelector(link.getAttribute('href')).style.display = 'block';
+          if (window.innerWidth <= 768) {
+            document.querySelector('.sidebar').classList.remove('active');
+          }
+        }
+      });
+    });
+
+    // Family Member Switcher
+    document.querySelector('.family-switcher').addEventListener('change', (e) => {
+      const role = e.target.value;
+      if (role === 'child') {
+        document.querySelector('.sidebar a[href="#kids"]').style.display = 'block';
+      } else {
+        document.querySelector('.sidebar a[href="#kids"]').style.display = 'none';
+      }
+      loadDashboard();
+      loadTasks();
+    });
+
+    // Task Form Submission
+    document.querySelector('.task-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const text = document.querySelector('.task-form input').value;
+      const priority = document.querySelector('.task-form select[aria-label="Priority"]').value;
+      const dueDate = document.querySelector('.task-form input[type="date"]').value;
+      const shareWith = document.querySelector('.task-form select[aria-label="Share with"]').value;
+      if (!text) return;
+      try {
+        await fetch('/api/tasks', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer pi_access_token'
+          },
+          body: JSON.stringify({ text, priority, dueDate, shareWith })
+        });
+        document.querySelector('.task-form').reset();
+        loadTasks();
+      } catch (error) {
+        alert('Error adding task');
+      }
+    });
+
+    // Load Tasks
+    async function loadTasks() {
+      const role = document.querySelector('.family-switcher').value;
+      const endpoint = role === 'child' ? '/api/tasks/kids' : '/api/tasks';
+      const res = await fetch(endpoint, {
+        headers: { 'Authorization': 'Bearer pi_access_token' }
+      });
+      const tasks = await res.json();
+      const taskList = role === 'child' ? '.kids-task-list' : '.task-list';
+      document.querySelector(taskList).innerHTML = tasks.map(task => `
+        <li>
+          <input type="checkbox" id="task-${task._id}" ${task.completed ? 'checked' : ''}>
+          <label for="task-${task._id}">${task.text}${role === 'child' ? '' : ` (${task.priority}, ${task.shareWith})`}</label>
+          ${role === 'child' ? `<span class="sticker">${task.sticker || '🌟'}</span>` : `<button onclick="deleteTask('${task._id}')"><i class="fas fa-trash"></i></button>`}
+        </li>
+      `).join('');
+    }
+
+    // Delete Task
+    async function deleteTask(id) {
+      await fetch(`/api/tasks/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': 'Bearer pi_access_token' }
+      });
+      loadTasks();
+    }
+
+    // Expense Form Submission
+    document.querySelector('.expense-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const description = document.querySelector('.expense-form input[placeholder="Description"]').value;
+      const amount = document.querySelector('.expense-form input[placeholder="Amount"]').value;
+      const category = document.querySelector('.expense-form select').value;
+      if (!description || !amount) return;
+      await fetch('/api/expenses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer pi_access_token'
+        },
+        body: JSON.stringify({ description, amount, category })
+      });
+      document.querySelector('.expense-form').reset();
+      loadExpenses();
+    });
+
+    // Load Expenses and Chart
+    async function loadExpenses() {
+      const res = await fetch('/api/expenses', {
+        headers: { 'Authorization': 'Bearer pi_access_token' }
+      });
+      const expenses = await res.json();
+      const categories = {};
+      expenses.forEach(exp => {
+        categories[exp.category] = (categories[exp.category] || 0) + exp.amount;
+      });
+      new Chart(document.getElementById('budgetChart'), {
+        type: 'pie',
+        data: {
+          labels: Object.keys(categories),
+          datasets: [{ data: Object.values(categories), backgroundColor: ['#A3CFFA', '#A8D5BA', '#FFD1DC'] }]
+        }
+      });
+    }
+
+    // Calendar
+    async function loadCalendar() {
+      const res = await fetch('/api/events', {
+        headers: { 'Authorization': 'Bearer pi_access_token' }
+      });
+      const events = await res.json();
+      const calendarEl = document.getElementById('calendar');
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek'
+        },
+        events: events.map(event => ({
+          title: event.title,
+          start: event.start,
+          end: event.end,
+          color: event.shareWith === 'family' ? '#A8D5BA' : '#A3CFFA'
+        }))
+      });
+      calendar.render();
+    }
+
+    // Meal Planner
+    async function loadMealPlan() {
+      const res = await fetch('/api/meals/plan', {
+        headers: { 'Authorization': 'Bearer pi_access_token' }
+      });
+      const plans = await res.json();
+      document.querySelector('.meal-planner').innerHTML = plans.map(plan => `
+        <div class="meal-card">
+          <h3>${plan.day}: ${plan.meal.name}</h3>
+          <p>${plan.meal.description}</p>
+          <button class="btn">View Recipe</button>
+        </div>
+      `).join('');
+    }
+
+    // Grocery List
+    async function loadGroceryList() {
+      const res = await fetch('/api/meals/grocery', {
+        headers: { 'Authorization': 'Bearer pi_access_token' }
+      });
+      const items = await res.json();
+      document.querySelector('.grocery-list').innerHTML = items.map(item => `
+        <div class="grocery-item">${item.item}</div>
+      `).join('');
+    }
+
+    // Mood Assistant
+    document.querySelectorAll('.mood-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const mood = btn.dataset.mood;
+        const share = document.querySelector('.privacy-controls input').checked;
+        await fetch('/api/mood', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer pi_access_token'
+          },
+          body: JSON.stringify({ mood, shareWith: share ? 'family' : 'self' })
+        });
+        document.getElementById('mood-feedback').textContent = 
+          mood === 'happy' ? 'Keep shining!' :
+          mood === 'neutral' ? 'Steady vibes!' : 
+          'It’s okay to feel down.';
+      });
+    });
+
+    // Service Request Submission
+    document.querySelector('.service-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = document.querySelector('.service-form input').value;
+      const description = document.querySelector('.service-form textarea').value;
+      if (!title || !description) return;
+      await fetch('/api/services/requests', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer pi_access_token'
+        },
+        body: JSON.stringify({ title, description })
+      });
+      document.querySelector('.service-form').reset();
+      alert('Service request posted (Placeholder)');
+    });
+
+    // Family Invite
+    document.querySelector('.invite-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const piUserId = document.querySelector('.invite-form input').value;
+      const role = document.querySelector('.invite-form select').value;
+      if (!piUserId) return;
+      await fetch('/api/family/invite', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer pi_access_token'
+        },
+        body: JSON.stringify({ piUserId, role })
+      });
+      document.querySelector('.invite-form').reset();
+      alert('Invitation sent (Placeholder)');
+    });
+
+    // Group Chat
+    document.querySelector('.chat-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const message = document.querySelector('.chat-form input').value;
+      if (!message) return;
+      await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer pi_access_token'
+        },
+        body: JSON.stringify({ message })
+      });
+      document.querySelector('.chat-form input').value = '';
+      loadChat();
+    });
+
+    async function loadChat() {
+      const res = await fetch('/api/chat', {
+        headers: { 'Authorization': 'Bearer pi_access_token' }
+      });
+      const messages = await res.json();
+      document.querySelector('.chat-messages').innerHTML = messages.map(msg => `
+        <li>${msg.user}: ${msg.message}</li>
+      `).join('');
+    }
+
+    // Load Dashboard
+    async function loadDashboard() {
+      const res = await fetch('/api/dashboard', {
+        headers: { 'Authorization': 'Bearer pi_access_token' }
+      });
+      const data = await res.json();
+      document.querySelector('.card p').textContent = `Personal tasks: ${data.personalTasks} | Family tasks: ${data.familyTasks} | Budget: $${data.budget} | Mood: ${data.mood}`;
+    }
+
+    // Privacy Controls
+    document.querySelectorAll('.privacy-controls input').forEach(checkbox => {
+      checkbox.addEventListener('change', async () => {
+        const section = checkbox.closest('.section').id;
+        const share = checkbox.checked;
+        await fetch(`/api/privacy/${section}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer pi_access_token'
+          },
+          body: JSON.stringify({ shareWith: share ? 'family' : 'self' })
+        });
+      });
+    });
+
+    // Initial Loads
+    loadDashboard();
+    loadTasks();
+    loadExpenses();
+    loadCalendar();
+    loadMealPlan();
+    loadGroceryList();
+    loadChat();
+    document.querySelector('#dashboard').style.display = 'block';
+  </script>
+</body>
+</html>
