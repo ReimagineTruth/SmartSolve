@@ -4,13 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pricing | SmartSolve</title>
-  <meta name="description" content="Explore SmartSolve's pricing plans. Start free or upgrade for advanced features starting at 3 Pi/month.">
-  <meta name="keywords" content="SmartSolve, pricing, plans, Pi network">
+  <meta name="description" content="Discover SmartSolve’s pricing plans, including the exclusive Lifetime Plan with limited accounts available!">
+  <meta name="keywords" content="SmartSolve, pricing, Lifetime Plan, Pi Network, productivity platform">
   <meta name="author" content="SmartSolve Team">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
   <style>
-    /* Same CSS as index.html */
     :root {
       --primary: #A3CFFA;
       --secondary: #A8D5BA;
@@ -23,6 +22,7 @@
       --footer-bg: #EDEFF2;
       --dark-bg: #2A3B5A;
       --dark-text: #EDEFF2;
+      --highlight-bg: #FFD700; /* Gold for Lifetime Plan badge */
     }
     * {
       margin: 0;
@@ -32,7 +32,7 @@
     body {
       font-family: 'Inter', sans-serif;
       background-color: var(--background);
-      color: var(--text);
+      color: var(--text);
       line-height: 1.6;
       overflow-x: hidden;
     }
@@ -144,115 +144,158 @@
       color: var(--text);
       opacity: 0.8;
     }
+    .pricing-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; /* Reduced gap for better spacing */
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      text-align: left;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card.lifetime {
+      background: var(--gradient);
+      color: var(--text);
+    }
+    .card.lifetime h3,
+    .card.lifetime p,
+    .card.lifetime ul li {
+      color: var(--text);
+      opacity: 1;
+    }
+    .card .badge {
+      position: absolute;
+      top: -15px;
+      right: 15px;
+      background: var(--highlight-bg);
+      color: var(--text);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      max-width: 120px;
+      text-align: center;
+    }
+    .card h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .card .price {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    .card.lifetime .price {
+      color: var(--text);
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.8;
+      margin-bottom: 1rem;
+    }
+    .card ul {
+      list-style: none;
+      margin: 1rem 0;
+    }
+    .card ul li {
+      font-size: 0.9rem;
+      color: var(--text);
+      margin: 0.5rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .card ul li i {
+      color: var(--primary);
+      font-size: 0.9rem;
+      margin-top: 2px;
+    }
+    .card.lifetime ul li i {
+      color: var(--text);
+    }
+    .card a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .card a:hover {
+      color: var(--secondary);
+    }
     .btn {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
       padding: 0.8rem 2rem;
       border-radius: 20px;
       text-decoration: none;
       font-weight: 500;
       font-size: 0.95rem;
-      transition: transform 0.3s ease, background 0.3s ease;
-      display: inline-block;
-      margin: 0.5rem;
-      background: var(--primary);
-      color: white;
+      transition: background 0.3s ease, transform 0.3s ease;
+      margin-top: 1rem;
+      text-align: center;
+      width: 100%;
+      border: none;
+      cursor: pointer;
+    }
+    .btn.lifetime {
+      background: var(--highlight-bg);
+      color: var(--text);
     }
     .btn:hover {
       background: var(--secondary);
       transform: scale(1.05);
     }
-    .btn.secondary {
-      background: var(--secondary);
+    .btn.lifetime:hover {
+      background: #FFC107;
     }
-    .btn.secondary:hover {
-      background: var(--primary);
+    .btn.disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
     }
-    /* Pricing Table */
-    .pricing-table {
-      max-width: 1200px;
-      margin: 0 auto;
-      overflow-x: auto;
-    }
-    .pricing-table table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--card-bg);
-      box-shadow: var(--shadow);
-      border-radius: 10px;
-    }
-    .pricing-table th, .pricing-table td {
-      padding: 1rem;
-      text-align: center;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    .countdown {
       font-size: 0.9rem;
-    }
-    .pricing-table th {
-      background: var(--primary);
-      color: white;
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.1rem;
-    }
-    .pricing-table td {
       color: var(--text);
+      margin-top: 1rem;
+      font-weight: 500;
+      text-align: center;
     }
-    .pricing-table .popular {
-      background: var(--secondary);
-      color: white;
-    }
-    .pricing-table .check {
-      color: var(--primary);
-      font-size: 1.2rem;
-    }
-    .pricing-table .cross {
-      color: var(--text);
-      opacity: 0.5;
-      font-size: 1.2rem;
-    }
-    /* FAQ Section */
-    .faq-container {
+    .terms-card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
       max-width: 800px;
-      margin: 0 auto;
-      text-align: left;
+      margin: 2rem auto;
+      text-align: center;
     }
-    .faq-item {
-      margin: 1rem 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    }
-    .faq-question {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.2rem;
-      color: var(--text);
-      cursor: pointer;
-      padding: 1rem 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .faq-question::after {
-      content: '\f078';
-      font-family: 'Font Awesome 6 Free';
-      font-weight: 900;
-      color: var(--primary);
-    }
-    .faq-question.active::after {
-      content: '\f077';
-    }
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease-out;
+    .terms-card p {
       font-size: 0.9rem;
       color: var(--text);
       opacity: 0.8;
     }
-    .faq-answer.active {
-      max-height: 200px;
-      padding: 1rem 0;
+    .terms-card a {
+      color: var(--primary);
+      text-decoration: none;
     }
-    body.dark-mode .faq-question,
-    body.dark-mode .faq-answer {
-      color: var(--dark-text);
+    .terms-card a:hover {
+      color: var(--secondary);
     }
-    /* Footer */
     footer {
       background: var(--footer-bg);
       padding: 2rem 1rem;
@@ -327,6 +370,9 @@
       .section p.subtitle {
         font-size: 1rem;
       }
+      .pricing-container {
+        grid-template-columns: 1fr;
+      }
       .footer-container {
         grid-template-columns: 1fr;
       }
@@ -350,9 +396,6 @@
       .app-bar nav {
         display: none;
       }
-      .faq-answer.active {
-нивер: $max-height: 300px;
-      }
     }
     @media (max-width: 480px) {
       .app-bar {
@@ -363,6 +406,16 @@
       }
       .section h2 {
         font-size: 1.8rem;
+      }
+      .card {
+        padding: 1.5rem;
+      }
+      .card .price {
+        font-size: 1.8rem;
+      }
+      .card .badge {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.8rem;
       }
     }
   </style>
@@ -380,167 +433,91 @@
       <a href="index.html">Home</a>
       <a href="features.html">Features</a>
       <a href="pricing.html">Plans</a>
-      <a href="signin.html" class="pi-signin">Sign in with Pi</a>
+      <a href="signin.html" class="pi-signin" id="pi-signin">Sign in with Pi</a>
     </nav>
   </header>
 
   <!-- Pricing Section -->
   <section class="section" id="pricing">
     <div id="main-content">
-      <h2>Our Pricing Plans</h2>
-      <p class="subtitle">Choose the plan that fits your needs. Start free or upgrade for advanced features starting at 3 Pi/month.</p>
-      <div class="pricing-table">
-        <table>
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th>Free</th>
-              <th>Standard</th>
-              <th>Premium</th>
-              <th>Pro</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Price</td>
-              <td>0 Pi/month</td>
-              <td class="popular">3 Pi/month</td>
-              <td>6 Pi/month</td>
-              <td>9 Pi/month</td>
-            </tr>
-            <tr>
-              <td>To-Do & Planning</td>
-              <td>Limited</td>
-              <td class="check"><i class="fas fa-check"></i> Unlimited</td>
-              <td class="check"><i class="fas fa-check"></i> Unlimited</td>
-              <td class="check"><i class="fas fa-check"></i> Unlimited</td>
-            </tr>
-            <tr>
-              <td>Budget Tracker</td>
-              <td>Basic</td>
-              <td class="check"><i class="fas fa-check"></i> Advanced</td>
-              <td class="check"><i class="fas fa-check"></i> Advanced</td>
-              <td class="check"><i class="fas fa-check"></i> Advanced</td>
-            </tr>
-            <tr>
-              <td>Meal Suggestions</td>
-              <td>2/day</td>
-              <td class="check"><i class="fas fa-check"></i> Full Planner</td>
-              <td class="check"><i class="fas fa-check"></i> Full Planner</td>
-              <td class="check"><i class="fas fa-check"></i> Full Planner</td>
-            </tr>
-            <tr>
-              <td>Mental Wellness</td>
-              <td>Daily Quotes</td>
-              <td class="check"><i class="fas fa-check"></i> AI Mood Assistant</td>
-              <td class="check"><i class="fas fa-check"></i> AI Mood Assistant</td>
-              <td class="check"><i class="fas fa-check"></i> AI Mood Assistant</td>
-            </tr>
-            <tr>
-              <td>Local Services</td>
-              <td>View-only</td>
-              <td class="check"><i class="fas fa-check"></i> Post Requests</td>
-              <td class="check"><i class="fas fa-check"></i> Post Requests</td>
-              <td class="check"><i class="fas fa-check"></i> Post Requests</td>
-            </tr>
-            <tr>
-              <td>Ads</td>
-              <td>Enabled</td>
-              <td class="check"><i class="fas fa-check"></i> Ad-Free</td>
-              <td class="check"><i class="fas fa-check"></i> Ad-Free</td>
-              <td class="check"><i class="fas fa-check"></i> Ad-Free</td>
-            </tr>
-            <tr>
-              <td>Family Sharing</td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="check"><i class="fas fa-check"></i></td>
-              <td class="check"><i class="fas fa-check"></i></td>
-            </tr>
-            <tr>
-              <td>Grocery Planner</td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="check"><i class="fas fa-check"></i></td>
-              <td class="check"><i class="fas fa-check"></i></td>
-            </tr>
-            <tr>
-              <td>Kids Mode</td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="check"><i class="fas fa-check"></i></td>
-              <td class="check"><i class="fas fa-check"></i></td>
-            </tr>
-            <tr>
-              <td>Group Chat</td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="check"><i class="fas fa-check"></i></td>
-              <td class="check"><i class="fas fa-check"></i></td>
-            </tr>
-            <tr>
-              <td>Team Collaboration</td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="check"><i class="fas fa-check"></i></td>
-            </tr>
-            <tr>
-              <td>Business Tools</td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="check"><i class="fas fa-check"></i></td>
-            </tr>
-            <tr>
-              <td>Sync with TruthWeb & Cloudy</td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="check"><i class="fas fa-check"></i></td W>
-            </tr>
-            <tr>
-              <td>Virtual Assistant Booking</td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="cross"><i class="fas fa-times"></i></td>
-              <td class="check"><i class="fas fa-check"></i></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td><a href="signin.html" class="btn">Get Started</a></td>
-              <td><a href="signin.html" class="btn">Get Started</a></td>
-              <td><a href="signin.html" class="btn">Get Started</a></td>
-              <td><a href="signin.html" class="btn">Get Started</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pricing FAQ Section -->
-  <section class="section" id="pricing-faq">
-    <h2>Pricing FAQs</h2>
-    <p class="subtitle">Answers to common questions about our plans.</p>
-    <div class="faq-container">
-      <div class="faq-item">
-        <h3 class="faq-question">Can I switch plans later?</h3>
-        <div class="faq-answer">
-          <p>Yes, you can upgrade or downgrade your plan anytime from your account settings. Changes take effect at the next billing cycle.</p>
+      <h2>Choose Your SmartSolve Plan</h2>
+      <p class="subtitle">Boost your productivity with our flexible plans, including the exclusive Lifetime Plan – only a limited number of accounts available! Pay securely with Pi Wallet.</p>
+      <div class="pricing-container">
+        <!-- Free Plan -->
+        <div class="card">
+          <h3>Free Plan</h3>
+          <div class="price">0 Pi</div>
+          <p>Start with essential productivity tools for free.</p>
+          <ul>
+            <li><i class="fas fa-check"></i>Limited To-Do & Calendar</li>
+            <li><i class="fas fa-check"></i>Mood Tracking</li>
+            <li><i class="fas fa-check"></i>Basic Support</li>
+          </ul>
+          <button class="btn" id="free-plan-btn" aria-label="Select Free Plan">Get Started</button>
+        </div>
+        <!-- Standard Plan -->
+        <div class="card">
+          <h3>Standard Plan</h3>
+          <div class="price">3 Pi/month</div>
+          <p>Core tools for personal organization.</p>
+          <ul>
+            <li><i class="fas fa-check"></i>Unlimited To-Do & Full Calendar</li>
+            <li><i class="fas fa-check"></i>Budget Tracker</li>
+            <li><i class="fas fa-check"></i>Meal Planner</li>
+            <li><i class="fas fa-check"></i>Mood Assistant</li>
+            <li><i class="fas fa-check"></i>Local Services</li>
+          </ul>
+          <button class="btn" id="standard-plan-btn" aria-label="Select Standard Plan">Choose Standard</button>
+        </div>
+        <!-- Premium Plan -->
+        <div class="card">
+          <h3>Premium Plan</h3>
+          <div class="price">6 Pi/month</div>
+          <p>Ideal for families and small groups.</p>
+          <ul>
+            <li><i class="fas fa-check"></i>All Standard Features</li>
+            <li><i class="fas fa-check"></i>Family Dashboard</li>
+            <li><i class="fas fa-check"></i>Kids Mode</li>
+            <li><i class="fas fa-check"></i>Group Chat</li>
+            <li><i class="fas fa-check"></i>Privacy Controls</li>
+          </ul>
+          <button class="btn" id="premium-plan-btn" aria-label="Select Premium Plan">Choose Premium</button>
+        </div>
+        <!-- Pro Plan -->
+        <div class="card">
+          <h3>Pro Plan</h3>
+          <div class="price">9 Pi/month</div>
+          <p>Advanced features for businesses and power users.</p>
+          <ul>
+            <li><i class="fas fa-check"></i>All Premium Features</li>
+            <li><i class="fas fa-check"></i>Team Collaboration</li>
+            <li><i class="fas fa-check"></i>Business Tools (Pi Income Tracker, Marketing Planner)</li>
+            <li><i class="fas fa-check"></i>TruthWeb/Cloudy Integrations</li>
+            <li><i class="fas fa-check"></i>Virtual Assistant</li>
+          </ul>
+          <button class="btn" id="pro-plan-btn" aria-label="Select Pro Plan">Choose Pro</button>
+        </div>
+        <!-- Lifetime Plan -->
+        <div class="card lifetime">
+          <div class="badge">Limited Accounts!</div>
+          <h3>🔓 Lifetime Plan</h3>
+          <div class="price">💰 99 Pi One-Time</div>
+          <p>🎉 Pay once, unlock everything forever! Get all Pro features plus exclusive perks. Only a few accounts left – grab yours now!</p>
+          <ul>
+            <li><i class="fas fa-check"></i>✅ All Pro Plan Features</li>
+            <li><i class="fas fa-check"></i>✅ Lifetime Access – No Monthly Fees</li>
+            <li><i class="fas fa-check"></i>✅ Priority Support</li>
+            <li><i class="fas fa-check"></i>✅ Early Access to New Features</li>
+            <li><i class="fas fa-check"></i>✅ Exclusive Lifetime Badge</li>
+            <li><i class="fas fa-check"></i>✅ Beta Tester for Future Apps</li>
+            <li><i class="fas fa-check"></i>✅ Free Access to Future SmartSolve Products</li>
+          </ul>
+          <button class="btn lifetime" id="lifetime-plan-btn" aria-label="Select Lifetime Plan">Get Lifetime Now</button>
+          <div class="countdown">⏰ Only a few accounts left!</div>
         </div>
       </div>
-      <div class="faq-item">
-        <h3 class="faq-question">Is there a free trial for paid plans?</h3>
-        <div class="faq-answer">
-          <p>The free plan is a great way to try SmartSolve. Paid plans don’t have a separate trial, but you can cancel within 7 days for a full refund.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <h3 class="faq-question">How do I pay with Pi?</h3>
-        <div class="faq-answer">
-          <p>Payments are processed securely through your Pi Wallet. After selecting a plan, you’ll be prompted to authorize the transaction via the Pi SDK.</p>
-        </div>
+      <div class="terms-card">
+        <p>By subscribing, you agree to our <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>.</p>
       </div>
     </div>
   </section>
@@ -555,6 +532,7 @@
           <li><a href="pricing.html">Standard Plan</a></li>
           <li><a href="pricing.html">Premium Plan</a></li>
           <li><a href="pricing.html">Pro Plan</a></li>
+          <li><a href="pricing.html">Lifetime Plan</a></li>
           <li><a href="family-plan.html">Family Plan</a></li>
           <li><a href="business-plan.html">Business Plan</a></li>
         </ul>
@@ -597,6 +575,7 @@
           <li><a href="accessibility.html">Accessibility Statement</a></li>
           <li><a href="security.html">Security</a></li>
           <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
         </ul>
       </div>
     </div>
@@ -625,27 +604,63 @@
       });
     });
 
-    // FAQ Collapsible
-    document.querySelectorAll('.faq-question').forEach(question => {
-      question.addEventListener('click', () => {
-        const answer = question.nextElementSibling;
-        const isActive = answer.classList.contains('active');
-        answer.classList.toggle('active');
-        question.classList.toggle('active');
-      });
-    });
-
     // Dynamic Copyright Year
     document.getElementById('copyright-year').textContent = new Date().getFullYear();
 
-    // Placeholder for Pi SDK Integration (Sign-in)
-    document.querySelectorAll('a[href="signin.html"]').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        alert('Redirecting to Sign in with Pi Wallet (Pi SDK integration placeholder)');
-        // Pi SDK: Pi.authenticate() would go here
-        // Refer to https://x.ai/api for implementation details
-      });
+    // Plan Selection Handler
+    const handlePlanSelection = (plan, amount, isOneTime = false) => {
+      console.log(`Selected ${plan} plan${isOneTime ? ' (one-time)' : ''}, amount: ${amount} Pi`);
+      // Placeholder for Pi SDK payment
+      // Example:
+      /*
+      if (typeof Pi !== 'undefined') {
+        Pi.createPayment({
+          amount: amount,
+          memo: `SmartSolve ${plan} Plan`,
+          metadata: { plan: plan.toLowerCase(), isOneTime }
+        }).then(() => {
+          window.location.href = 'payment-success.html';
+        }).catch(error => {
+          console.error('Payment failed:', error);
+          alert('Payment failed. Please try again.');
+        });
+      } else {
+        console.warn('Pi SDK not loaded. Redirecting to sign-in.');
+        window.location.href = 'signin.html';
+      }
+      */
+      window.location.href = 'signin.html'; // Fallback redirect
+    };
+
+    // Attach Event Listeners to Buttons
+    const buttons = [
+      { id: 'free-plan-btn', plan: 'Free', amount: 0 },
+      { id: 'standard-plan-btn', plan: 'Standard', amount: 3 },
+      { id: 'premium-plan-btn', plan: 'Premium', amount: 6 },
+      { id: 'pro-plan-btn', plan: 'Pro', amount: 9 },
+      { id: 'lifetime-plan-btn', plan: 'Lifetime', amount: 99, isOneTime: true }
+    ];
+
+    buttons.forEach(({ id, plan, amount, isOneTime }) => {
+      const button = document.getElementById(id);
+      if (button) {
+        button.addEventListener('click', () => handlePlanSelection(plan, amount, isOneTime));
+      } else {
+        console.warn(`Button with ID ${id} not found.`);
+      }
     });
+
+    // Sign-in Button Handler
+    const signInButton = document.getElementById('pi-signin');
+    if (signInButton) {
+      signInButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('Initiating Pi Wallet sign-in');
+        // Placeholder for Pi SDK authentication
+        // Pi.authenticate().then(() => { ... });
+        window.location.href = 'signin.html';
+      });
+    }
   </script>
 </body>
 </html>
