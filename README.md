@@ -1,6 +1,8 @@
 # SmartSolve Landing Page
 
-[SmartSolve Logo]
+![Build Status](https://img.shields.io/badge/Build-Active-brightgreen)
+![License](https://img.shields.io/badge/License-MIT-blue)
+![Pi Network](https://img.shields.io/badge/Powered%20by-Pi%20Network-ffb800)
 
 ## Simplify your life with SmartSolve.
 
