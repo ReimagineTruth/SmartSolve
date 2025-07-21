@@ -492,6 +492,96 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
+      {/* SaaS Features */}
+      {/* AI Mood Assistant */}
+      {planFeatures.aiMood ? (
+        <div className="bg-white rounded-2xl p-6 shadow-lg border border-blue-200">
+          <h2 className="text-xl font-semibold text-blue-700 mb-4">AI Mood Assistant</h2>
+          <p className="text-gray-700 mb-2">Get personalized mood insights and suggestions powered by AI.</p>
+          <button className="btn btn-primary">Analyze My Mood</button>
+        </div>
+      ) : (
+        <div className="bg-white rounded-2xl p-6 shadow-lg border border-blue-100 flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-semibold text-blue-700 mb-2">AI Mood Assistant</h2>
+            <p className="text-gray-700">Upgrade to Premium to unlock AI-powered mood insights.</p>
+          </div>
+          <button className="btn btn-secondary" onClick={() => upgradeSubscription('premium', 'monthly')}>Upgrade</button>
+        </div>
+      )}
+      {/* Family Sharing / Kids Mode */}
+      {planFeatures.family && (
+        <div className="bg-white rounded-2xl p-6 shadow-lg border border-green-200">
+          <h2 className="text-xl font-semibold text-green-700 mb-4">Family Sharing & Kids Mode</h2>
+          <p className="text-gray-700 mb-2">Share tasks, meals, and wellness with your family. Enable kids mode for a safe experience.</p>
+          <button className="btn btn-primary">Manage Family</button>
+        </div>
+      )}
+      {/* Group Chat / Team Collaboration */}
+      {planFeatures.family || planFeatures.business ? (
+        <div className="bg-white rounded-2xl p-6 shadow-lg border border-purple-200">
+          <h2 className="text-xl font-semibold text-purple-700 mb-4">Group Chat & Team Collaboration</h2>
+          <p className="text-gray-700 mb-2">Chat with your family or team, share files, and collaborate in real time.</p>
+          <button className="btn btn-primary">Open Group Chat</button>
+        </div>
+      ) : null}
+      {/* Business Tools / Analytics */}
+      {planFeatures.business && (
+        <div className="bg-white rounded-2xl p-6 shadow-lg border border-yellow-200">
+          <h2 className="text-xl font-semibold text-yellow-700 mb-4">Business Tools & Analytics</h2>
+          <p className="text-gray-700 mb-2">Track income, expenses, and team performance. Access advanced analytics and reports.</p>
+          <button className="btn btn-primary">View Analytics</button>
+        </div>
+      )}
+      {/* Integrations */}
+      {planFeatures.business && (
+        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-300">
+          <h2 className="text-xl font-semibold text-gray-700 mb-4">Integrations</h2>
+          <p className="text-gray-700 mb-2">Connect with TruthWeb, Cloudy, and more for seamless workflow.</p>
+          <button className="btn btn-primary">Manage Integrations</button>
+        </div>
+      )}
+      {/* Notifications */}
+      <div className="bg-white rounded-2xl p-6 shadow-lg border border-indigo-200">
+        <h2 className="text-xl font-semibold text-indigo-700 mb-4">Notifications</h2>
+        <p className="text-gray-700 mb-2">Stay up to date with reminders and important updates.</p>
+        <button className="btn btn-primary">View Notifications</button>
+      </div>
+      {/* Profile Quick Access */}
+      <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">Profile</h2>
+          <p className="text-gray-700">View and edit your account details.</p>
+        </div>
+        <a href="/profile" className="btn btn-secondary">Go to Profile</a>
+      </div>
+      {/* Recent Activity Feed */}
+      <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Recent Activity</h2>
+        <ul className="text-gray-700 space-y-2">
+          <li>Logged in</li>
+          <li>Viewed dashboard</li>
+          <li>Checked tasks</li>
+          <li>Updated profile</li>
+        </ul>
+      </div>
+      {/* Settings */}
+      <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">Settings</h2>
+          <p className="text-gray-700">Customize your preferences and notifications.</p>
+        </div>
+        <a href="/profile" className="btn btn-secondary">Settings</a>
+      </div>
+      {/* Help Widget */}
+      <div className="bg-white rounded-2xl p-6 shadow-lg border border-blue-100 flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-semibold text-blue-700 mb-2">Need Help?</h2>
+          <p className="text-gray-700">Visit our Help Center or contact support for assistance.</p>
+        </div>
+        <a href="/help" className="btn btn-primary">Help Center</a>
+      </div>
+
       {/* Recent Tasks */}
       <div
         // Removed: initial={{ opacity: 0, y: 20 }}
