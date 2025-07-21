@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Check, Star, Crown, Zap, Users, Building } from 'lucide-react'
 import Footer from '../components/Footer'
 
 const Pricing: React.FC = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly')
+  const navigate = useNavigate();
 
   const plans = [
     {
@@ -185,18 +186,12 @@ const Pricing: React.FC = () => {
                 </ul>
 
                 <div className="mt-auto">
-                  {plan.name === 'Free' ? (
-                    <Link to="/demo/free" className="btn btn-primary w-full">
-                      Get Started Free
-                    </Link>
-                  ) : (
-                    <Link 
-                      to={`/demo/${plan.name.toLowerCase()}`} 
-                      className="btn btn-primary w-full"
-                    >
-                      Choose {plan.name}
-                    </Link>
-                  )}
+                  <button
+                    className="btn btn-primary w-full"
+                    onClick={() => navigate('/dashboard')}
+                  >
+                    {plan.name === 'Free' ? 'Get Started Free' : `Choose ${plan.name}`}
+                  </button>
                 </div>
               </div>
             ))}
@@ -368,9 +363,9 @@ const Pricing: React.FC = () => {
             Join thousands of users who are already organizing their lives with SmartSolve.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/demo/free" className="btn bg-white text-primary hover:bg-gray-100 text-lg px-8 py-4">
+            <button onClick={() => navigate('/dashboard')} className="btn bg-white text-primary hover:bg-gray-100 text-lg px-8 py-4">
               Try Free Plan
-            </Link>
+            </button>
             <Link to="/payment-demo" className="btn bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary text-lg px-8 py-4">
               View Payment Demo
             </Link>

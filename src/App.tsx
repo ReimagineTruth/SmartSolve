@@ -23,6 +23,7 @@ import Help from './pages/Help'
 import CookiePolicy from './pages/CookiePolicy'
 import Security from './pages/Security'
 import Dashboard from './pages/Dashboard'
+import { AuthProvider } from './contexts/AuthContext'
 
 function App() {
   const [showSplash, setShowSplash] = useState(true)
@@ -33,32 +34,34 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
-        {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/demo/free" element={<DemoFreePlan />} />
-          <Route path="/demo/standard" element={<DemoStandardPlan />} />
-          <Route path="/demo/premium" element={<DemoPremiumPlan />} />
-          <Route path="/demo/pro" element={<DemoProPlan />} />
-          <Route path="/payment-demo" element={<PaymentModalDemo />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/team" element={<Team />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/careers" element={<Careers />} />
-          <Route path="/press" element={<Press />} />
-          <Route path="/partners" element={<Partners />} />
-          <Route path="/help" element={<Help />} />
-          <Route path="/cookiepolicy" element={<CookiePolicy />} />
-          <Route path="/security" element={<Security />} />
-        </Routes>
-        <PaymentModal />
-      </div>
+      <AuthProvider>
+        <div className="App">
+          {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/demo/free" element={<DemoFreePlan />} />
+            <Route path="/demo/standard" element={<DemoStandardPlan />} />
+            <Route path="/demo/premium" element={<DemoPremiumPlan />} />
+            <Route path="/demo/pro" element={<DemoProPlan />} />
+            <Route path="/payment-demo" element={<PaymentModalDemo />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/team" element={<Team />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/press" element={<Press />} />
+            <Route path="/partners" element={<Partners />} />
+            <Route path="/help" element={<Help />} />
+            <Route path="/cookiepolicy" element={<CookiePolicy />} />
+            <Route path="/security" element={<Security />} />
+          </Routes>
+          <PaymentModal />
+        </div>
+      </AuthProvider>
     </Router>
   )
 }

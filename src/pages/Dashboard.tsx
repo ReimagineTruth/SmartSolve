@@ -157,9 +157,64 @@ const Dashboard: React.FC = () => {
     }
   }
 
+  // Plan feature matrix
+  const PLAN_FEATURES = {
+    free: {
+      maxTasks: 5,
+      budget: 'basic',
+      maxMeals: 2,
+      aiMood: false,
+      family: false,
+      business: false,
+      ads: true,
+    },
+    standard: {
+      maxTasks: Infinity,
+      budget: 'advanced',
+      maxMeals: Infinity,
+      aiMood: true,
+      family: false,
+      business: false,
+      ads: false,
+    },
+    premium: {
+      maxTasks: Infinity,
+      budget: 'advanced',
+      maxMeals: Infinity,
+      aiMood: true,
+      family: true,
+      business: false,
+      ads: false,
+    },
+    pro: {
+      maxTasks: Infinity,
+      budget: 'advanced',
+      maxMeals: Infinity,
+      aiMood: true,
+      family: true,
+      business: true,
+      ads: false,
+    },
+    lifetime: {
+      maxTasks: Infinity,
+      budget: 'advanced',
+      maxMeals: Infinity,
+      aiMood: true,
+      family: true,
+      business: true,
+      ads: false,
+    },
+  }
+  const planKey = subscription.plan.toLowerCase() as keyof typeof PLAN_FEATURES;
+  const planFeatures = PLAN_FEATURES[planKey] || PLAN_FEATURES.free;
+
+  // In addNewTask, restrict for Free plan
   const addNewTask = async () => {
     if (!newTask.title.trim()) {
-      // Removed: toast.error('Please enter a task title')
+      return
+    }
+    if (planFeatures.maxTasks !== Infinity && stats.recentTasks.length >= planFeatures.maxTasks) {
+      alert('Upgrade your plan to add more tasks!')
       return
     }
 
@@ -239,6 +294,14 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {/* Plan Badge */}
+      <div className="flex justify-end">
+        <span className={`inline-block px-4 py-2 rounded-full text-sm font-semibold mb-2 ${
+          planKey === 'lifetime' ? 'bg-lifetime-bg text-lifetime-text' : 'bg-gradient-to-r from-primary to-secondary text-white'
+        }`}>
+          {subscription.plan.charAt(0).toUpperCase() + subscription.plan.slice(1)} Plan
+        </span>
+      </div>
       {/* Subscription Status Banner */}
       <div className="mb-4">
         <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-primary to-secondary text-white shadow">
@@ -379,13 +442,22 @@ const Dashboard: React.FC = () => {
         <h2 className="text-xl font-semibold text-gray-900 mb-6">Quick Actions</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <button
-            onClick={() => setShowAddTask(true)}
+            onClick={() => {
+              if (planFeatures.maxTasks !== Infinity && stats.recentTasks.length >= planFeatures.maxTasks) {
+                alert('Upgrade your plan to add more tasks!')
+                return
+              }
+              setShowAddTask(true)
+            }}
             className="group flex flex-col items-center p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
           >
             <div className="p-4 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 mb-4 group-hover:scale-110 transition-transform duration-300">
               <Plus className="h-8 w-8 text-white" />
             </div>
             <span className="text-sm font-medium text-gray-900 text-center">Add Task</span>
+            {planFeatures.maxTasks !== Infinity && stats.recentTasks.length >= planFeatures.maxTasks && (
+              <span className="text-xs text-red-500 mt-2">Upgrade for more</span>
+            )}
           </button>
           <a
             href="/budget"
@@ -395,6 +467,7 @@ const Dashboard: React.FC = () => {
               <DollarSign className="h-8 w-8 text-white" />
             </div>
             <span className="text-sm font-medium text-gray-900 text-center">Log Expense</span>
+            {planFeatures.budget === 'basic' && <span className="text-xs text-red-500 mt-2">Upgrade for advanced</span>}
           </a>
           <a
             href="/meals"
@@ -404,6 +477,7 @@ const Dashboard: React.FC = () => {
               <Utensils className="h-8 w-8 text-white" />
             </div>
             <span className="text-sm font-medium text-gray-900 text-center">Plan Meal</span>
+            {planFeatures.maxMeals !== Infinity && <span className="text-xs text-red-500 mt-2">Upgrade for unlimited</span>}
           </a>
           <a
             href="/wellness"
@@ -413,6 +487,7 @@ const Dashboard: React.FC = () => {
               <Heart className="h-8 w-8 text-white" />
             </div>
             <span className="text-sm font-medium text-gray-900 text-center">Track Mood</span>
+            {!planFeatures.aiMood && <span className="text-xs text-red-500 mt-2">Upgrade for AI</span>}
           </a>
         </div>
       </div>
