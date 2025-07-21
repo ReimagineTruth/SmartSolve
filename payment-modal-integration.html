@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Modal Integration | SmartSolve</title>
+  <meta name="description" content="Example of how to integrate SmartSolve payment modal">
+  <meta name="keywords" content="SmartSolve, payment modal, integration, Pi Network">
+  <meta name="author" content="SmartSolve Team">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="payment-modal-styles.css">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #F5F5F5;
+      color: #2A3B5A;
+      line-height: 1.6;
+      margin: 0;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .header h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.5rem;
+      color: #A3CFFA;
+      margin-bottom: 1rem;
+    }
+    .integration-examples {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .example-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .example-card h3 {
+      color: #A3CFFA;
+      margin-bottom: 1rem;
+    }
+    .code-block {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      margin: 1rem 0;
+      overflow-x: auto;
+    }
+    .btn {
+      background: #A3CFFA;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      margin: 0.5rem;
+    }
+    .btn:hover {
+      background: #A8D5BA;
+      transform: translateY(-2px);
+    }
+    .btn-lifetime {
+      background: #FFE5B4;
+      color: #E65100;
+    }
+    .btn-lifetime:hover {
+      background: #FFD700;
+    }
+    .usage-section {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      margin-bottom: 2rem;
+    }
+    .usage-section h2 {
+      color: #A3CFFA;
+      margin-bottom: 1rem;
+    }
+    .step {
+      margin: 1rem 0;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #A3CFFA;
+    }
+    .step h4 {
+      margin-bottom: 0.5rem;
+      color: #2A3B5A;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Payment Modal Integration</h1>
+      <p>Learn how to integrate SmartSolve's payment modal into your pages</p>
+    </div>
+
+    <!-- Usage Instructions -->
+    <div class="usage-section">
+      <h2>📋 Integration Steps</h2>
+      
+      <div class="step">
+        <h4>Step 1: Include Required Files</h4>
+        <div class="code-block">
+&lt;link rel="stylesheet" href="payment-modal-styles.css"&gt;
+&lt;script src="payment-modal-component.js"&gt;&lt;/script&gt;
+        </div>
+      </div>
+
+      <div class="step">
+        <h4>Step 2: Add Payment Buttons</h4>
+        <div class="code-block">
+&lt;button onclick="openPaymentModal('standard')" class="btn"&gt;
+  Subscribe to Standard
+&lt;/button&gt;
+
+&lt;button onclick="openPaymentModal('premium')" class="btn"&gt;
+  Subscribe to Premium
+&lt;/button&gt;
+
+&lt;button onclick="openPaymentModal('pro')" class="btn"&gt;
+  Subscribe to Pro
+&lt;/button&gt;
+
+&lt;button onclick="openPaymentModal('lifetime')" class="btn btn-lifetime"&gt;
+  Get Lifetime Access
+&lt;/button&gt;
+        </div>
+      </div>
+
+      <div class="step">
+        <h4>Step 3: Handle Payment Events (Optional)</h4>
+        <div class="code-block">
+// Set up success callback
+paymentModal.onSuccess((details) => {
+  console.log('Payment successful:', details);
+  // Redirect to dashboard or update UI
+  window.location.href = '/dashboard';
+});
+
+// Set up cancel callback
+paymentModal.onCancel(() => {
+  console.log('Payment cancelled');
+  // Handle cancellation
+});
+        </div>
+      </div>
+    </div>
+
+    <!-- Integration Examples -->
+    <div class="integration-examples">
+      <div class="example-card">
+        <h3><i class="fas fa-rocket"></i> Pricing Page Integration</h3>
+        <p>Add payment buttons to your pricing page for seamless subscription flow.</p>
+        <div class="code-block">
+&lt;div class="pricing-card"&gt;
+  &lt;h3&gt;Standard Plan&lt;/h3&gt;
+  &lt;p&gt;3 Pi/month&lt;/p&gt;
+  &lt;button onclick="openPaymentModal('standard')" class="btn"&gt;
+    Choose Standard
+  &lt;/button&gt;
+&lt;/div&gt;
+        </div>
+        <button onclick="openPaymentModal('standard')" class="btn">
+          <i class="fas fa-star"></i> Try Standard Plan
+        </button>
+      </div>
+
+      <div class="example-card">
+        <h3><i class="fas fa-users"></i> Dashboard Integration</h3>
+        <p>Show upgrade prompts in user dashboard when they reach limits.</p>
+        <div class="code-block">
+&lt;div class="upgrade-prompt"&gt;
+  &lt;p&gt;You've reached your free plan limit&lt;/p&gt;
+  &lt;button onclick="openPaymentModal('premium')" class="btn"&gt;
+    Upgrade to Premium
+  &lt;/button&gt;
+&lt;/div&gt;
+        </div>
+        <button onclick="openPaymentModal('premium')" class="btn">
+          <i class="fas fa-arrow-up"></i> Upgrade to Premium
+        </button>
+      </div>
+
+      <div class="example-card">
+        <h3><i class="fas fa-briefcase"></i> Business Page Integration</h3>
+        <p>Promote Pro plan features for business users.</p>
+        <div class="code-block">
+&lt;div class="business-features"&gt;
+  &lt;h3&gt;Business Tools&lt;/h3&gt;
+  &lt;p&gt;Team collaboration, analytics, integrations&lt;/p&gt;
+  &lt;button onclick="openPaymentModal('pro')" class="btn"&gt;
+    Get Pro Plan
+  &lt;/button&gt;
+&lt;/div&gt;
+        </div>
+        <button onclick="openPaymentModal('pro')" class="btn">
+          <i class="fas fa-chart-line"></i> Get Pro Plan
+        </button>
+      </div>
+
+      <div class="example-card">
+        <h3><i class="fas fa-crown"></i> Lifetime Promotion</h3>
+        <p>Special promotion for lifetime access with limited availability.</p>
+        <div class="code-block">
+&lt;div class="lifetime-promo"&gt;
+  &lt;h3&gt;🔓 Limited Time Offer&lt;/h3&gt;
+  &lt;p&gt;Get lifetime access for 99 Pi&lt;/p&gt;
+  &lt;button onclick="openPaymentModal('lifetime')" class="btn btn-lifetime"&gt;
+    Get Lifetime Access
+  &lt;/button&gt;
+&lt;/div&gt;
+        </div>
+        <button onclick="openPaymentModal('lifetime')" class="btn btn-lifetime">
+          <i class="fas fa-crown"></i> Get Lifetime Access
+        </button>
+      </div>
+    </div>
+
+    <!-- Advanced Usage -->
+    <div class="usage-section">
+      <h2>🔧 Advanced Usage</h2>
+      
+      <div class="step">
+        <h4>Custom Payment Handling</h4>
+        <div class="code-block">
+// Custom success handler
+paymentModal.onSuccess((details) => {
+  // Send to analytics
+  gtag('event', 'purchase', {
+    value: details.amount,
+    currency: 'Pi',
+    plan: details.plan
+  });
+  
+  // Update user status
+  updateUserSubscription(details);
+  
+  // Show success message
+  showSuccessMessage('Welcome to SmartSolve!');
+});
+
+// Custom cancel handler
+paymentModal.onCancel(() => {
+  // Track abandonment
+  gtag('event', 'payment_cancelled');
+  
+  // Show alternative options
+  showAlternativePlans();
+});
+        </div>
+      </div>
+
+      <div class="step">
+        <h4>Dynamic Plan Selection</h4>
+        <div class="code-block">
+// Open modal with specific plan based on user action
+function handleUpgradeClick(planType) {
+  // Track the upgrade attempt
+  analytics.track('upgrade_clicked', { plan: planType });
+  
+  // Open payment modal
+  openPaymentModal(planType);
+}
+
+// Usage
+&lt;button onclick="handleUpgradeClick('premium')"&gt;
+  Upgrade to Premium
+&lt;/button&gt;
+        </div>
+      </div>
+
+      <div class="step">
+        <h4>Integration with Pi SDK</h4>
+        <div class="code-block">
+// Custom payment processing with Pi SDK
+paymentModal.onSuccess((details) => {
+  // Initialize Pi payment
+  Pi.createPayment({
+    amount: details.amount.replace(' Pi', ''),
+    memo: `SmartSolve ${details.plan} Plan`,
+    metadata: {
+      plan: details.plan,
+      billing: details.billing
+    }
+  }).then((payment) => {
+    // Handle successful payment
+    console.log('Pi payment successful:', payment);
+    redirectToDashboard();
+  }).catch((error) => {
+    console.error('Payment failed:', error);
+    showErrorMessage('Payment failed. Please try again.');
+  });
+});
+        </div>
+      </div>
+    </div>
+
+    <!-- Test Buttons -->
+    <div class="usage-section">
+      <h2>🧪 Test Payment Modals</h2>
+      <p>Click the buttons below to test different payment modal configurations:</p>
+      
+      <div style="text-align: center; margin: 2rem 0;">
+        <button onclick="openPaymentModal('standard')" class="btn">
+          <i class="fas fa-star"></i> Standard Plan
+        </button>
+        <button onclick="openPaymentModal('premium')" class="btn">
+          <i class="fas fa-users"></i> Premium Plan
+        </button>
+        <button onclick="openPaymentModal('pro')" class="btn">
+          <i class="fas fa-briefcase"></i> Pro Plan
+        </button>
+        <button onclick="openPaymentModal('lifetime')" class="btn btn-lifetime">
+          <i class="fas fa-crown"></i> Lifetime Plan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Include Payment Modal Component -->
+  <script src="payment-modal-component.js"></script>
+  
+  <script>
+    // Example: Set up payment success handler
+    paymentModal.onSuccess((details) => {
+      console.log('Payment successful:', details);
+      
+      // Example: Show success message
+      alert(`Payment successful! You've subscribed to the ${details.plan} plan for ${details.amount}.`);
+      
+      // Example: Redirect to dashboard
+      // window.location.href = '/dashboard';
+    });
+
+    // Example: Set up payment cancel handler
+    paymentModal.onCancel(() => {
+      console.log('Payment cancelled');
+      
+      // Example: Show alternative options
+      // showAlternativePlans();
+    });
+  </script>
+</body>
+</html> 

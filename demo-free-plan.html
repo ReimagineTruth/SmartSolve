@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Plan Demo | SmartSolve</title>
+  <meta name="description" content="Experience SmartSolve's Free Plan - limited features with upgrade opportunities">
+  <meta name="keywords" content="SmartSolve, free plan demo, Pi Network, productivity">
+  <meta name="author" content="SmartSolve Team">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --primary: #A3CFFA;
+      --secondary: #A8D5BA;
+      --gradient: linear-gradient(45deg, #A3CFFA, #A8D5BA);
+      --text: #2A3B5A;
+      --background: #F5F5F5;
+      --card-bg: #FFFFFF;
+      --hover-bg: #E6F0FA;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --locked-bg: #F0F0F0;
+      --locked-text: #999;
+      --upgrade-bg: #FFF3CD;
+      --upgrade-border: #FFEAA7;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .app-bar {
+      background: var(--card-bg);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+    .app-bar .logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+    }
+    .logo-icon {
+      margin-right: 8px;
+      color: var(--primary);
+    }
+    .plan-badge {
+      background: var(--gradient);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .upgrade-banner {
+      background: var(--upgrade-bg);
+      border: 2px solid var(--upgrade-border);
+      border-radius: 10px;
+      padding: 1rem;
+      margin: 1rem;
+      text-align: center;
+      color: #856404;
+    }
+    .upgrade-banner h3 {
+      color: #856404;
+      margin-bottom: 0.5rem;
+    }
+    .upgrade-btn {
+      background: var(--primary);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border: none;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+    .main-content {
+      margin-top: 80px;
+      padding: 2rem;
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .card.locked {
+      background: var(--locked-bg);
+      color: var(--locked-text);
+    }
+    .card h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+    .card.locked h3 {
+      color: var(--locked-text);
+    }
+    .feature-list {
+      list-style: none;
+      margin: 1rem 0;
+    }
+    .feature-list li {
+      margin: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .feature-list li i {
+      color: var(--primary);
+      width: 16px;
+    }
+    .card.locked .feature-list li i {
+      color: var(--locked-text);
+    }
+    .locked-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(240, 240, 240, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 15px;
+      color: var(--locked-text);
+      font-weight: 600;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.8;
+    }
+    .btn {
+      background: var(--primary);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 1rem;
+    }
+    .btn:hover {
+      background: var(--secondary);
+    }
+    .btn.locked {
+      background: var(--locked-bg);
+      color: var(--locked-text);
+      cursor: not-allowed;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #E0E0E0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 0.5rem 0;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    .limited-indicator {
+      background: #FFE5E5;
+      color: #D63031;
+      padding: 0.3rem 0.6rem;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 1rem;
+      }
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- App Bar -->
+  <header class="app-bar">
+    <div class="logo">
+      <i class="fas fa-brain logo-icon"></i>
+      SmartSolve
+    </div>
+    <div class="plan-badge">Free Plan</div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Upgrade Banner -->
+    <div class="upgrade-banner">
+      <h3>🚀 Upgrade to Standard Plan</h3>
+      <p>Unlock unlimited features, advanced tools, and Pi-powered services for just 3 Pi/month!</p>
+      <button class="upgrade-btn" onclick="window.location.href='pricing.html'">
+        <i class="fas fa-arrow-up"></i> Upgrade Now
+      </button>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">3/5</div>
+        <div class="stat-label">Tasks Today</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">70 Pi</div>
+        <div class="stat-label">Budget Spent</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">😊</div>
+        <div class="stat-label">Mood Today</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">2/3</div>
+        <div class="stat-label">Meals Planned</div>
+      </div>
+    </div>
+
+    <!-- Dashboard Grid -->
+    <div class="dashboard-grid">
+      <!-- Tasks Card -->
+      <div class="card">
+        <h3><i class="fas fa-tasks"></i> Today's Tasks</h3>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Review project proposal</li>
+          <li><i class="fas fa-check"></i> Call client at 2 PM</li>
+          <li><i class="fas fa-clock"></i> Prepare presentation</li>
+          <li><i class="fas fa-clock"></i> Team meeting at 4 PM</li>
+          <li><i class="fas fa-clock"></i> Send weekly report</li>
+        </ul>
+        <div class="limited-indicator">Limited to 5 tasks</div>
+        <button class="btn">Add Task</button>
+      </div>
+
+      <!-- Budget Card -->
+      <div class="card">
+        <h3><i class="fas fa-wallet"></i> Budget Tracker</h3>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 70%"></div>
+        </div>
+        <p>70 Pi spent of 100 Pi budget</p>
+        <ul class="feature-list">
+          <li><i class="fas fa-shopping-cart"></i> Groceries: 50 Pi</li>
+          <li><i class="fas fa-bus"></i> Transport: 20 Pi</li>
+        </ul>
+        <div class="limited-indicator">Basic tracking only</div>
+        <button class="btn">Add Expense</button>
+      </div>
+
+      <!-- Meals Card -->
+      <div class="card">
+        <h3><i class="fas fa-utensils"></i> Meal Suggestions</h3>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Breakfast: Oatmeal with berries</li>
+          <li><i class="fas fa-check"></i> Lunch: Grilled chicken salad</li>
+          <li><i class="fas fa-clock"></i> Dinner: Pasta with vegetables</li>
+        </ul>
+        <div class="limited-indicator">2 suggestions/day</div>
+        <button class="btn">Get More Ideas</button>
+      </div>
+
+      <!-- Wellness Card -->
+      <div class="card">
+        <h3><i class="fas fa-heart"></i> Daily Quote</h3>
+        <blockquote style="font-style: italic; margin: 1rem 0; padding: 1rem; background: var(--hover-bg); border-radius: 10px;">
+          "The only way to do great work is to love what you do." - Steve Jobs
+        </blockquote>
+        <div class="limited-indicator">Daily quotes only</div>
+        <button class="btn">New Quote</button>
+      </div>
+
+      <!-- Services Card (Locked) -->
+      <div class="card locked">
+        <div class="locked-overlay">
+          <div style="text-align: center;">
+            <i class="fas fa-lock" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+            <p>Upgrade to Standard Plan</p>
+            <p style="font-size: 0.8rem;">Unlock local services</p>
+          </div>
+        </div>
+        <h3><i class="fas fa-map-marker-alt"></i> Local Services</h3>
+        <ul class="feature-list">
+          <li><i class="fas fa-times"></i> Browse local services</li>
+          <li><i class="fas fa-times"></i> Post service requests</li>
+          <li><i class="fas fa-times"></i> Connect with neighbors</li>
+        </ul>
+        <button class="btn locked">View Services</button>
+      </div>
+
+      <!-- Advanced Features Card (Locked) -->
+      <div class="card locked">
+        <div class="locked-overlay">
+          <div style="text-align: center;">
+            <i class="fas fa-lock" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+            <p>Upgrade to Standard Plan</p>
+            <p style="font-size: 0.8rem;">Unlock advanced features</p>
+          </div>
+        </div>
+        <h3><i class="fas fa-chart-line"></i> Advanced Analytics</h3>
+        <ul class="feature-list">
+          <li><i class="fas fa-times"></i> Detailed spending reports</li>
+          <li><i class="fas fa-times"></i> Productivity insights</li>
+          <li><i class="fas fa-times"></i> Goal tracking</li>
+        </ul>
+        <button class="btn locked">View Analytics</button>
+      </div>
+    </div>
+
+    <!-- Upgrade CTA -->
+    <div style="text-align: center; margin-top: 2rem; padding: 2rem; background: var(--card-bg); border-radius: 15px; box-shadow: var(--shadow);">
+      <h3 style="color: var(--primary); margin-bottom: 1rem;">Ready for More?</h3>
+      <p style="margin-bottom: 1.5rem;">Upgrade to Standard Plan and unlock unlimited features, advanced tools, and Pi-powered services.</p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <button class="btn" onclick="window.location.href='pricing.html'">
+          <i class="fas fa-star"></i> View Plans
+        </button>
+        <button class="btn" onclick="window.location.href='demo-standard-plan.html'">
+          <i class="fas fa-eye"></i> See Standard Demo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Demo interactions
+    document.querySelectorAll('.btn:not(.locked)').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        if (this.textContent.includes('Add') || this.textContent.includes('Get')) {
+          e.preventDefault();
+          alert('This feature is limited in the Free Plan. Upgrade to Standard for unlimited access!');
+        }
+      });
+    });
+
+    // Animate progress bar
+    setTimeout(() => {
+      document.querySelector('.progress-fill').style.width = '70%';
+    }, 500);
+  </script>
+</body>
+</html> 

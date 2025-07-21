@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Standard Plan Demo | SmartSolve</title>
+  <meta name="description" content="Experience SmartSolve's Standard Plan - unlimited features and Pi-powered services">
+  <meta name="keywords" content="SmartSolve, standard plan demo, Pi Network, productivity">
+  <meta name="author" content="SmartSolve Team">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --primary: #A3CFFA;
+      --secondary: #A8D5BA;
+      --gradient: linear-gradient(45deg, #A3CFFA, #A8D5BA);
+      --text: #2A3B5A;
+      --background: #F5F5F5;
+      --card-bg: #FFFFFF;
+      --hover-bg: #E6F0FA;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --locked-bg: #F0F0F0;
+      --locked-text: #999;
+      --success-bg: #D4EDDA;
+      --success-text: #155724;
+      --pi-bg: #FFD700;
+      --pi-text: #B8860B;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .app-bar {
+      background: var(--card-bg);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+    .app-bar .logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+    }
+    .logo-icon {
+      margin-right: 8px;
+      color: var(--primary);
+    }
+    .plan-badge {
+      background: var(--gradient);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .main-content {
+      margin-top: 80px;
+      padding: 2rem;
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .card h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+    .feature-list {
+      list-style: none;
+      margin: 1rem 0;
+    }
+    .feature-list li {
+      margin: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .feature-list li i {
+      color: var(--primary);
+      width: 16px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.8;
+    }
+    .btn {
+      background: var(--primary);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 1rem;
+    }
+    .btn:hover {
+      background: var(--secondary);
+    }
+    .btn.pi {
+      background: var(--pi-bg);
+      color: var(--pi-text);
+    }
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #E0E0E0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 0.5rem 0;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    .unlimited-badge {
+      background: var(--success-bg);
+      color: var(--success-text);
+      padding: 0.3rem 0.6rem;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+    .pi-service {
+      background: var(--pi-bg);
+      color: var(--pi-text);
+      padding: 0.5rem;
+      border-radius: 8px;
+      margin: 0.5rem 0;
+      font-weight: 600;
+    }
+    .chart-container {
+      height: 200px;
+      background: var(--hover-bg);
+      border-radius: 10px;
+      margin: 1rem 0;
+      display: flex;
+      align-items: end;
+      justify-content: space-around;
+      padding: 1rem;
+    }
+    .chart-bar {
+      width: 30px;
+      background: var(--primary);
+      border-radius: 4px 4px 0 0;
+      transition: height 0.3s ease;
+    }
+    .mood-tracker {
+      display: flex;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+    .mood-btn {
+      padding: 0.5rem;
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      background: white;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+    .mood-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+    .upgrade-cta {
+      background: var(--gradient);
+      color: white;
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .upgrade-cta h3 {
+      margin-bottom: 1rem;
+    }
+    .upgrade-cta .btn {
+      background: white;
+      color: var(--text);
+      margin: 0 0.5rem;
+    }
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 1rem;
+      }
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- App Bar -->
+  <header class="app-bar">
+    <div class="logo">
+      <i class="fas fa-brain logo-icon"></i>
+      SmartSolve
+    </div>
+    <div class="plan-badge">Standard Plan</div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Stats Overview -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">12</div>
+        <div class="stat-label">Tasks Today</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">150 Pi</div>
+        <div class="stat-label">Budget Spent</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">😊</div>
+        <div class="stat-label">Mood Today</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">7</div>
+        <div class="stat-label">Meals Planned</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Local Services</div>
+      </div>
+    </div>
+
+    <!-- Dashboard Grid -->
+    <div class="dashboard-grid">
+      <!-- Tasks Card -->
+      <div class="card">
+        <h3><i class="fas fa-tasks"></i> Unlimited Tasks</h3>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Review project proposal</li>
+          <li><i class="fas fa-check"></i> Call client at 2 PM</li>
+          <li><i class="fas fa-check"></i> Prepare presentation</li>
+          <li><i class="fas fa-clock"></i> Team meeting at 4 PM</li>
+          <li><i class="fas fa-clock"></i> Send weekly report</li>
+          <li><i class="fas fa-clock"></i> Update website content</li>
+          <li><i class="fas fa-clock"></i> Schedule follow-up calls</li>
+        </ul>
+        <div class="unlimited-badge">Unlimited tasks</div>
+        <button class="btn">Add Task</button>
+      </div>
+
+      <!-- Budget Card -->
+      <div class="card">
+        <h3><i class="fas fa-wallet"></i> Advanced Budget Tools</h3>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 75%"></div>
+        </div>
+        <p>150 Pi spent of 200 Pi budget</p>
+        <ul class="feature-list">
+          <li><i class="fas fa-shopping-cart"></i> Groceries: 80 Pi</li>
+          <li><i class="fas fa-bus"></i> Transport: 30 Pi</li>
+          <li><i class="fas fa-home"></i> Utilities: 40 Pi</li>
+        </ul>
+        <div class="chart-container">
+          <div class="chart-bar" style="height: 60%"></div>
+          <div class="chart-bar" style="height: 40%"></div>
+          <div class="chart-bar" style="height: 80%"></div>
+          <div class="chart-bar" style="height: 30%"></div>
+          <div class="chart-bar" style="height: 70%"></div>
+        </div>
+        <div class="unlimited-badge">Advanced analytics</div>
+        <button class="btn">Add Expense</button>
+      </div>
+
+      <!-- Meals Card -->
+      <div class="card">
+        <h3><i class="fas fa-utensils"></i> Full Meal Planner</h3>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Breakfast: Oatmeal with berries</li>
+          <li><i class="fas fa-check"></i> Lunch: Grilled chicken salad</li>
+          <li><i class="fas fa-check"></i> Dinner: Pasta with vegetables</li>
+          <li><i class="fas fa-check"></i> Snack: Greek yogurt</li>
+          <li><i class="fas fa-clock"></i> Tomorrow: Fish tacos</li>
+          <li><i class="fas fa-clock"></i> Tomorrow: Buddha bowl</li>
+        </ul>
+        <div class="unlimited-badge">Unlimited meal planning</div>
+        <button class="btn">Plan Meals</button>
+      </div>
+
+      <!-- Wellness Card -->
+      <div class="card">
+        <h3><i class="fas fa-heart"></i> AI Mood Assistant</h3>
+        <div class="mood-tracker">
+          <button class="mood-btn">😢</button>
+          <button class="mood-btn">😐</button>
+          <button class="mood-btn active">😊</button>
+          <button class="mood-btn">😄</button>
+          <button class="mood-btn">🤩</button>
+        </div>
+        <blockquote style="font-style: italic; margin: 1rem 0; padding: 1rem; background: var(--hover-bg); border-radius: 10px;">
+          "Your positive mood today is great! Keep up the good energy."
+        </blockquote>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Mood tracking</li>
+          <li><i class="fas fa-check"></i> AI-powered insights</li>
+          <li><i class="fas fa-check"></i> Wellness tips</li>
+        </ul>
+        <div class="unlimited-badge">AI-powered</div>
+        <button class="btn">Track Mood</button>
+      </div>
+
+      <!-- Services Card -->
+      <div class="card">
+        <h3><i class="fas fa-map-marker-alt"></i> Local Services</h3>
+        <div class="pi-service">
+          <i class="fas fa-coins"></i> Dog walking - 5 Pi/hour
+        </div>
+        <div class="pi-service">
+          <i class="fas fa-coins"></i> House cleaning - 15 Pi
+        </div>
+        <div class="pi-service">
+          <i class="fas fa-coins"></i> Tutoring - 10 Pi/hour
+        </div>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Browse local services</li>
+          <li><i class="fas fa-check"></i> Post service requests</li>
+          <li><i class="fas fa-check"></i> Connect with neighbors</li>
+          <li><i class="fas fa-check"></i> Pi-powered payments</li>
+        </ul>
+        <div class="unlimited-badge">Pi ecosystem</div>
+        <button class="btn pi">Browse Services</button>
+      </div>
+
+      <!-- Analytics Card -->
+      <div class="card">
+        <h3><i class="fas fa-chart-line"></i> Smart Analytics</h3>
+        <div class="chart-container">
+          <div class="chart-bar" style="height: 40%"></div>
+          <div class="chart-bar" style="height: 60%"></div>
+          <div class="chart-bar" style="height: 80%"></div>
+          <div class="chart-bar" style="height: 70%"></div>
+          <div class="chart-bar" style="height: 90%"></div>
+          <div class="chart-bar" style="height: 50%"></div>
+          <div class="chart-bar" style="height: 75%"></div>
+        </div>
+        <p>Productivity trend: +15% this week</p>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Detailed spending reports</li>
+          <li><i class="fas fa-check"></i> Productivity insights</li>
+          <li><i class="fas fa-check"></i> Goal tracking</li>
+        </ul>
+        <div class="unlimited-badge">Advanced insights</div>
+        <button class="btn">View Reports</button>
+      </div>
+    </div>
+
+    <!-- Upgrade CTA -->
+    <div class="upgrade-cta">
+      <h3>🚀 Ready for Family Features?</h3>
+      <p>Upgrade to Premium Plan and unlock family sharing, kids mode, and group chat features for just 6 Pi/month!</p>
+      <div style="margin-top: 1.5rem;">
+        <button class="btn" onclick="window.location.href='pricing.html'">
+          <i class="fas fa-star"></i> View Plans
+        </button>
+        <button class="btn" onclick="window.location.href='demo-premium-plan.html'">
+          <i class="fas fa-eye"></i> See Premium Demo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Demo interactions
+    document.querySelectorAll('.mood-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    // Animate progress bars and charts
+    setTimeout(() => {
+      document.querySelectorAll('.progress-fill').forEach(bar => {
+        bar.style.width = bar.style.width;
+      });
+      
+      document.querySelectorAll('.chart-bar').forEach((bar, index) => {
+        setTimeout(() => {
+          bar.style.height = bar.style.height;
+        }, index * 100);
+      });
+    }, 500);
+
+    // Service interactions
+    document.querySelectorAll('.pi-service').forEach(service => {
+      service.addEventListener('click', function() {
+        alert('Pi payment integration would be triggered here!');
+      });
+    });
+  </script>
+</body>
+</html> 

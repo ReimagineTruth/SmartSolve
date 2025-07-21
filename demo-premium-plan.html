@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Plan Demo | SmartSolve</title>
+  <meta name="description" content="Experience SmartSolve's Premium Plan - family features and advanced capabilities">
+  <meta name="keywords" content="SmartSolve, premium plan demo, Pi Network, family features">
+  <meta name="author" content="SmartSolve Team">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --primary: #A3CFFA;
+      --secondary: #A8D5BA;
+      --gradient: linear-gradient(45deg, #A3CFFA, #A8D5BA);
+      --text: #2A3B5A;
+      --background: #F5F5F5;
+      --card-bg: #FFFFFF;
+      --hover-bg: #E6F0FA;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --family-bg: #E8F5E8;
+      --family-text: #2E7D32;
+      --kids-bg: #FFF3E0;
+      --kids-text: #E65100;
+      --chat-bg: #F3E5F5;
+      --chat-text: #7B1FA2;
+      --pi-bg: #FFD700;
+      --pi-text: #B8860B;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .app-bar {
+      background: var(--card-bg);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+    .app-bar .logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+    }
+    .logo-icon {
+      margin-right: 8px;
+      color: var(--primary);
+    }
+    .plan-badge {
+      background: var(--gradient);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .main-content {
+      margin-top: 80px;
+      padding: 2rem;
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .card.family {
+      background: var(--family-bg);
+      border: 2px solid var(--family-text);
+    }
+    .card.kids {
+      background: var(--kids-bg);
+      border: 2px solid var(--kids-text);
+    }
+    .card.chat {
+      background: var(--chat-bg);
+      border: 2px solid var(--chat-text);
+    }
+    .card h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+    .feature-list {
+      list-style: none;
+      margin: 1rem 0;
+    }
+    .feature-list li {
+      margin: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .feature-list li i {
+      color: var(--primary);
+      width: 16px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.8;
+    }
+    .btn {
+      background: var(--primary);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 1rem;
+    }
+    .btn:hover {
+      background: var(--secondary);
+    }
+    .btn.family {
+      background: var(--family-text);
+      color: white;
+    }
+    .btn.kids {
+      background: var(--kids-text);
+      color: white;
+    }
+    .btn.chat {
+      background: var(--chat-text);
+      color: white;
+    }
+    .family-member {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      background: white;
+      border-radius: 8px;
+      margin: 0.5rem 0;
+    }
+    .member-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+    }
+    .chat-message {
+      background: white;
+      padding: 0.8rem;
+      border-radius: 10px;
+      margin: 0.5rem 0;
+      border-left: 3px solid var(--chat-text);
+    }
+    .chat-message .sender {
+      font-weight: 600;
+      color: var(--chat-text);
+      margin-bottom: 0.3rem;
+    }
+    .kids-task {
+      background: white;
+      padding: 0.8rem;
+      border-radius: 10px;
+      margin: 0.5rem 0;
+      border-left: 3px solid var(--kids-text);
+    }
+    .kids-task .task-title {
+      font-weight: 600;
+      color: var(--kids-text);
+      margin-bottom: 0.3rem;
+    }
+    .grocery-list {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      margin: 1rem 0;
+    }
+    .grocery-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    .grocery-item:last-child {
+      border-bottom: none;
+    }
+    .upgrade-cta {
+      background: var(--gradient);
+      color: white;
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .upgrade-cta h3 {
+      margin-bottom: 1rem;
+    }
+    .upgrade-cta .btn {
+      background: white;
+      color: var(--text);
+      margin: 0 0.5rem;
+    }
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 1rem;
+      }
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- App Bar -->
+  <header class="app-bar">
+    <div class="logo">
+      <i class="fas fa-brain logo-icon"></i>
+      SmartSolve
+    </div>
+    <div class="plan-badge">Premium Plan</div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Stats Overview -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">8</div>
+        <div class="stat-label">Family Tasks</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">250 Pi</div>
+        <div class="stat-label">Family Budget</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">4</div>
+        <div class="stat-label">Family Members</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">12</div>
+        <div class="stat-label">Meals Planned</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">5</div>
+        <div class="stat-label">Chat Messages</div>
+      </div>
+    </div>
+
+    <!-- Dashboard Grid -->
+    <div class="dashboard-grid">
+      <!-- Family Calendar Card -->
+      <div class="card family">
+        <h3><i class="fas fa-users"></i> Family Calendar</h3>
+        <div class="family-member">
+          <div class="member-avatar">M</div>
+          <div>
+            <strong>Mom</strong> - Doctor appointment at 3 PM
+          </div>
+        </div>
+        <div class="family-member">
+          <div class="member-avatar">D</div>
+          <div>
+            <strong>Dad</strong> - Team meeting at 2 PM
+          </div>
+        </div>
+        <div class="family-member">
+          <div class="member-avatar">S</div>
+          <div>
+            <strong>Sarah</strong> - Soccer practice at 4 PM
+          </div>
+        </div>
+        <div class="family-member">
+          <div class="member-avatar">J</div>
+          <div>
+            <strong>John</strong> - Piano lesson at 5 PM
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Shared family calendar</li>
+          <li><i class="fas fa-check"></i> Task assignments</li>
+          <li><i class="fas fa-check"></i> Event notifications</li>
+        </ul>
+        <button class="btn family">Add Family Event</button>
+      </div>
+
+      <!-- Kids Mode Card -->
+      <div class="card kids">
+        <h3><i class="fas fa-child"></i> Kids Mode</h3>
+        <div class="kids-task">
+          <div class="task-title">Sarah's Tasks</div>
+          <div>✅ Complete homework</div>
+          <div>✅ Pack soccer gear</div>
+          <div>⏰ Read for 20 minutes</div>
+        </div>
+        <div class="kids-task">
+          <div class="task-title">John's Tasks</div>
+          <div>✅ Practice piano</div>
+          <div>✅ Clean room</div>
+          <div>⏰ Math worksheet</div>
+        </div>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Age-appropriate tasks</li>
+          <li><i class="fas fa-check"></i> Reward system</li>
+          <li><i class="fas fa-check"></i> Parent monitoring</li>
+        </ul>
+        <button class="btn kids">Manage Kids</button>
+      </div>
+
+      <!-- Group Chat Card -->
+      <div class="card chat">
+        <h3><i class="fas fa-comments"></i> Family Chat</h3>
+        <div class="chat-message">
+          <div class="sender">Mom</div>
+          <div>Don't forget to pick up groceries on your way home!</div>
+        </div>
+        <div class="chat-message">
+          <div class="sender">Dad</div>
+          <div>Got it! I'll stop by the store.</div>
+        </div>
+        <div class="chat-message">
+          <div class="sender">Sarah</div>
+          <div>Can someone pick me up from soccer practice?</div>
+        </div>
+        <div class="chat-message">
+          <div class="sender">Mom</div>
+          <div>I'll pick you up at 5:30 PM</div>
+        </div>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Family group chat</li>
+          <li><i class="fas fa-check"></i> File sharing</li>
+          <li><i class="fas fa-check"></i> Voice messages</li>
+        </ul>
+        <button class="btn chat">Send Message</button>
+      </div>
+
+      <!-- Full Grocery Planner Card -->
+      <div class="card">
+        <h3><i class="fas fa-shopping-basket"></i> Full Grocery Planner</h3>
+        <div class="grocery-list">
+          <div class="grocery-item">
+            <span>Milk</span>
+            <span>2 cartons</span>
+          </div>
+          <div class="grocery-item">
+            <span>Bread</span>
+            <span>3 loaves</span>
+          </div>
+          <div class="grocery-item">
+            <span>Chicken</span>
+            <span>2 lbs</span>
+          </div>
+          <div class="grocery-item">
+            <span>Vegetables</span>
+            <span>Mixed pack</span>
+          </div>
+          <div class="grocery-item">
+            <span>Fruits</span>
+            <span>Apples, Bananas</span>
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Family meal planning</li>
+          <li><i class="fas fa-check"></i> Automatic grocery lists</li>
+          <li><i class="fas fa-check"></i> Budget optimization</li>
+        </ul>
+        <button class="btn">Plan Groceries</button>
+      </div>
+
+      <!-- Privacy Controls Card -->
+      <div class="card">
+        <h3><i class="fas fa-shield-alt"></i> Privacy Controls</h3>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Family member permissions</li>
+          <li><i class="fas fa-check"></i> Data sharing controls</li>
+          <li><i class="fas fa-check"></i> Activity monitoring</li>
+          <li><i class="fas fa-check"></i> Safe browsing for kids</li>
+        </ul>
+        <div style="background: var(--hover-bg); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+          <strong>Current Settings:</strong><br>
+          • Kids mode: Enabled<br>
+          • Screen time limits: 2 hours/day<br>
+          • Content filtering: Active
+        </div>
+        <button class="btn">Manage Privacy</button>
+      </div>
+
+      <!-- Advanced Features Card -->
+      <div class="card">
+        <h3><i class="fas fa-star"></i> Premium Features</h3>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> All Standard features</li>
+          <li><i class="fas fa-check"></i> Family dashboard</li>
+          <li><i class="fas fa-check"></i> Kids mode with rewards</li>
+          <li><i class="fas fa-check"></i> Group chat & file sharing</li>
+          <li><i class="fas fa-check"></i> Full grocery planner</li>
+          <li><i class="fas fa-check"></i> Advanced privacy controls</li>
+        </ul>
+        <div style="background: var(--success-bg); color: var(--success-text); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+          <strong>Family Benefits:</strong><br>
+          • Better organization<br>
+          • Improved communication<br>
+          • Shared responsibility
+        </div>
+        <button class="btn">View All Features</button>
+      </div>
+    </div>
+
+    <!-- Upgrade CTA -->
+    <div class="upgrade-cta">
+      <h3>🚀 Ready for Business Features?</h3>
+      <p>Upgrade to Pro Plan and unlock team collaboration, business tools, and advanced integrations for just 9 Pi/month!</p>
+      <div style="margin-top: 1.5rem;">
+        <button class="btn" onclick="window.location.href='pricing.html'">
+          <i class="fas fa-star"></i> View Plans
+        </button>
+        <button class="btn" onclick="window.location.href='demo-pro-plan.html'">
+          <i class="fas fa-eye"></i> See Pro Demo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Demo interactions
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const action = this.textContent.trim();
+        if (action.includes('Add') || action.includes('Send') || action.includes('Manage') || action.includes('Plan')) {
+          alert('This feature is fully functional in the Premium Plan!');
+        }
+      });
+    });
+
+    // Family member interactions
+    document.querySelectorAll('.family-member').forEach(member => {
+      member.addEventListener('click', function() {
+        alert('Click to view detailed schedule for this family member');
+      });
+    });
+
+    // Chat message interactions
+    document.querySelectorAll('.chat-message').forEach(message => {
+      message.addEventListener('click', function() {
+        alert('Click to reply to this message');
+      });
+    });
+
+    // Kids task interactions
+    document.querySelectorAll('.kids-task').forEach(task => {
+      task.addEventListener('click', function() {
+        alert('Click to mark task as complete or edit');
+      });
+    });
+  </script>
+</body>
+</html> 

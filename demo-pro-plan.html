@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pro Plan Demo | SmartSolve</title>
+  <meta name="description" content="Experience SmartSolve's Pro Plan - business tools and advanced integrations">
+  <meta name="keywords" content="SmartSolve, pro plan demo, Pi Network, business features">
+  <meta name="author" content="SmartSolve Team">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --primary: #A3CFFA;
+      --secondary: #A8D5BA;
+      --gradient: linear-gradient(45deg, #A3CFFA, #A8D5BA);
+      --text: #2A3B5A;
+      --background: #F5F5F5;
+      --card-bg: #FFFFFF;
+      --hover-bg: #E6F0FA;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      --business-bg: #E3F2FD;
+      --business-text: #1565C0;
+      --team-bg: #F3E5F5;
+      --team-text: #7B1FA2;
+      --integration-bg: #E8F5E8;
+      --integration-text: #2E7D32;
+      --assistant-bg: #FFF3E0;
+      --assistant-text: #E65100;
+      --pi-bg: #FFD700;
+      --pi-text: #B8860B;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .app-bar {
+      background: var(--card-bg);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+    .app-bar .logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+    }
+    .logo-icon {
+      margin-right: 8px;
+      color: var(--primary);
+    }
+    .plan-badge {
+      background: var(--gradient);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .main-content {
+      margin-top: 80px;
+      padding: 2rem;
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .card.business {
+      background: var(--business-bg);
+      border: 2px solid var(--business-text);
+    }
+    .card.team {
+      background: var(--team-bg);
+      border: 2px solid var(--team-text);
+    }
+    .card.integration {
+      background: var(--integration-bg);
+      border: 2px solid var(--integration-text);
+    }
+    .card.assistant {
+      background: var(--assistant-bg);
+      border: 2px solid var(--assistant-text);
+    }
+    .card h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+    .feature-list {
+      list-style: none;
+      margin: 1rem 0;
+    }
+    .feature-list li {
+      margin: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .feature-list li i {
+      color: var(--primary);
+      width: 16px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.8;
+    }
+    .btn {
+      background: var(--primary);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 1rem;
+    }
+    .btn:hover {
+      background: var(--secondary);
+    }
+    .btn.business {
+      background: var(--business-text);
+      color: white;
+    }
+    .btn.team {
+      background: var(--team-text);
+      color: white;
+    }
+    .btn.integration {
+      background: var(--integration-text);
+      color: white;
+    }
+    .btn.assistant {
+      background: var(--assistant-text);
+      color: white;
+    }
+    .team-member {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      background: white;
+      border-radius: 8px;
+      margin: 0.5rem 0;
+    }
+    .member-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+    }
+    .business-metric {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      margin: 0.5rem 0;
+      border-left: 3px solid var(--business-text);
+    }
+    .metric-title {
+      font-weight: 600;
+      color: var(--business-text);
+      margin-bottom: 0.3rem;
+    }
+    .integration-item {
+      background: white;
+      padding: 0.8rem;
+      border-radius: 10px;
+      margin: 0.5rem 0;
+      border-left: 3px solid var(--integration-text);
+    }
+    .integration-item .platform {
+      font-weight: 600;
+      color: var(--integration-text);
+      margin-bottom: 0.3rem;
+    }
+    .assistant-message {
+      background: white;
+      padding: 0.8rem;
+      border-radius: 10px;
+      margin: 0.5rem 0;
+      border-left: 3px solid var(--assistant-text);
+    }
+    .assistant-message .assistant-name {
+      font-weight: 600;
+      color: var(--assistant-text);
+      margin-bottom: 0.3rem;
+    }
+    .chart-container {
+      height: 200px;
+      background: var(--hover-bg);
+      border-radius: 10px;
+      margin: 1rem 0;
+      display: flex;
+      align-items: end;
+      justify-content: space-around;
+      padding: 1rem;
+    }
+    .chart-bar {
+      width: 30px;
+      background: var(--primary);
+      border-radius: 4px 4px 0 0;
+      transition: height 0.3s ease;
+    }
+    .income-tracker {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      margin: 1rem 0;
+    }
+    .income-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    .income-item:last-child {
+      border-bottom: none;
+    }
+    .pi-income {
+      color: var(--pi-text);
+      font-weight: 600;
+    }
+    .lifetime-cta {
+      background: var(--gradient);
+      color: white;
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .lifetime-cta h3 {
+      margin-bottom: 1rem;
+    }
+    .lifetime-cta .btn {
+      background: white;
+      color: var(--text);
+      margin: 0 0.5rem;
+    }
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 1rem;
+      }
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- App Bar -->
+  <header class="app-bar">
+    <div class="logo">
+      <i class="fas fa-brain logo-icon"></i>
+      SmartSolve
+    </div>
+    <div class="plan-badge">Pro Plan</div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Stats Overview -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">15</div>
+        <div class="stat-label">Team Tasks</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">500 Pi</div>
+        <div class="stat-label">Business Income</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">8</div>
+        <div class="stat-label">Team Members</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Integrations</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">2</div>
+        <div class="stat-label">Virtual Assistants</div>
+      </div>
+    </div>
+
+    <!-- Dashboard Grid -->
+    <div class="dashboard-grid">
+      <!-- Team Collaboration Card -->
+      <div class="card team">
+        <h3><i class="fas fa-users-cog"></i> Team Collaboration</h3>
+        <div class="team-member">
+          <div class="member-avatar">A</div>
+          <div>
+            <strong>Alex</strong> - Working on website redesign
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="member-avatar">S</div>
+          <div>
+            <strong>Sarah</strong> - Client presentation ready
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="member-avatar">M</div>
+          <div>
+            <strong>Mike</strong> - Marketing campaign draft
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="member-avatar">L</div>
+          <div>
+            <strong>Lisa</strong> - Financial report pending
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Team task management</li>
+          <li><i class="fas fa-check"></i> Project collaboration</li>
+          <li><i class="fas fa-check"></i> File sharing & version control</li>
+        </ul>
+        <button class="btn team">Manage Team</button>
+      </div>
+
+      <!-- Business Tools Card -->
+      <div class="card business">
+        <h3><i class="fas fa-chart-line"></i> Business Tools</h3>
+        <div class="business-metric">
+          <div class="metric-title">Pi Income Tracker</div>
+          <div>This month: 500 Pi</div>
+          <div>Last month: 420 Pi (+19%)</div>
+        </div>
+        <div class="business-metric">
+          <div class="metric-title">Marketing Planner</div>
+          <div>Active campaigns: 3</div>
+          <div>ROI: 150%</div>
+        </div>
+        <div class="chart-container">
+          <div class="chart-bar" style="height: 60%"></div>
+          <div class="chart-bar" style="height: 80%"></div>
+          <div class="chart-bar" style="height: 90%"></div>
+          <div class="chart-bar" style="height: 70%"></div>
+          <div class="chart-bar" style="height: 85%"></div>
+          <div class="chart-bar" style="height: 75%"></div>
+          <div class="chart-bar" style="height: 95%"></div>
+        </div>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Pi income tracking</li>
+          <li><i class="fas fa-check"></i> Marketing campaign management</li>
+          <li><i class="fas fa-check"></i> Business analytics</li>
+        </ul>
+        <button class="btn business">View Reports</button>
+      </div>
+
+      <!-- Integrations Card -->
+      <div class="card integration">
+        <h3><i class="fas fa-plug"></i> Advanced Integrations</h3>
+        <div class="integration-item">
+          <div class="platform">TruthWeb Integration</div>
+          <div>✅ Connected - Syncing data</div>
+          <div>Last sync: 2 minutes ago</div>
+        </div>
+        <div class="integration-item">
+          <div class="platform">Cloudy Integration</div>
+          <div>✅ Connected - File sync active</div>
+          <div>Last sync: 5 minutes ago</div>
+        </div>
+        <div class="integration-item">
+          <div class="platform">Pi Wallet</div>
+          <div>✅ Connected - Payment processing</div>
+          <div>Balance: 1,250 Pi</div>
+        </div>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> TruthWeb data sync</li>
+          <li><i class="fas fa-check"></i> Cloudy file integration</li>
+          <li><i class="fas fa-check"></i> Pi Wallet integration</li>
+        </ul>
+        <button class="btn integration">Manage Integrations</button>
+      </div>
+
+      <!-- Virtual Assistant Card -->
+      <div class="card assistant">
+        <h3><i class="fas fa-robot"></i> Virtual Assistant</h3>
+        <div class="assistant-message">
+          <div class="assistant-name">SmartSolve Assistant</div>
+          <div>I've scheduled your team meeting for tomorrow at 10 AM. Would you like me to prepare the agenda?</div>
+        </div>
+        <div class="assistant-message">
+          <div class="assistant-name">Business Assistant</div>
+          <div>Your marketing campaign is performing well! ROI increased by 25% this week.</div>
+        </div>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> AI-powered scheduling</li>
+          <li><i class="fas fa-check"></i> Business insights</li>
+          <li><i class="fas fa-check"></i> Automated workflows</li>
+        </ul>
+        <button class="btn assistant">Chat with Assistant</button>
+      </div>
+
+      <!-- Income Tracker Card -->
+      <div class="card">
+        <h3><i class="fas fa-coins"></i> Pi Income Tracker</h3>
+        <div class="income-tracker">
+          <div class="income-item">
+            <span>Website Design</span>
+            <span class="pi-income">+150 Pi</span>
+          </div>
+          <div class="income-item">
+            <span>Marketing Services</span>
+            <span class="pi-income">+200 Pi</span>
+          </div>
+          <div class="income-item">
+            <span>Consulting</span>
+            <span class="pi-income">+100 Pi</span>
+          </div>
+          <div class="income-item">
+            <span>Software Development</span>
+            <span class="pi-income">+50 Pi</span>
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Pi income tracking</li>
+          <li><i class="fas fa-check"></i> Revenue analytics</li>
+          <li><i class="fas fa-check"></i> Payment processing</li>
+        </ul>
+        <button class="btn">View Income</button>
+      </div>
+
+      <!-- Pro Features Card -->
+      <div class="card">
+        <h3><i class="fas fa-crown"></i> Pro Features</h3>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> All Premium features</li>
+          <li><i class="fas fa-check"></i> Team collaboration tools</li>
+          <li><i class="fas fa-check"></i> Business tools (Marketing + Income Tracker)</li>
+          <li><i class="fas fa-check"></i> TruthWeb & Cloudy integrations</li>
+          <li><i class="fas fa-check"></i> Virtual assistant booking</li>
+          <li><i class="fas fa-check"></i> Advanced analytics</li>
+        </ul>
+        <div style="background: var(--success-bg); color: var(--success-text); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+          <strong>Business Benefits:</strong><br>
+          • Increased productivity<br>
+          • Better team coordination<br>
+          • Advanced insights
+        </div>
+        <button class="btn">View All Features</button>
+      </div>
+    </div>
+
+    <!-- Lifetime CTA -->
+    <div class="lifetime-cta">
+      <h3>🔓 Ready for Lifetime Access?</h3>
+      <p>Get the Pro Plan forever with our exclusive Lifetime Plan for just 99 Pi one-time payment!</p>
+      <div style="margin-top: 1.5rem;">
+        <button class="btn" onclick="window.location.href='pricing.html'">
+          <i class="fas fa-crown"></i> View Lifetime Plan
+        </button>
+        <button class="btn" onclick="window.location.href='demo-lifetime-plan.html'">
+          <i class="fas fa-eye"></i> See Lifetime Demo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Demo interactions
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const action = this.textContent.trim();
+        if (action.includes('Manage') || action.includes('View') || action.includes('Chat')) {
+          alert('This feature is fully functional in the Pro Plan!');
+        }
+      });
+    });
+
+    // Team member interactions
+    document.querySelectorAll('.team-member').forEach(member => {
+      member.addEventListener('click', function() {
+        alert('Click to view detailed profile and tasks for this team member');
+      });
+    });
+
+    // Business metric interactions
+    document.querySelectorAll('.business-metric').forEach(metric => {
+      metric.addEventListener('click', function() {
+        alert('Click to view detailed business analytics and reports');
+      });
+    });
+
+    // Integration interactions
+    document.querySelectorAll('.integration-item').forEach(integration => {
+      integration.addEventListener('click', function() {
+        alert('Click to manage integration settings and sync options');
+      });
+    });
+
+    // Assistant message interactions
+    document.querySelectorAll('.assistant-message').forEach(message => {
+      message.addEventListener('click', function() {
+        alert('Click to continue conversation with the virtual assistant');
+      });
+    });
+
+    // Animate charts
+    setTimeout(() => {
+      document.querySelectorAll('.chart-bar').forEach((bar, index) => {
+        setTimeout(() => {
+          bar.style.height = bar.style.height;
+        }, index * 100);
+      });
+    }, 500);
+  </script>
+</body>
+</html> 

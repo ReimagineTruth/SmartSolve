@@ -1,0 +1,444 @@
+/* SmartSolve Payment Modal Styles */
+/* Include this CSS file in your HTML to style the payment modal */
+
+:root {
+  --primary: #A3CFFA;
+  --secondary: #A8D5BA;
+  --gradient: linear-gradient(45deg, #A3CFFA, #A8D5BA);
+  --text: #2A3B5A;
+  --background: #F5F5F5;
+  --card-bg: #FFFFFF;
+  --hover-bg: #E6F0FA;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --success-bg: #D4EDDA;
+  --success-text: #155724;
+  --warning-bg: #FFF3CD;
+  --warning-text: #856404;
+  --error-bg: #F8D7DA;
+  --error-text: #721C24;
+  --pi-bg: #FFD700;
+  --pi-text: #B8860B;
+  --lifetime-bg: #FFE5B4;
+  --lifetime-text: #E65100;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+/* Payment Modal */
+.payment-modal {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow);
+  position: relative;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modal Header */
+.modal-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.modal-header h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.plan-badge {
+  background: var(--gradient);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.plan-badge.lifetime {
+  background: var(--lifetime-bg);
+  color: var(--lifetime-text);
+}
+
+/* Billing Toggle */
+.billing-toggle {
+  display: flex;
+  background: var(--hover-bg);
+  border-radius: 10px;
+  padding: 0.3rem;
+  margin: 1rem 0;
+}
+
+.billing-option {
+  flex: 1;
+  padding: 0.8rem;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  position: relative;
+}
+
+.billing-option.active {
+  background: var(--primary);
+  color: white;
+}
+
+.billing-option:hover:not(.active) {
+  background: rgba(163, 207, 250, 0.3);
+}
+
+/* Price Display */
+.price-display {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.price-amount {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.price-currency {
+  font-size: 1.5rem;
+  color: var(--pi-text);
+  font-weight: 600;
+}
+
+.price-period {
+  font-size: 1rem;
+  color: var(--text);
+  opacity: 0.8;
+}
+
+.savings-badge {
+  background: var(--success-bg);
+  color: var(--success-text);
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+/* Features List */
+.features-list {
+  list-style: none;
+  margin: 1.5rem 0;
+}
+
+.features-list li {
+  margin: 0.8rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.5rem 0;
+}
+
+.features-list li i {
+  color: var(--primary);
+  width: 20px;
+  font-size: 1rem;
+}
+
+/* Payment Methods */
+.payment-methods {
+  margin: 1.5rem 0;
+}
+
+.payment-methods h3 {
+  margin-bottom: 1rem;
+  color: var(--text);
+  font-size: 1.1rem;
+}
+
+.payment-method {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 2px solid var(--hover-bg);
+  border-radius: 10px;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.payment-method:hover {
+  border-color: var(--primary);
+  background: var(--hover-bg);
+}
+
+.payment-method.selected {
+  border-color: var(--primary);
+  background: var(--hover-bg);
+}
+
+.payment-method i {
+  font-size: 1.5rem;
+  color: var(--pi-text);
+}
+
+.payment-method .method-info h4 {
+  margin-bottom: 0.2rem;
+  color: var(--text);
+}
+
+.payment-method .method-info p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* Modal Actions */
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn {
+  flex: 1;
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--secondary);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: var(--hover-bg);
+  color: var(--text);
+}
+
+.btn-secondary:hover {
+  background: #D1E7DD;
+}
+
+.btn-lifetime {
+  background: var(--lifetime-bg);
+  color: var(--lifetime-text);
+}
+
+.btn-lifetime:hover {
+  background: #FFD700;
+  transform: translateY(-2px);
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text);
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.close-btn:hover {
+  opacity: 1;
+  background: var(--hover-bg);
+}
+
+/* Security Notice */
+.security-notice {
+  background: var(--warning-bg);
+  color: var(--warning-text);
+  padding: 1rem;
+  border-radius: 10px;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+}
+
+.security-notice i {
+  margin-right: 0.5rem;
+  font-size: 1.1rem;
+}
+
+/* Loading State */
+.loading {
+  display: none;
+  text-align: center;
+  padding: 2rem;
+}
+
+.loading i {
+  font-size: 2rem;
+  color: var(--primary);
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading p {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Success State */
+.success-message {
+  display: none;
+  text-align: center;
+  padding: 2rem;
+}
+
+.success-message i {
+  font-size: 3rem;
+  color: var(--success-text);
+  margin-bottom: 1rem;
+}
+
+.success-message h3 {
+  color: var(--success-text);
+  margin-bottom: 1rem;
+}
+
+.success-message p {
+  color: var(--text);
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .payment-modal {
+    padding: 1.5rem;
+    margin: 1rem;
+    width: 95%;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+  }
+  
+  .price-amount {
+    font-size: 2.5rem;
+  }
+  
+  .billing-toggle {
+    flex-direction: column;
+  }
+  
+  .billing-option {
+    margin: 0.2rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-modal {
+    padding: 1rem;
+  }
+  
+  .modal-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .price-amount {
+    font-size: 2rem;
+  }
+  
+  .features-list li {
+    font-size: 0.9rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .payment-modal {
+    animation: none;
+  }
+  
+  .btn:hover {
+    transform: none;
+  }
+  
+  .loading i {
+    animation: none;
+  }
+}
+
+/* Focus styles for accessibility */
+.btn:focus,
+.payment-method:focus,
+.billing-option:focus,
+.close-btn:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .payment-modal {
+    border: 2px solid var(--text);
+  }
+  
+  .btn {
+    border: 2px solid currentColor;
+  }
+} 

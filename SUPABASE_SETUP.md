@@ -17,7 +17,7 @@ SmartSolve now features a complete dashboard system with:
 - Basic wellness tracking
 - Local storage only
 
-### ⭐ **Standard Plan ($5/month)**
+### ⭐ **Standard Plan (3 Pi/month)**
 - Unlimited task management
 - Advanced budget tools with categories
 - Full meal planner
@@ -26,7 +26,7 @@ SmartSolve now features a complete dashboard system with:
 - Ad-free experience
 - Supabase cloud sync
 
-### 🏆 **Premium Plan ($10/month)**
+### 🏆 **Premium Plan (6 Pi/month)**
 - Everything in Standard
 - Family calendar & task sharing
 - Full grocery planner
@@ -34,7 +34,7 @@ SmartSolve now features a complete dashboard system with:
 - Group chat for families
 - Advanced analytics
 
-### 🚀 **Pro Plan ($15/month)**
+### 🚀 **Pro Plan (9 Pi/month)**
 - All Premium features
 - Team collaboration tools
 - Business tools (marketing + income tracker)
