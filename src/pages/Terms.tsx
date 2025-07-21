@@ -240,6 +240,7 @@ const Terms: React.FC = () => {
 
           <div className="bg-white rounded-xl shadow-lg p-8">
             {/* Contact section removed as requested */}
+            <p className="text-gray-700 mt-4 text-center">For legal inquiries, email <a href="mailto:legal@smartsolve.com" className="text-primary underline">legal@smartsolve.com</a> (Mrwain Organization).</p>
           </div>
         </div>
       </div>

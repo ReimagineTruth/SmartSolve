@@ -22,6 +22,7 @@ import Partners from './pages/Partners'
 import Help from './pages/Help'
 import CookiePolicy from './pages/CookiePolicy'
 import Security from './pages/Security'
+import Dashboard from './pages/Dashboard'
 
 function App() {
   const [showSplash, setShowSplash] = useState(true)
@@ -36,6 +37,7 @@ function App() {
         {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/demo/free" element={<DemoFreePlan />} />
           <Route path="/demo/standard" element={<DemoStandardPlan />} />

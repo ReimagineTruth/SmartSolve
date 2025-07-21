@@ -27,6 +27,7 @@ const CookiePolicy: React.FC = () => {
         <div className="bg-primary/10 rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold text-primary mb-2">Contact Us</h2>
           <p className="text-gray-700 mb-4">If you have questions about our Cookie Policy, email <a href='mailto:privacy@smartsolve.com' className='text-primary underline'>privacy@smartsolve.com</a>.</p>
+          <p className="text-gray-700 mt-4 text-center">For cookie policy inquiries, email <a href="mailto:privacy@smartsolve.com" className="text-primary underline">privacy@smartsolve.com</a> (Mrwain Organization).</p>
         </div>
       </div>
       <Footer />
