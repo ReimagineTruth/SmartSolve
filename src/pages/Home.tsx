@@ -173,7 +173,7 @@ const Home: React.FC = () => {
               Choose Your Plan
             </h2>
             <p className="text-xl text-gray-600">
-              Start free or upgrade to unlock powerful features starting at 3 Pi/month.
+              Start free or upgrade to unlock powerful features starting at 5 Pi/month.
             </p>
           </div>
 
@@ -208,7 +208,7 @@ const Home: React.FC = () => {
                 Most Popular
               </div>
               <h3 className="text-xl font-semibold text-text mb-2">Standard Plan</h3>
-              <div className="text-3xl font-bold text-primary mb-2">3 Pi/month</div>
+              <div className="text-3xl font-bold text-primary mb-2">5 Pi/month</div>
               <p className="text-gray-600 mb-6">Core tools for personal organization</p>
               <ul className="text-left mb-6 space-y-2">
                 <li className="flex items-center">
@@ -236,7 +236,7 @@ const Home: React.FC = () => {
             {/* Premium Plan */}
             <div className="card text-center">
               <h3 className="text-xl font-semibold text-text mb-2">Premium Plan</h3>
-              <div className="text-3xl font-bold text-primary mb-2">6 Pi/month</div>
+              <div className="text-3xl font-bold text-primary mb-2">10 Pi/month</div>
               <p className="text-gray-600 mb-6">Perfect for families</p>
               <ul className="text-left mb-6 space-y-2">
                 <li className="flex items-center">
@@ -264,7 +264,7 @@ const Home: React.FC = () => {
             {/* Pro Plan */}
             <div className="card text-center">
               <h3 className="text-xl font-semibold text-text mb-2">Pro Plan</h3>
-              <div className="text-3xl font-bold text-primary mb-2">9 Pi/month</div>
+              <div className="text-3xl font-bold text-primary mb-2">15 Pi/month</div>
               <p className="text-gray-600 mb-6">Advanced features for businesses</p>
               <ul className="text-left mb-6 space-y-2">
                 <li className="flex items-center">

@@ -26,7 +26,7 @@ const Pricing: React.FC = () => {
     },
     {
       name: 'Standard',
-      price: billingCycle === 'monthly' ? '3' : '30',
+      price: billingCycle === 'monthly' ? '5' : '50',
       currency: 'Pi',
       period: billingCycle === 'monthly' ? '/month' : '/year',
       description: 'Core tools for personal organization',
@@ -45,7 +45,7 @@ const Pricing: React.FC = () => {
     },
     {
       name: 'Premium',
-      price: billingCycle === 'monthly' ? '6' : '60',
+      price: billingCycle === 'monthly' ? '10' : '100',
       currency: 'Pi',
       period: billingCycle === 'monthly' ? '/month' : '/year',
       description: 'Perfect for families and small groups',
@@ -63,7 +63,7 @@ const Pricing: React.FC = () => {
     },
     {
       name: 'Pro',
-      price: billingCycle === 'monthly' ? '9' : '90',
+      price: billingCycle === 'monthly' ? '15' : '150',
       currency: 'Pi',
       period: billingCycle === 'monthly' ? '/month' : '/year',
       description: 'Advanced features for businesses',

@@ -1,60 +1,150 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Star, Zap, ArrowUp, Check, Users, Building, Crown } from 'lucide-react'
+import { Star, ArrowUp, Check, X, Plus, Trash2, Edit, Calendar, DollarSign, Utensils, Heart, Brain, TrendingUp, Target, Zap } from 'lucide-react'
+import localStorageService, { Task, BudgetItem, Meal, WellnessData } from '../lib/localStorage'
 
 const DemoStandardPlan: React.FC = () => {
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
+  const [tasks, setTasks] = useState<Task[]>([])
+  const [budgetItems, setBudgetItems] = useState<BudgetItem[]>([])
+  const [meals, setMeals] = useState<Meal[]>([])
+  const [wellnessData, setWellnessData] = useState<WellnessData[]>([])
+  const [newTask, setNewTask] = useState('')
+  const [newBudgetItem, setNewBudgetItem] = useState({ name: '', amount: 0, type: 'expense' as const, category: '' })
+  const [newMeal, setNewMeal] = useState({ name: '', ingredients: '', instructions: '', prepTime: 0, cookTime: 0, servings: 1, cost: 0, category: 'dinner' as const })
+  const [moodRating, setMoodRating] = useState(5)
+  const [aiMoodAdvice, setAiMoodAdvice] = useState('')
+  const [editingTask, setEditingTask] = useState<string | null>(null)
+  const [editingBudget, setEditingBudget] = useState<string | null>(null)
 
-  const tasks = [
-    { id: 1, text: 'Buy groceries', completed: true, priority: 'high' },
-    { id: 2, text: 'Call dentist', completed: false, priority: 'medium' },
-    { id: 3, text: 'Pay electricity bill', completed: false, priority: 'high' },
-    { id: 4, text: 'Schedule car service', completed: false, priority: 'low' },
-    { id: 5, text: 'Plan weekend trip', completed: false, priority: 'medium' },
-    { id: 6, text: 'Review budget', completed: true, priority: 'high' },
-    { id: 7, text: 'Update resume', completed: false, priority: 'medium' },
-    { id: 8, text: 'Book flight tickets', completed: false, priority: 'high' }
-  ]
+  // Load data on component mount
+  useEffect(() => {
+    loadData()
+  }, [])
 
-  const budgetData = {
-    income: 3500,
-    expenses: 2200,
-    savings: 1300,
-    categories: [
-      { name: 'Housing', amount: 1000, color: 'bg-blue-500', trend: 'up' },
-      { name: 'Food', amount: 500, color: 'bg-green-500', trend: 'down' },
-      { name: 'Transport', amount: 300, color: 'bg-yellow-500', trend: 'stable' },
-      { name: 'Entertainment', amount: 200, color: 'bg-purple-500', trend: 'up' },
-      { name: 'Utilities', amount: 150, color: 'bg-red-500', trend: 'down' },
-      { name: 'Healthcare', amount: 50, color: 'bg-indigo-500', trend: 'stable' }
-    ]
+  const loadData = () => {
+    const storedTasks = localStorageService.getTasks()
+    const storedBudget = localStorageService.getBudgetItems()
+    const storedMeals = localStorageService.getMeals()
+    const storedWellness = localStorageService.getWellnessData()
+
+    setTasks(storedTasks) // Unlimited tasks for Standard plan
+    setBudgetItems(storedBudget)
+    setMeals(storedMeals)
+    setWellnessData(storedWellness)
   }
 
-  const meals = [
-    { day: 'Monday', meal: 'Chicken Stir Fry', cost: 12, ingredients: ['Chicken', 'Vegetables', 'Soy Sauce'] },
-    { day: 'Tuesday', meal: 'Pasta Carbonara', cost: 8, ingredients: ['Pasta', 'Eggs', 'Bacon', 'Cheese'] },
-    { day: 'Wednesday', meal: 'Grilled Salmon', cost: 15, ingredients: ['Salmon', 'Lemon', 'Herbs'] },
-    { day: 'Thursday', meal: 'Beef Tacos', cost: 10, ingredients: ['Ground Beef', 'Tortillas', 'Lettuce', 'Tomatoes'] },
-    { day: 'Friday', meal: 'Vegetarian Curry', cost: 9, ingredients: ['Chickpeas', 'Coconut Milk', 'Rice'] }
-  ]
-
-  const moodData = {
-    currentMood: 'Happy',
-    moodScore: 8,
-    weeklyTrend: [6, 7, 8, 7, 9, 8, 8],
-    suggestions: [
-      'Take a 10-minute walk outside',
-      'Practice deep breathing exercises',
-      'Listen to your favorite music',
-      'Connect with a friend or family member'
-    ]
+  // Task management functions
+  const addTask = () => {
+    if (newTask.trim()) {
+      const task: Omit<Task, 'id' | 'createdAt'> = {
+        text: newTask.trim(),
+        completed: false,
+        priority: 'medium',
+        category: 'personal'
+      }
+      localStorageService.addTask(task)
+      setNewTask('')
+      loadData()
+    }
   }
 
-  const localServices = [
-    { id: 1, title: 'House Cleaning', price: '50 Pi', location: 'Downtown', rating: 4.8 },
-    { id: 2, title: 'Tutoring Services', price: '30 Pi/hour', location: 'University Area', rating: 4.9 },
-    { id: 3, title: 'Pet Sitting', price: '25 Pi/day', location: 'Suburbs', rating: 4.7 }
-  ]
+  const toggleTask = (id: string) => {
+    const task = tasks.find(t => t.id === id)
+    if (task) {
+      localStorageService.updateTask(id, { completed: !task.completed })
+      loadData()
+    }
+  }
+
+  const deleteTask = (id: string) => {
+    localStorageService.deleteTask(id)
+    loadData()
+  }
+
+  const updateTask = (id: string, text: string) => {
+    localStorageService.updateTask(id, { text })
+    setEditingTask(null)
+    loadData()
+  }
+
+  // Budget management functions
+  const addBudgetItem = () => {
+    if (newBudgetItem.name && newBudgetItem.amount > 0) {
+      const item: Omit<BudgetItem, 'id'> = {
+        name: newBudgetItem.name,
+        amount: newBudgetItem.amount,
+        type: newBudgetItem.type,
+        category: newBudgetItem.category || 'Other',
+        date: new Date()
+      }
+      localStorageService.addBudgetItem(item)
+      setNewBudgetItem({ name: '', amount: 0, type: 'expense', category: '' })
+      loadData()
+    }
+  }
+
+  const deleteBudgetItem = (id: string) => {
+    localStorageService.deleteBudgetItem(id)
+    loadData()
+  }
+
+  // Meal management functions
+  const addMeal = () => {
+    if (newMeal.name && newMeal.ingredients) {
+      const meal: Omit<Meal, 'id'> = {
+        name: newMeal.name,
+        ingredients: newMeal.ingredients.split(',').map(i => i.trim()),
+        instructions: newMeal.instructions.split(',').map(i => i.trim()),
+        prepTime: newMeal.prepTime,
+        cookTime: newMeal.cookTime,
+        servings: newMeal.servings,
+        cost: newMeal.cost,
+        category: newMeal.category,
+        isFavorite: false
+      }
+      localStorageService.addMeal(meal)
+      setNewMeal({ name: '', ingredients: '', instructions: '', prepTime: 0, cookTime: 0, servings: 1, cost: 0, category: 'dinner' })
+      loadData()
+    }
+  }
+
+  const deleteMeal = (id: string) => {
+    localStorageService.deleteMeal(id)
+    loadData()
+  }
+
+  // AI Mood Assistant
+  const generateMoodAdvice = () => {
+    const advice = [
+      "Take a 10-minute walk outside to boost your mood and energy levels.",
+      "Practice deep breathing exercises for 5 minutes to reduce stress.",
+      "Listen to your favorite music while organizing your workspace.",
+      "Try a new hobby or activity you've been curious about.",
+      "Connect with a friend or family member for a quick chat.",
+      "Write down three things you're grateful for today.",
+      "Do some light stretching or yoga to improve your mood.",
+      "Plan something fun for the weekend to look forward to."
+    ]
+    const randomAdvice = advice[Math.floor(Math.random() * advice.length)]
+    setAiMoodAdvice(randomAdvice)
+  }
+
+  // Wellness tracking
+  const addWellnessEntry = () => {
+    const entry: Omit<WellnessData, 'date'> = {
+      mood: moodRating,
+      sleep: 7, // Default values
+      water: 8,
+      exercise: 30
+    }
+    localStorageService.addWellnessEntry(entry)
+    loadData()
+  }
+
+  // Get statistics
+  const budgetStats = localStorageService.getBudgetStats()
+  const taskStats = localStorageService.getTaskStats()
 
   return (
     <div className="min-h-screen bg-background">
@@ -69,7 +159,7 @@ const DemoStandardPlan: React.FC = () => {
               <h1 className="text-xl font-bold text-text">SmartSolve</h1>
             </Link>
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-primary font-semibold">Standard Plan</span>
+              <span className="text-sm text-secondary font-semibold">Standard Plan</span>
               <button 
                 onClick={() => setShowUpgradeModal(true)}
                 className="btn btn-primary text-sm"
@@ -87,26 +177,26 @@ const DemoStandardPlan: React.FC = () => {
         {/* Welcome Section */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-text mb-2">Welcome to SmartSolve Standard!</h1>
-          <p className="text-gray-600">You have access to unlimited tasks, advanced budget tools, and AI-powered features.</p>
+          <p className="text-gray-600">Unlimited tasks, advanced budget tools, and AI-powered features.</p>
         </div>
 
         {/* Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="card text-center">
-            <div className="text-2xl font-bold text-primary mb-2">8</div>
-            <div className="text-sm text-gray-600">Active Tasks</div>
+            <div className="text-2xl font-bold text-primary mb-2">{tasks.length}</div>
+            <div className="text-sm text-gray-600">Total Tasks</div>
           </div>
           <div className="card text-center">
-            <div className="text-2xl font-bold text-primary mb-2">5</div>
-            <div className="text-sm text-gray-600">Meals Planned</div>
+            <div className="text-2xl font-bold text-primary mb-2">{meals.length}</div>
+            <div className="text-sm text-gray-600">Meal Plans</div>
           </div>
           <div className="card text-center">
-            <div className="text-2xl font-bold text-primary mb-2">$1,300</div>
-            <div className="text-sm text-gray-600">Monthly Savings</div>
+            <div className="text-2xl font-bold text-primary mb-2">${budgetStats.expenses.toLocaleString()}</div>
+            <div className="text-sm text-gray-600">Monthly Expenses</div>
           </div>
           <div className="card text-center">
-            <div className="text-2xl font-bold text-primary mb-2">8/10</div>
-            <div className="text-sm text-gray-600">Mood Score</div>
+            <div className="text-2xl font-bold text-primary mb-2">{taskStats.completionRate}%</div>
+            <div className="text-sm text-gray-600">Completion Rate</div>
           </div>
         </div>
 
@@ -114,42 +204,73 @@ const DemoStandardPlan: React.FC = () => {
           {/* Tasks Section */}
           <div className="card">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-text">Today's Tasks</h2>
-              <span className="text-sm text-green-600 font-semibold">Unlimited</span>
+              <h2 className="text-xl font-semibold text-text">Unlimited Tasks</h2>
+              <Zap className="h-5 w-5 text-secondary" />
             </div>
             
-            <div className="space-y-3">
-              {tasks.map((task) => (
-                <div key={task.id} className="flex items-center p-3 bg-gray-50 rounded-lg">
-                  <button className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
-                    task.completed 
-                      ? 'bg-primary border-primary' 
-                      : 'border-gray-300'
-                  }`}>
+            {/* Add new task */}
+            <div className="mb-4 flex gap-2">
+              <input
+                type="text"
+                value={newTask}
+                onChange={(e) => setNewTask(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && addTask()}
+                placeholder="Add a new task..."
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+              <button
+                onClick={addTask}
+                className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition-colors"
+              >
+                <Plus className="h-4 w-4" />
+              </button>
+            </div>
+            
+            <div className="space-y-3 max-h-64 overflow-y-auto">
+              {tasks.slice(0, 10).map((task) => (
+                <div key={task.id} className="flex items-center p-3 bg-gray-50 rounded-lg group">
+                  <button 
+                    onClick={() => toggleTask(task.id)}
+                    className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center transition-colors ${
+                      task.completed 
+                        ? 'bg-primary border-primary' 
+                        : 'border-gray-300 hover:border-primary'
+                    }`}
+                  >
                     {task.completed && <Check className="h-3 w-3 text-white" />}
                   </button>
-                  <span className={`flex-1 ${task.completed ? 'line-through text-gray-500' : ''}`}>
-                    {task.text}
-                  </span>
-                  <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    task.priority === 'high' ? 'bg-red-100 text-red-800' :
-                    task.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
-                    'bg-green-100 text-green-800'
-                  }`}>
-                    {task.priority}
+                  
+                  {editingTask === task.id ? (
+                    <input
+                      type="text"
+                      defaultValue={task.text}
+                      onBlur={(e) => updateTask(task.id, e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && updateTask(task.id, e.currentTarget.value)}
+                      className="flex-1 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary"
+                      autoFocus
+                    />
+                  ) : (
+                    <span className={`flex-1 ${task.completed ? 'line-through text-gray-500' : ''}`}>
+                      {task.text}
+                    </span>
+                  )}
+                  
+                  <div className="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button
+                      onClick={() => setEditingTask(editingTask === task.id ? null : task.id)}
+                      className="p-1 text-gray-500 hover:text-primary"
+                    >
+                      <Edit className="h-3 w-3" />
+                    </button>
+                    <button
+                      onClick={() => deleteTask(task.id)}
+                      className="p-1 text-gray-500 hover:text-red-500"
+                    >
+                      <Trash2 className="h-3 w-3" />
+                    </button>
                   </div>
                 </div>
               ))}
-            </div>
-
-            <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-              <div className="flex items-center">
-                <Check className="h-5 w-5 text-green-600 mr-3" />
-                <div>
-                  <h3 className="font-semibold text-green-800">Unlimited Tasks</h3>
-                  <p className="text-sm text-green-700">Create as many tasks as you need with priority levels</p>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -157,92 +278,177 @@ const DemoStandardPlan: React.FC = () => {
           <div className="card">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-text">Advanced Budget</h2>
-              <span className="text-sm text-primary font-semibold">AI Insights</span>
+              <TrendingUp className="h-5 w-5 text-secondary" />
             </div>
 
             <div className="mb-6">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-sm text-gray-600">Monthly Budget</span>
-                <span className="text-sm font-semibold">${budgetData.income}</span>
+                <span className="text-sm font-semibold">${budgetStats.income}</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div 
                   className="bg-primary h-2 rounded-full" 
-                  style={{ width: `${(budgetData.expenses / budgetData.income) * 100}%` }}
+                  style={{ width: `${budgetStats.income > 0 ? (budgetStats.expenses / budgetStats.income) * 100 : 0}%` }}
                 ></div>
               </div>
               <div className="flex justify-between text-sm mt-2">
-                <span className="text-gray-600">Spent: ${budgetData.expenses}</span>
-                <span className="text-green-600">Saved: ${budgetData.savings}</span>
+                <span className="text-gray-600">Spent: ${budgetStats.expenses}</span>
+                <span className="text-green-600">Saved: ${budgetStats.savings}</span>
               </div>
             </div>
 
-            <div className="space-y-3">
-              {budgetData.categories.map((category, index) => (
-                <div key={index} className="flex items-center justify-between">
+            {/* Add budget item */}
+            <div className="mb-4 space-y-2">
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={newBudgetItem.name}
+                  onChange={(e) => setNewBudgetItem({...newBudgetItem, name: e.target.value})}
+                  placeholder="Item name..."
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+                <input
+                  type="number"
+                  value={newBudgetItem.amount}
+                  onChange={(e) => setNewBudgetItem({...newBudgetItem, amount: parseFloat(e.target.value) || 0})}
+                  placeholder="Amount"
+                  className="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </div>
+              <div className="flex gap-2">
+                <select
+                  value={newBudgetItem.type}
+                  onChange={(e) => setNewBudgetItem({...newBudgetItem, type: e.target.value as 'income' | 'expense'})}
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                  <option value="expense">Expense</option>
+                  <option value="income">Income</option>
+                </select>
+                <select
+                  value={newBudgetItem.category}
+                  onChange={(e) => setNewBudgetItem({...newBudgetItem, category: e.target.value})}
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                  <option value="">Category</option>
+                  <option value="Housing">Housing</option>
+                  <option value="Food">Food</option>
+                  <option value="Transport">Transport</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Utilities">Utilities</option>
+                  <option value="Other">Other</option>
+                </select>
+                <button
+                  onClick={addBudgetItem}
+                  className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition-colors"
+                >
+                  <Plus className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-3 max-h-48 overflow-y-auto">
+              {budgetItems.slice(0, 8).map((item) => (
+                <div key={item.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg group">
                   <div className="flex items-center">
-                    <div className={`w-3 h-3 rounded-full ${category.color} mr-3`}></div>
-                    <span className="text-sm text-gray-600">{category.name}</span>
+                    <div className={`w-3 h-3 rounded-full mr-3 ${
+                      item.type === 'income' ? 'bg-green-500' : 'bg-red-500'
+                    }`}></div>
+                    <div>
+                      <span className="text-sm font-medium">{item.name}</span>
+                      <span className="text-xs text-gray-500 ml-2">{item.category}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center">
-                    <span className="text-sm font-semibold mr-2">${category.amount}</span>
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      category.trend === 'up' ? 'bg-red-100 text-red-800' :
-                      category.trend === 'down' ? 'bg-green-100 text-green-800' :
-                      'bg-gray-100 text-gray-800'
+                  <div className="flex items-center space-x-2">
+                    <span className={`text-sm font-semibold ${
+                      item.type === 'income' ? 'text-green-600' : 'text-red-600'
                     }`}>
-                      {category.trend}
+                      {item.type === 'income' ? '+' : '-'}${item.amount}
                     </span>
+                    <button
+                      onClick={() => deleteBudgetItem(item.id)}
+                      className="p-1 text-gray-500 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <Trash2 className="h-3 w-3" />
+                    </button>
                   </div>
                 </div>
               ))}
-            </div>
-
-            <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <div className="flex items-center">
-                <Check className="h-5 w-5 text-blue-600 mr-3" />
-                <div>
-                  <h3 className="font-semibold text-blue-800">Smart Insights</h3>
-                  <p className="text-sm text-blue-700">AI-powered spending analysis and savings recommendations</p>
-                </div>
-              </div>
             </div>
           </div>
 
-          {/* Meals Section */}
+          {/* Meal Planner */}
           <div className="card">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-text">Full Meal Planner</h2>
-              <span className="text-sm text-primary font-semibold">Unlimited</span>
+              <h2 className="text-xl font-semibold text-text">Meal Planner</h2>
+              <Utensils className="h-5 w-5 text-secondary" />
             </div>
 
-            <div className="space-y-4">
-              {meals.map((meal, index) => (
-                <div key={index} className="p-4 bg-gray-50 rounded-lg">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-semibold text-text">{meal.day}</h3>
-                    <span className="text-sm text-green-600">${meal.cost}</span>
+            {/* Add new meal */}
+            <div className="mb-4 space-y-2">
+              <input
+                type="text"
+                value={newMeal.name}
+                onChange={(e) => setNewMeal({...newMeal, name: e.target.value})}
+                placeholder="Meal name..."
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={newMeal.ingredients}
+                  onChange={(e) => setNewMeal({...newMeal, ingredients: e.target.value})}
+                  placeholder="Ingredients (comma separated)"
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+                <input
+                  type="number"
+                  value={newMeal.cost}
+                  onChange={(e) => setNewMeal({...newMeal, cost: parseFloat(e.target.value) || 0})}
+                  placeholder="Cost"
+                  className="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </div>
+              <div className="flex gap-2">
+                <select
+                  value={newMeal.category}
+                  onChange={(e) => setNewMeal({...newMeal, category: e.target.value as any})}
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                  <option value="breakfast">Breakfast</option>
+                  <option value="lunch">Lunch</option>
+                  <option value="dinner">Dinner</option>
+                  <option value="snack">Snack</option>
+                </select>
+                <button
+                  onClick={addMeal}
+                  className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition-colors"
+                >
+                  <Plus className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-3 max-h-48 overflow-y-auto">
+              {meals.slice(0, 6).map((meal) => (
+                <div key={meal.id} className="p-3 bg-gray-50 rounded-lg">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-medium">{meal.name}</h3>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-sm text-gray-600">${meal.cost}</span>
+                      <button
+                        onClick={() => deleteMeal(meal.id)}
+                        className="p-1 text-gray-500 hover:text-red-500"
+                      >
+                        <Trash2 className="h-3 w-3" />
+                      </button>
+                    </div>
                   </div>
-                  <p className="text-gray-600 text-sm mb-2">{meal.meal}</p>
-                  <div className="flex flex-wrap gap-1">
-                    {meal.ingredients.map((ingredient, idx) => (
-                      <span key={idx} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">
-                        {ingredient}
-                      </span>
-                    ))}
+                  <div className="text-xs text-gray-500">
+                    <span className="capitalize">{meal.category}</span> • {meal.ingredients.length} ingredients
                   </div>
                 </div>
               ))}
-            </div>
-
-            <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-              <div className="flex items-center">
-                <Check className="h-5 w-5 text-green-600 mr-3" />
-                <div>
-                  <h3 className="font-semibold text-green-800">Complete Meal Planning</h3>
-                  <p className="text-sm text-green-700">Get ingredient lists, cost estimates, and nutritional info</p>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -250,150 +456,100 @@ const DemoStandardPlan: React.FC = () => {
           <div className="card">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-text">AI Mood Assistant</h2>
-              <span className="text-sm text-primary font-semibold">Active</span>
+              <Brain className="h-5 w-5 text-secondary" />
             </div>
 
-            <div className="p-6 bg-gradient-to-r from-primary to-secondary rounded-lg text-white text-center mb-6">
-              <div className="text-4xl mb-2">😊</div>
-              <h3 className="text-xl font-semibold mb-2">{moodData.currentMood}</h3>
-              <div className="flex justify-center items-center space-x-1">
-                {moodData.weeklyTrend.map((score, index) => (
-                  <div 
-                    key={index}
-                    className="w-8 h-8 bg-white/20 rounded flex items-center justify-center text-sm font-semibold"
-                  >
-                    {score}
-                  </div>
-                ))}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">How are you feeling today?</label>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">😢</span>
+                <input
+                  type="range"
+                  min="1"
+                  max="10"
+                  value={moodRating}
+                  onChange={(e) => setMoodRating(parseInt(e.target.value))}
+                  className="flex-1 mx-4"
+                />
+                <span className="text-sm text-gray-600">😊</span>
               </div>
-              <p className="text-sm opacity-90 mt-2">Weekly Mood Trend</p>
-            </div>
-
-            <div className="space-y-3">
-              <h4 className="font-semibold text-text">Today's Suggestions:</h4>
-              {moodData.suggestions.map((suggestion, index) => (
-                <div key={index} className="flex items-start">
-                  <span className="text-primary mr-2">•</span>
-                  <span className="text-sm text-gray-600">{suggestion}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6 p-4 bg-purple-50 border border-purple-200 rounded-lg">
-              <div className="flex items-center">
-                <Check className="h-5 w-5 text-purple-600 mr-3" />
-                <div>
-                  <h3 className="font-semibold text-purple-800">Personalized Wellness</h3>
-                  <p className="text-sm text-purple-700">AI-powered mood tracking and wellness recommendations</p>
-                </div>
+              <div className="text-center mt-2">
+                <span className="text-lg font-semibold text-primary">{moodRating}/10</span>
               </div>
             </div>
-          </div>
 
-          {/* Local Services */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-text">Local Services</h2>
-              <span className="text-sm text-primary font-semibold">Pi Network</span>
-            </div>
-
-            <div className="space-y-4">
-              {localServices.map((service) => (
-                <div key={service.id} className="p-4 bg-gray-50 rounded-lg">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-semibold text-text">{service.title}</h3>
-                    <span className="text-sm text-green-600">{service.price}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">{service.location}</span>
-                    <div className="flex items-center">
-                      <span className="text-yellow-500 mr-1">★</span>
-                      <span className="text-sm text-gray-600">{service.rating}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-6 p-4 bg-orange-50 border border-orange-200 rounded-lg">
-              <div className="flex items-center">
-                <Check className="h-5 w-5 text-orange-600 mr-3" />
-                <div>
-                  <h3 className="font-semibold text-orange-800">Pi Network Integration</h3>
-                  <p className="text-sm text-orange-700">Browse and book local services using Pi currency</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Upgrade CTA */}
-        <div className="mt-12 card bg-gradient-to-r from-secondary to-primary text-white text-center">
-          <h2 className="text-2xl font-bold mb-4">Ready for Family Features?</h2>
-          <p className="text-lg mb-6 opacity-90">
-            Upgrade to Premium Plan and get family calendar sharing, kids mode, group chat, and more!
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button 
-              onClick={() => setShowUpgradeModal(true)}
-              className="btn bg-white text-secondary hover:bg-gray-100 text-lg px-8 py-4"
+            <button
+              onClick={generateMoodAdvice}
+              className="w-full mb-4 px-4 py-2 bg-secondary text-white rounded-lg hover:bg-primary transition-colors"
             >
-              Upgrade to Premium
+              Get AI Advice
             </button>
-            <Link to="/demo/premium" className="btn bg-transparent border-2 border-white text-white hover:bg-white hover:text-secondary text-lg px-8 py-4">
-              See Premium Demo
-            </Link>
+
+            {aiMoodAdvice && (
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="flex items-center mb-2">
+                  <Brain className="h-4 w-4 text-blue-600 mr-2" />
+                  <span className="text-sm font-medium text-blue-800">AI Suggestion</span>
+                </div>
+                <p className="text-sm text-blue-700">{aiMoodAdvice}</p>
+              </div>
+            )}
+
+            <button
+              onClick={addWellnessEntry}
+              className="w-full mt-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition-colors"
+            >
+              Track Today's Mood
+            </button>
           </div>
         </div>
+
+        {/* Upgrade Modal */}
+        {showUpgradeModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-xl p-8 max-w-md w-11/12">
+              <div className="text-center mb-6">
+                <h3 className="text-2xl font-bold text-text mb-2">Upgrade to Premium</h3>
+                <p className="text-gray-600">Unlock family features, kids mode, and group collaboration!</p>
+              </div>
+              
+              <div className="space-y-4 mb-6">
+                <div className="flex items-center">
+                  <Check className="h-5 w-5 text-green-500 mr-3" />
+                  <span>Family Calendar & Task Sharing</span>
+                </div>
+                <div className="flex items-center">
+                  <Check className="h-5 w-5 text-green-500 mr-3" />
+                  <span>Kids Mode with Rewards</span>
+                </div>
+                <div className="flex items-center">
+                  <Check className="h-5 w-5 text-green-500 mr-3" />
+                  <span>Group Chat & File Sharing</span>
+                </div>
+                <div className="flex items-center">
+                  <Check className="h-5 w-5 text-green-500 mr-3" />
+                  <span>Full Grocery Planner</span>
+                </div>
+              </div>
+
+              <div className="flex space-x-3">
+                <button
+                  onClick={() => setShowUpgradeModal(false)}
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+                >
+                  Maybe Later
+                </button>
+                <Link
+                  to="/pricing"
+                  className="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-secondary text-center"
+                >
+                  View Plans
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* Upgrade Modal */}
-      {showUpgradeModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
-            <div className="text-center mb-6">
-              <Users className="h-12 w-12 text-secondary mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-text mb-2">Upgrade to Premium</h3>
-              <p className="text-gray-600">Perfect for families and small groups</p>
-            </div>
-
-            <div className="space-y-4 mb-6">
-              <div className="flex items-center">
-                <Check className="h-5 w-5 text-green-500 mr-3" />
-                <span className="text-sm">All Standard features</span>
-              </div>
-              <div className="flex items-center">
-                <Check className="h-5 w-5 text-green-500 mr-3" />
-                <span className="text-sm">Family calendar & sharing</span>
-              </div>
-              <div className="flex items-center">
-                <Check className="h-5 w-5 text-green-500 mr-3" />
-                <span className="text-sm">Kids mode with rewards</span>
-              </div>
-              <div className="flex items-center">
-                <Check className="h-5 w-5 text-green-500 mr-3" />
-                <span className="text-sm">Group chat & file sharing</span>
-              </div>
-              <div className="flex items-center">
-                <Check className="h-5 w-5 text-green-500 mr-3" />
-                <span className="text-sm">Full grocery planner</span>
-              </div>
-            </div>
-
-            <div className="flex gap-4">
-              <button 
-                onClick={() => setShowUpgradeModal(false)}
-                className="btn btn-secondary flex-1"
-              >
-                Maybe Later
-              </button>
-              <Link to="/pricing" className="btn btn-primary flex-1">
-                View Plans
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

@@ -37,8 +37,8 @@ const plans: Record<string, Plan> = {
     name: 'Standard Plan',
     badge: 'Standard Plan',
     description: 'Core tools for personal organization',
-    monthly: { price: 3, period: '/month', savings: null },
-    yearly: { price: 30, period: '/year', savings: 'Save 10 Pi/year' },
+    monthly: { price: 5, period: '/month', savings: null },
+    yearly: { price: 50, period: '/year', savings: 'Save 10 Pi/year' },
     features: [
       'Unlimited tasks & planning',
       'Advanced budget tools',
@@ -51,8 +51,8 @@ const plans: Record<string, Plan> = {
     name: 'Premium Plan',
     badge: 'Premium Plan',
     description: 'Perfect for families and small groups',
-    monthly: { price: 6, period: '/month', savings: null },
-    yearly: { price: 60, period: '/year', savings: 'Save 20 Pi/year' },
+    monthly: { price: 10, period: '/month', savings: null },
+    yearly: { price: 100, period: '/year', savings: 'Save 20 Pi/year' },
     features: [
       'All Standard features',
       'Family calendar & sharing',
@@ -66,8 +66,8 @@ const plans: Record<string, Plan> = {
     name: 'Pro Plan',
     badge: 'Pro Plan',
     description: 'Advanced features for businesses',
-    monthly: { price: 9, period: '/month', savings: null },
-    yearly: { price: 90, period: '/year', savings: 'Save 30 Pi/year' },
+    monthly: { price: 15, period: '/month', savings: null },
+    yearly: { price: 150, period: '/year', savings: 'Save 30 Pi/year' },
     features: [
       'All Premium features',
       'Team collaboration tools',
