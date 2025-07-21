@@ -299,6 +299,54 @@ class LocalStorageService {
       localStorage.removeItem(this.getKey(key));
     });
   }
+
+  // Subscription management
+  getSubscription(): {
+    plan: 'free' | 'standard' | 'premium' | 'pro' | 'lifetime',
+    billing: 'monthly' | 'yearly' | 'lifetime',
+    status: 'active' | 'expired',
+    expiration: string | null,
+  } {
+    return this.getItem('subscription', {
+      plan: 'free',
+      billing: 'monthly',
+      status: 'active',
+      expiration: null,
+    });
+  }
+
+  saveSubscription(subscription: {
+    plan: 'free' | 'standard' | 'premium' | 'pro' | 'lifetime',
+    billing: 'monthly' | 'yearly' | 'lifetime',
+    status: 'active' | 'expired',
+    expiration: string | null,
+  }): void {
+    this.setItem('subscription', subscription);
+  }
+
+  updateSubscription(updates: Partial<{
+    plan: 'free' | 'standard' | 'premium' | 'pro' | 'lifetime',
+    billing: 'monthly' | 'yearly' | 'lifetime',
+    status: 'active' | 'expired',
+    expiration: string | null,
+  }>): void {
+    const current = this.getSubscription();
+    const updated = { ...current, ...updates };
+    this.saveSubscription(updated);
+  }
+
+  checkSubscriptionExpiration(): 'active' | 'expired' {
+    const { expiration, plan } = this.getSubscription();
+    if (plan === 'lifetime') return 'active';
+    if (!expiration) return 'active';
+    const now = new Date();
+    const exp = new Date(expiration);
+    return now > exp ? 'expired' : 'active';
+  }
+
+  clearSubscription(): void {
+    localStorage.removeItem(this.getKey('subscription'));
+  }
 }
 
 export const localStorageService = new LocalStorageService();

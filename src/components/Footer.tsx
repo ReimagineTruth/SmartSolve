@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
   }
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-black text-white">
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -130,11 +130,6 @@ const Footer: React.FC = () => {
             <h4 className="text-lg font-semibold mb-4">Support & Legal</h4>
             <ul className="space-y-3">
               <li>
-                <Link to="/contact" className="text-gray-400 hover:text-white transition-colors">
-                  Contact Us
-                </Link>
-              </li>
-              <li>
                 <Link to="/help" className="text-gray-400 hover:text-white transition-colors">
                   Help Center
                 </Link>
@@ -190,11 +185,11 @@ const Footer: React.FC = () => {
       </div>
 
       {/* Bottom Footer */}
-      <div className="border-t border-gray-800">
+      <div className="border-t border-gray-800 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center mb-4 md:mb-0">
-              <span className="text-gray-400">© 2024 SmartSolve. Made with</span>
+              <span className="text-gray-400">© 2025 SmartSolve. Made with</span>
               <Heart className="h-4 w-4 text-red-500 mx-1" />
               <span className="text-gray-400">by</span>
               <span className="text-primary font-semibold ml-1">Mrwain Organization</span>
@@ -204,14 +199,6 @@ const Footer: React.FC = () => {
               <div className="flex items-center text-gray-400">
                 <Mail className="h-4 w-4 mr-2" />
                 <span>support@smartsolve.com</span>
-              </div>
-              <div className="flex items-center text-gray-400">
-                <Phone className="h-4 w-4 mr-2" />
-                <span>+1 (555) 123-4567</span>
-              </div>
-              <div className="flex items-center text-gray-400">
-                <MapPin className="h-4 w-4 mr-2" />
-                <span>Pi Network</span>
               </div>
             </div>
           </div>

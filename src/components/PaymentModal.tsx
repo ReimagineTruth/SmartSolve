@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import localStorageService from '../lib/localStorage'
 
 interface Plan {
   name: string
@@ -141,7 +142,25 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
         paymentMethod: selectedPaymentMethod,
         amount: `${plans[currentPlan][currentBilling].price} Pi`
       }
-      
+      // Save subscription to localStorage
+      let expiration: string | null = null;
+      if (currentPlan === 'lifetime') {
+        expiration = null;
+      } else {
+        const now = new Date();
+        if (currentBilling === 'monthly') {
+          now.setMonth(now.getMonth() + 1);
+        } else if (currentBilling === 'yearly') {
+          now.setFullYear(now.getFullYear() + 1);
+        }
+        expiration = now.toISOString();
+      }
+      localStorageService.saveSubscription({
+        plan: currentPlan,
+        billing: currentPlan === 'lifetime' ? 'lifetime' : currentBilling,
+        status: 'active',
+        expiration,
+      });
       onSuccess?.(paymentDetails)
     }, 2000)
   }

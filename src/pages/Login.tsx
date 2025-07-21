@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { motion } from 'framer-motion'
-import toast from 'react-hot-toast'
-import { useAuth } from '@/contexts/AuthContext'
 import { Eye, EyeOff, Mail, Lock, User, ArrowLeft, Target, Shield, Zap, CheckCircle, AlertCircle } from 'lucide-react'
 
 interface LoginFormData {
@@ -20,7 +17,6 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [piLoading, setPiLoading] = useState(false)
-  const { login, register } = useAuth()
   const navigate = useNavigate()
 
   const {
@@ -37,13 +33,13 @@ const Login: React.FC = () => {
       await new Promise(resolve => setTimeout(resolve, 1500))
       
       if (isLogin) {
-        await login(data.email, data.password)
+        // await login(data.email, data.password) // Removed: useAuth
         toast.success('Welcome back!', {
           icon: <CheckCircle className="h-5 w-5 text-green-500" />,
         })
       } else {
         const registerData = data as RegisterFormData
-        await register(registerData.email, registerData.password, registerData.name)
+        // await register(registerData.email, registerData.password, registerData.name) // Removed: useAuth
         toast.success('Account created successfully!', {
           icon: <CheckCircle className="h-5 w-5 text-green-500" />,
         })
@@ -100,7 +96,8 @@ const Login: React.FC = () => {
   return (
     <div className="min-h-screen bg-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        <motion.div
+        {/* Removed: motion.div */}
+        <div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -305,7 +302,7 @@ const Login: React.FC = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   )

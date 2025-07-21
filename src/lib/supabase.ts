@@ -1,5 +1,3 @@
-import { createClient } from '@supabase/supabase-js'
-
 // Initialize Supabase client with proper fallbacks
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://placeholder.supabase.co'
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'placeholder-key'

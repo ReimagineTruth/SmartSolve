@@ -1,9 +1,9 @@
 import React from 'react'
 import { Settings, Shield, CreditCard } from 'lucide-react'
-import { useAuth } from '@/contexts/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
 
 const Profile: React.FC = () => {
-  const { user } = useAuth()
+  const { user, subscription, renewSubscription, upgradeSubscription } = useAuth()
 
   return (
     <div className="space-y-6">
@@ -63,16 +63,28 @@ const Profile: React.FC = () => {
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-600 dark:text-gray-400">Current Plan</span>
                 <span className="text-sm font-medium text-gray-900 dark:text-white capitalize">
-                  {user?.subscription || 'free'}
+                  {subscription.plan}
                 </span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-600 dark:text-gray-400">Status</span>
-                <span className="text-sm font-medium text-green-600">Active</span>
+                <span className={`text-sm font-medium ${subscription.status === 'active' ? 'text-green-600' : 'text-red-600'}`}>{subscription.status === 'active' ? 'Active' : 'Expired'}</span>
               </div>
-              <button className="w-full btn-primary">
-                Upgrade Plan
-              </button>
+              {subscription.plan !== 'lifetime' && subscription.expiration && (
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Expiration</span>
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">{new Date(subscription.expiration).toLocaleDateString()}</span>
+                </div>
+              )}
+              {subscription.status === 'expired' ? (
+                <button className="w-full btn-primary" onClick={renewSubscription}>
+                  Renew Subscription
+                </button>
+              ) : (
+                <button className="w-full btn-primary" onClick={() => upgradeSubscription('premium', 'monthly')}>
+                  Upgrade Plan
+                </button>
+              )}
             </div>
           </div>
         </div>

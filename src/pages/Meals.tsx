@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import { 
   Utensils, 
   Plus, 
@@ -15,9 +14,6 @@ import {
   X,
   Sun
 } from 'lucide-react'
-import { useAuth } from '@/contexts/AuthContext'
-import { dataService } from '@/lib/supabase'
-import toast from 'react-hot-toast'
 
 interface Meal {
   id: string
@@ -33,7 +29,6 @@ interface Meal {
 }
 
 const Meals: React.FC = () => {
-  const { user } = useAuth()
   const [meals, setMeals] = useState<Meal[]>([])
   const [loading, setLoading] = useState(true)
   const [showAddMeal, setShowAddMeal] = useState(false)
@@ -51,19 +46,19 @@ const Meals: React.FC = () => {
   })
 
   useEffect(() => {
-    if (user?.email) {
-      loadMeals()
-    }
-  }, [user])
+    // if (user?.email) {
+    //   loadMeals()
+    // }
+  }, [])
 
   const loadMeals = async () => {
     try {
       setLoading(true)
-      const userMeals = await dataService.getMeals(user?.email || '')
-      setMeals(userMeals)
+      // const userMeals = await dataService.getMeals(user?.email || '')
+      // setMeals(userMeals)
     } catch (error) {
       console.error('Error loading meals:', error)
-      toast.error('Failed to load meals')
+      // toast.error('Failed to load meals')
     } finally {
       setLoading(false)
     }
@@ -71,7 +66,7 @@ const Meals: React.FC = () => {
 
   const addMeal = async () => {
     if (!newMeal.name.trim()) {
-      toast.error('Please enter a meal name')
+      // toast.error('Please enter a meal name')
       return
     }
 
@@ -89,7 +84,7 @@ const Meals: React.FC = () => {
       }
 
       const updatedMeals = [meal, ...meals]
-      await dataService.saveMeals(user?.email || '', updatedMeals)
+      // await dataService.saveMeals(user?.email || '', updatedMeals)
       setMeals(updatedMeals)
       setNewMeal({
         name: '',
@@ -102,22 +97,22 @@ const Meals: React.FC = () => {
         date: new Date().toISOString().split('T')[0]
       })
       setShowAddMeal(false)
-      toast.success('Meal added successfully!')
+      // toast.success('Meal added successfully!')
     } catch (error) {
       console.error('Error adding meal:', error)
-      toast.error('Failed to add meal')
+      // toast.error('Failed to add meal')
     }
   }
 
   const deleteMeal = async (mealId: string) => {
     try {
       const updatedMeals = meals.filter(meal => meal.id !== mealId)
-      await dataService.saveMeals(user?.email || '', updatedMeals)
+      // await dataService.saveMeals(user?.email || '', updatedMeals)
       setMeals(updatedMeals)
-      toast.success('Meal deleted!')
+      // toast.success('Meal deleted!')
     } catch (error) {
       console.error('Error deleting meal:', error)
-      toast.error('Failed to delete meal')
+      // toast.error('Failed to delete meal')
     }
   }
 
@@ -126,11 +121,11 @@ const Meals: React.FC = () => {
       const updatedMeals = meals.map(meal => 
         meal.id === mealId ? { ...meal, favorite: !meal.favorite } : meal
       )
-      await dataService.saveMeals(user?.email || '', updatedMeals)
+      // await dataService.saveMeals(user?.email || '', updatedMeals)
       setMeals(updatedMeals)
     } catch (error) {
       console.error('Error updating meal:', error)
-      toast.error('Failed to update meal')
+      // toast.error('Failed to update meal')
     }
   }
 
@@ -241,10 +236,7 @@ const Meals: React.FC = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
@@ -256,12 +248,9 @@ const Meals: React.FC = () => {
               <Utensils className="h-8 w-8 text-blue-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
@@ -273,12 +262,9 @@ const Meals: React.FC = () => {
               <Star className="h-8 w-8 text-yellow-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
@@ -290,12 +276,9 @@ const Meals: React.FC = () => {
               <Calendar className="h-8 w-8 text-green-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
@@ -307,7 +290,7 @@ const Meals: React.FC = () => {
               <Clock className="h-8 w-8 text-orange-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Filters and Search */}
@@ -346,9 +329,7 @@ const Meals: React.FC = () => {
 
       {/* Add Meal Form */}
       {showAddMeal && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <h3 className="text-xl font-semibold text-gray-900 mb-4">Add New Meal</h3>
@@ -471,7 +452,7 @@ const Meals: React.FC = () => {
               Cancel
             </button>
           </div>
-        </motion.div>
+        </div>
       )}
 
       {/* Meals List */}
@@ -484,11 +465,8 @@ const Meals: React.FC = () => {
           </div>
         ) : (
           filteredMeals.map((meal, index) => (
-            <motion.div
+            <div
               key={meal.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
               className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300"
             >
               <div className="flex items-start justify-between">
@@ -571,7 +549,7 @@ const Meals: React.FC = () => {
                   </button>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))
         )}
       </div>

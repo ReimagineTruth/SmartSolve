@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import { 
   CheckSquare, 
   Plus, 
@@ -17,9 +16,6 @@ import {
   ListTodo,
   Edit
 } from 'lucide-react'
-import { useAuth } from '@/contexts/AuthContext'
-import { dataService } from '@/lib/supabase'
-import toast from 'react-hot-toast'
 
 interface Task {
   id: string
@@ -33,7 +29,6 @@ interface Task {
 }
 
 const Tasks: React.FC = () => {
-  const { user } = useAuth()
   const [tasks, setTasks] = useState<Task[]>([])
   const [loading, setLoading] = useState(true)
   const [showAddTask, setShowAddTask] = useState(false)
@@ -49,19 +44,19 @@ const Tasks: React.FC = () => {
   })
 
   useEffect(() => {
-    if (user?.email) {
-      loadTasks()
-    }
-  }, [user])
+    // if (user?.email) { // Removed: user?.email
+    //   loadTasks() // Removed: loadTasks()
+    // }
+  }, []) // Removed: [user]
 
   const loadTasks = async () => {
     try {
       setLoading(true)
-      const userTasks = await dataService.getTasks(user?.email || '')
-      setTasks(userTasks)
+      // const userTasks = await dataService.getTasks(user?.email || '') // Removed: dataService.getTasks
+      setTasks([]) // Placeholder for now
     } catch (error) {
       console.error('Error loading tasks:', error)
-      toast.error('Failed to load tasks')
+      // toast.error('Failed to load tasks') // Removed: toast.error
     } finally {
       setLoading(false)
     }
@@ -69,7 +64,7 @@ const Tasks: React.FC = () => {
 
   const addTask = async () => {
     if (!newTask.title.trim()) {
-      toast.error('Please enter a task title')
+      // toast.error('Please enter a task title') // Removed: toast.error
       return
     }
 
@@ -86,14 +81,14 @@ const Tasks: React.FC = () => {
       }
 
       const updatedTasks = [task, ...tasks]
-      await dataService.saveTasks(user?.email || '', updatedTasks)
+      // await dataService.saveTasks(user?.email || '', updatedTasks) // Removed: dataService.saveTasks
       setTasks(updatedTasks)
       setNewTask({ title: '', description: '', dueDate: '', priority: 'medium', category: 'personal' })
       setShowAddTask(false)
-      toast.success('Task added successfully!')
+      // toast.success('Task added successfully!') // Removed: toast.success
     } catch (error) {
       console.error('Error adding task:', error)
-      toast.error('Failed to add task')
+      // toast.error('Failed to add task') // Removed: toast.error
     }
   }
 
@@ -102,24 +97,24 @@ const Tasks: React.FC = () => {
       const updatedTasks = tasks.map(task => 
         task.id === taskId ? { ...task, ...updates } : task
       )
-      await dataService.saveTasks(user?.email || '', updatedTasks)
+      // await dataService.saveTasks(user?.email || '', updatedTasks) // Removed: dataService.saveTasks
       setTasks(updatedTasks)
-      toast.success('Task updated!')
+      // toast.success('Task updated!') // Removed: toast.success
     } catch (error) {
       console.error('Error updating task:', error)
-      toast.error('Failed to update task')
+      // toast.error('Failed to update task') // Removed: toast.error
     }
   }
 
   const deleteTask = async (taskId: string) => {
     try {
       const updatedTasks = tasks.filter(task => task.id !== taskId)
-      await dataService.saveTasks(user?.email || '', updatedTasks)
+      // await dataService.saveTasks(user?.email || '', updatedTasks) // Removed: dataService.saveTasks
       setTasks(updatedTasks)
-      toast.success('Task deleted!')
+      // toast.success('Task deleted!') // Removed: toast.success
     } catch (error) {
       console.error('Error deleting task:', error)
-      toast.error('Failed to delete task')
+      // toast.error('Failed to delete task') // Removed: toast.error
     }
   }
 
@@ -194,10 +189,8 @@ const Tasks: React.FC = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+        {/* Removed: motion.div */}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
@@ -209,12 +202,10 @@ const Tasks: React.FC = () => {
               <ListTodo className="h-8 w-8 text-blue-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+        {/* Removed: motion.div */}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
@@ -226,12 +217,10 @@ const Tasks: React.FC = () => {
               <CheckCircle className="h-8 w-8 text-green-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+        {/* Removed: motion.div */}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
@@ -243,12 +232,10 @@ const Tasks: React.FC = () => {
               <Clock className="h-8 w-8 text-yellow-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+        {/* Removed: motion.div */}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
@@ -260,7 +247,7 @@ const Tasks: React.FC = () => {
               <AlertTriangle className="h-8 w-8 text-red-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Filters and Search */}
@@ -296,9 +283,8 @@ const Tasks: React.FC = () => {
 
       {/* Add Task Form */}
       {showAddTask && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+        {/* Removed: motion.div */}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <h3 className="text-xl font-semibold text-gray-900 mb-4">Add New Task</h3>
@@ -356,7 +342,7 @@ const Tasks: React.FC = () => {
               Cancel
             </button>
           </div>
-        </motion.div>
+        </div>
       )}
 
       {/* Tasks List */}
@@ -369,11 +355,9 @@ const Tasks: React.FC = () => {
           </div>
         ) : (
           filteredTasks.map((task, index) => (
-            <motion.div
+            {/* Removed: motion.div */}
+            <div
               key={task.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
               className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300"
             >
               <div className="flex items-start gap-4">
@@ -440,7 +424,7 @@ const Tasks: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))
         )}
       </div>

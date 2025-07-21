@@ -1,7 +1,5 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useAuth } from '@/contexts/AuthContext'
-import { useTheme } from '@/contexts/ThemeContext'
 import { 
   Home, 
   CheckSquare, 
@@ -27,8 +25,6 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const { user, logout } = useAuth()
-  const { theme, toggleTheme } = useTheme()
   const location = useLocation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -41,10 +37,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     { name: 'Services', href: '/services', icon: Users },
     { name: 'Profile', href: '/profile', icon: User },
   ]
-
-  const handleLogout = () => {
-    logout()
-  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -93,20 +85,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <div className="flex items-center">
                 <div className="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-green-500 flex items-center justify-center">
                   <span className="text-sm font-medium text-white">
-                    {user?.name?.charAt(0).toUpperCase()}
+                    {/* {user?.name?.charAt(0).toUpperCase()} */}
                   </span>
                 </div>
                 <div className="ml-3">
                   <p className="text-sm font-medium text-gray-700">
-                    {user?.name}
+                    {/* {user?.name} */}
                   </p>
                   <p className="text-xs text-gray-500 capitalize">
-                    {user?.subscription} plan
+                    {/* {user?.subscription} plan */}
                   </p>
                 </div>
               </div>
               <button
-                onClick={handleLogout}
+                onClick={() => {}}
                 className="text-gray-400 hover:text-red-600 transition-colors"
               >
                 <LogOut size={20} />
@@ -153,20 +145,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <div className="flex items-center">
                 <div className="h-10 w-10 rounded-full bg-gradient-to-r from-blue-500 to-green-500 flex items-center justify-center">
                   <span className="text-sm font-medium text-white">
-                    {user?.name?.charAt(0).toUpperCase()}
+                    {/* {user?.name?.charAt(0).toUpperCase()} */}
                   </span>
                 </div>
                 <div className="ml-3">
                   <p className="text-sm font-medium text-gray-700">
-                    {user?.name}
+                    {/* {user?.name} */}
                   </p>
                   <p className="text-xs text-gray-500 capitalize">
-                    {user?.subscription} plan
+                    {/* {user?.subscription} plan */}
                   </p>
                 </div>
               </div>
               <button
-                onClick={handleLogout}
+                onClick={() => {}}
                 className="text-gray-400 hover:text-red-600 transition-colors"
               >
                 <LogOut size={20} />
@@ -206,10 +198,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <Bell size={20} />
               </button>
               <button
-                onClick={toggleTheme}
+                onClick={() => {}}
                 className="text-gray-400 hover:text-gray-600 transition-colors"
               >
-                {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                {/* {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />} */}
               </button>
               <button className="text-gray-400 hover:text-gray-600 transition-colors">
                 <Settings size={20} />

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import { 
   DollarSign, 
   Plus, 
@@ -15,9 +14,6 @@ import {
   CreditCard,
   PiggyBank
 } from 'lucide-react'
-import { useAuth } from '@/contexts/AuthContext'
-import { dataService } from '@/lib/supabase'
-import toast from 'react-hot-toast'
 
 interface Expense {
   id: string
@@ -30,7 +26,6 @@ interface Expense {
 }
 
 const Budget: React.FC = () => {
-  const { user } = useAuth()
   const [expenses, setExpenses] = useState<Expense[]>([])
   const [loading, setLoading] = useState(true)
   const [showAddExpense, setShowAddExpense] = useState(false)
@@ -46,19 +41,19 @@ const Budget: React.FC = () => {
   })
 
   useEffect(() => {
-    if (user?.email) {
-      loadExpenses()
-    }
-  }, [user])
+    // if (user?.email) {
+    //   loadExpenses()
+    // }
+  }, [])
 
   const loadExpenses = async () => {
     try {
       setLoading(true)
-      const userExpenses = await dataService.getExpenses(user?.email || '')
-      setExpenses(userExpenses)
+      // const userExpenses = await dataService.getExpenses(user?.email || '')
+      // setExpenses(userExpenses)
     } catch (error) {
       console.error('Error loading expenses:', error)
-      toast.error('Failed to load expenses')
+      // toast.error('Failed to load expenses')
     } finally {
       setLoading(false)
     }
@@ -66,7 +61,7 @@ const Budget: React.FC = () => {
 
   const addExpense = async () => {
     if (!newExpense.title.trim() || !newExpense.amount) {
-      toast.error('Please fill in all required fields')
+      // toast.error('Please fill in all required fields')
       return
     }
 
@@ -82,7 +77,7 @@ const Budget: React.FC = () => {
       }
 
       const updatedExpenses = [expense, ...expenses]
-      await dataService.saveExpenses(user?.email || '', updatedExpenses)
+      // await dataService.saveExpenses(user?.email || '', updatedExpenses)
       setExpenses(updatedExpenses)
       setNewExpense({
         title: '',
@@ -93,22 +88,22 @@ const Budget: React.FC = () => {
         description: ''
       })
       setShowAddExpense(false)
-      toast.success('Transaction added successfully!')
+      // toast.success('Transaction added successfully!')
     } catch (error) {
       console.error('Error adding expense:', error)
-      toast.error('Failed to add transaction')
+      // toast.error('Failed to add transaction')
     }
   }
 
   const deleteExpense = async (expenseId: string) => {
     try {
       const updatedExpenses = expenses.filter(expense => expense.id !== expenseId)
-      await dataService.saveExpenses(user?.email || '', updatedExpenses)
+      // await dataService.saveExpenses(user?.email || '', updatedExpenses)
       setExpenses(updatedExpenses)
-      toast.success('Transaction deleted!')
+      // toast.success('Transaction deleted!')
     } catch (error) {
       console.error('Error deleting expense:', error)
-      toast.error('Failed to delete transaction')
+      // toast.error('Failed to delete transaction')
     }
   }
 
@@ -197,10 +192,7 @@ const Budget: React.FC = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
@@ -214,12 +206,9 @@ const Budget: React.FC = () => {
               <Wallet className="h-8 w-8 text-blue-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
@@ -233,12 +222,9 @@ const Budget: React.FC = () => {
               <TrendingUp className="h-8 w-8 text-green-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
@@ -252,12 +238,9 @@ const Budget: React.FC = () => {
               <TrendingDown className="h-8 w-8 text-red-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
@@ -271,7 +254,7 @@ const Budget: React.FC = () => {
               <Calendar className="h-8 w-8 text-orange-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Filters and Search */}
@@ -311,9 +294,7 @@ const Budget: React.FC = () => {
 
       {/* Add Transaction Form */}
       {showAddExpense && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <h3 className="text-xl font-semibold text-gray-900 mb-4">Add New Transaction</h3>
@@ -379,7 +360,7 @@ const Budget: React.FC = () => {
               Cancel
             </button>
           </div>
-        </motion.div>
+        </div>
       )}
 
       {/* Transactions List */}
@@ -392,11 +373,8 @@ const Budget: React.FC = () => {
           </div>
         ) : (
           filteredExpenses.map((expense, index) => (
-            <motion.div
+            <div
               key={expense.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
               className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300"
             >
               <div className="flex items-center justify-between">
@@ -454,7 +432,7 @@ const Budget: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))
         )}
       </div>

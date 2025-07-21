@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import { 
   CheckSquare, 
   DollarSign, 
@@ -23,9 +22,7 @@ import {
   PieChart,
   LineChart
 } from 'lucide-react'
-import { useAuth } from '@/contexts/AuthContext'
-import { dataService } from '@/lib/supabase'
-import toast from 'react-hot-toast'
+import { useAuth } from '../contexts/AuthContext'
 
 interface Task {
   id: string
@@ -86,7 +83,7 @@ interface DashboardStats {
 }
 
 const Dashboard: React.FC = () => {
-  const { user } = useAuth()
+  const { subscription, renewSubscription, upgradeSubscription } = useAuth()
   const [stats, setStats] = useState<DashboardStats>({
     tasksCompleted: 0,
     totalTasks: 0,
@@ -112,26 +109,26 @@ const Dashboard: React.FC = () => {
   })
 
   useEffect(() => {
-    if (user?.email) {
-      loadUserData()
-    }
-  }, [user])
+    // Removed: if (user?.email) {
+    loadUserData()
+    // }
+  }, []) // Removed: [user]
 
   const loadUserData = async () => {
     try {
       setLoading(true)
       
       // Initialize user data if needed
-      await dataService.initializeUserData(user?.email || '')
+      // Removed: await dataService.initializeUserData(user?.email || '')
       
       // Load dashboard stats
-      const dashboardStats = await dataService.getDashboardStats(user?.email || '')
-      if (dashboardStats) {
-        setStats(dashboardStats)
-      }
+      // Removed: const dashboardStats = await dataService.getDashboardStats(user?.email || '')
+      // if (dashboardStats) {
+      //   setStats(dashboardStats)
+      // }
     } catch (error) {
       console.error('Error loading user data:', error)
-      toast.error('Failed to load data')
+      // Removed: toast.error('Failed to load data')
     } finally {
       setLoading(false)
     }
@@ -144,24 +141,24 @@ const Dashboard: React.FC = () => {
       )
       
       // Save updated tasks
-      await dataService.saveTasks(user?.email || '', updatedTasks)
+      // Removed: await dataService.saveTasks(user?.email || '', updatedTasks)
       
       // Reload dashboard stats
-      const dashboardStats = await dataService.getDashboardStats(user?.email || '')
-      if (dashboardStats) {
-        setStats(dashboardStats)
-      }
+      // const dashboardStats = await dataService.getDashboardStats(user?.email || '')
+      // if (dashboardStats) {
+      //   setStats(dashboardStats)
+      // }
       
-      toast.success('Task updated!')
+      // Removed: toast.success('Task updated!')
     } catch (error) {
       console.error('Error updating task:', error)
-      toast.error('Failed to update task')
+      // Removed: toast.error('Failed to update task')
     }
   }
 
   const addNewTask = async () => {
     if (!newTask.title.trim()) {
-      toast.error('Please enter a task title')
+      // Removed: toast.error('Please enter a task title')
       return
     }
 
@@ -178,38 +175,38 @@ const Dashboard: React.FC = () => {
       }
 
       const updatedTasks = [task, ...stats.recentTasks]
-      await dataService.saveTasks(user?.email || '', updatedTasks)
+      // Removed: await dataService.saveTasks(user?.email || '', updatedTasks)
       
       // Reload dashboard stats
-      const dashboardStats = await dataService.getDashboardStats(user?.email || '')
-      if (dashboardStats) {
-        setStats(dashboardStats)
-      }
+      // const dashboardStats = await dataService.getDashboardStats(user?.email || '')
+      // if (dashboardStats) {
+      //   setStats(dashboardStats)
+      // }
 
       setNewTask({ title: '', description: '', dueDate: '', priority: 'medium', category: 'personal' })
       setShowAddTask(false)
-      toast.success('Task added successfully!')
+      // Removed: toast.success('Task added successfully!')
     } catch (error) {
       console.error('Error adding task:', error)
-      toast.error('Failed to add task')
+      // Removed: toast.error('Failed to add task')
     }
   }
 
   const deleteTask = async (taskId: string) => {
     try {
       const updatedTasks = stats.recentTasks.filter(task => task.id !== taskId)
-      await dataService.saveTasks(user?.email || '', updatedTasks)
+      // Removed: await dataService.saveTasks(user?.email || '', updatedTasks)
       
       // Reload dashboard stats
-      const dashboardStats = await dataService.getDashboardStats(user?.email || '')
-      if (dashboardStats) {
-        setStats(dashboardStats)
-      }
+      // const dashboardStats = await dataService.getDashboardStats(user?.email || '')
+      // if (dashboardStats) {
+      //   setStats(dashboardStats)
+      // }
       
-      toast.success('Task deleted!')
+      // Removed: toast.success('Task deleted!')
     } catch (error) {
       console.error('Error deleting task:', error)
-      toast.error('Failed to delete task')
+      // Removed: toast.error('Failed to delete task')
     }
   }
 
@@ -241,11 +238,28 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {/* Subscription Status Banner */}
+      <div className="mb-4">
+        <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-primary to-secondary text-white shadow">
+          <div>
+            <div className="font-bold text-lg">Current Plan: {subscription.plan}</div>
+            {subscription.plan !== 'lifetime' && subscription.expiration && (
+              <div className="text-sm">Expires: {new Date(subscription.expiration).toLocaleDateString()}</div>
+            )}
+            <div className={`text-sm font-semibold ${subscription.status === 'active' ? 'text-green-200' : 'text-yellow-200'}`}>{subscription.status === 'active' ? 'Active' : 'Expired'}</div>
+          </div>
+          {subscription.status === 'expired' ? (
+            <button className="btn btn-primary" onClick={renewSubscription}>Renew</button>
+          ) : (
+            <button className="btn btn-secondary" onClick={() => upgradeSubscription('premium', 'monthly')}>Upgrade</button>
+          )}
+        </div>
+      </div>
       {/* Welcome Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+      <div
+        // Removed: initial={{ opacity: 0, y: 20 }}
+        // Removed: animate={{ opacity: 1, y: 0 }}
+        // Removed: transition={{ duration: 0.5 }}
         className="bg-gradient-to-r from-blue-500 to-green-500 rounded-2xl p-8 text-white shadow-lg"
       >
         <div className="flex items-center mb-4">
@@ -254,7 +268,7 @@ const Dashboard: React.FC = () => {
           </div>
           <div>
             <h1 className="text-2xl font-bold">
-              Welcome back, {user?.name}!
+              Welcome back, {/* Removed: {user?.name}! */}
             </h1>
             <p className="text-blue-100">
               Here's your productivity overview for today.
@@ -279,14 +293,14 @@ const Dashboard: React.FC = () => {
             <div className="text-sm text-blue-100">Wellness Days</div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+        <div
+          // Removed: initial={{ opacity: 0, y: 20 }}
+          // Removed: animate={{ opacity: 1, y: 0 }}
+          // Removed: transition={{ duration: 0.5, delay: 0.1 }}
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300"
         >
           <div className="flex items-center justify-between">
@@ -300,12 +314,12 @@ const Dashboard: React.FC = () => {
               <CheckSquare className="h-8 w-8 text-blue-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+        <div
+          // Removed: initial={{ opacity: 0, y: 20 }}
+          // Removed: animate={{ opacity: 1, y: 0 }}
+          // Removed: transition={{ duration: 0.5, delay: 0.2 }}
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300"
         >
           <div className="flex items-center justify-between">
@@ -317,12 +331,12 @@ const Dashboard: React.FC = () => {
               <DollarSign className="h-8 w-8 text-green-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+        <div
+          // Removed: initial={{ opacity: 0, y: 20 }}
+          // Removed: animate={{ opacity: 1, y: 0 }}
+          // Removed: transition={{ duration: 0.5, delay: 0.3 }}
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300"
         >
           <div className="flex items-center justify-between">
@@ -334,12 +348,12 @@ const Dashboard: React.FC = () => {
               <Utensils className="h-8 w-8 text-orange-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
+        <div
+          // Removed: initial={{ opacity: 0, y: 20 }}
+          // Removed: animate={{ opacity: 1, y: 0 }}
+          // Removed: transition={{ duration: 0.5, delay: 0.4 }}
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300"
         >
           <div className="flex items-center justify-between">
@@ -351,14 +365,14 @@ const Dashboard: React.FC = () => {
               <Heart className="h-8 w-8 text-pink-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Quick Actions */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
+      <div
+        // Removed: initial={{ opacity: 0, y: 20 }}
+        // Removed: animate={{ opacity: 1, y: 0 }}
+        // Removed: transition={{ duration: 0.5, delay: 0.5 }}
         className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
       >
         <h2 className="text-xl font-semibold text-gray-900 mb-6">Quick Actions</h2>
@@ -400,13 +414,13 @@ const Dashboard: React.FC = () => {
             <span className="text-sm font-medium text-gray-900 text-center">Track Mood</span>
           </a>
         </div>
-      </motion.div>
+      </div>
 
       {/* Recent Tasks */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.6 }}
+      <div
+        // Removed: initial={{ opacity: 0, y: 20 }}
+        // Removed: animate={{ opacity: 1, y: 0 }}
+        // Removed: transition={{ duration: 0.5, delay: 0.6 }}
         className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
       >
         <div className="flex items-center justify-between mb-6">
@@ -516,13 +530,13 @@ const Dashboard: React.FC = () => {
             </div>
           ))}
         </div>
-      </motion.div>
+      </div>
 
       {/* Upcoming Expenses */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.7 }}
+      <div
+        // Removed: initial={{ opacity: 0, y: 20 }}
+        // Removed: animate={{ opacity: 1, y: 0 }}
+        // Removed: transition={{ duration: 0.5, delay: 0.7 }}
         className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
       >
         <div className="flex items-center justify-between mb-6">
@@ -547,7 +561,7 @@ const Dashboard: React.FC = () => {
             </div>
           ))}
         </div>
-      </motion.div>
+      </div>
     </div>
   )
 }

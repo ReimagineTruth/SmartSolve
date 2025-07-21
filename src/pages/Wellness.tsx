@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import { 
   Heart, 
   Plus, 
@@ -15,9 +14,6 @@ import {
   Calendar,
   CheckCircle
 } from 'lucide-react'
-import { useAuth } from '@/contexts/AuthContext'
-import { dataService } from '@/lib/supabase'
-import toast from 'react-hot-toast'
 
 interface WellnessEntry {
   id: string
@@ -30,7 +26,6 @@ interface WellnessEntry {
 }
 
 const Wellness: React.FC = () => {
-  const { user } = useAuth()
   const [entries, setEntries] = useState<WellnessEntry[]>([])
   const [loading, setLoading] = useState(true)
   const [showAddEntry, setShowAddEntry] = useState(false)
@@ -46,19 +41,19 @@ const Wellness: React.FC = () => {
   })
 
   useEffect(() => {
-    if (user?.email) {
-      loadEntries()
-    }
-  }, [user])
+    // if (user?.email) {
+    //   loadEntries()
+    // }
+  }, [])
 
   const loadEntries = async () => {
     try {
       setLoading(true)
-      const userEntries = await dataService.getWellnessEntries(user?.email || '')
-      setEntries(userEntries)
+      // const userEntries = await dataService.getWellnessEntries(user?.email || '')
+      // setEntries(userEntries)
     } catch (error) {
       console.error('Error loading wellness entries:', error)
-      toast.error('Failed to load wellness entries')
+      // toast.error('Failed to load wellness entries')
     } finally {
       setLoading(false)
     }
@@ -77,7 +72,7 @@ const Wellness: React.FC = () => {
       }
 
       const updatedEntries = [entry, ...entries]
-      await dataService.saveWellnessEntries(user?.email || '', updatedEntries)
+      // await dataService.saveWellnessEntries(user?.email || '', updatedEntries)
       setEntries(updatedEntries)
       setNewEntry({
         date: new Date().toISOString().split('T')[0],
@@ -88,22 +83,22 @@ const Wellness: React.FC = () => {
         notes: ''
       })
       setShowAddEntry(false)
-      toast.success('Wellness entry added successfully!')
+      // toast.success('Wellness entry added successfully!')
     } catch (error) {
       console.error('Error adding wellness entry:', error)
-      toast.error('Failed to add wellness entry')
+      // toast.error('Failed to add wellness entry')
     }
   }
 
   const deleteEntry = async (entryId: string) => {
     try {
       const updatedEntries = entries.filter(entry => entry.id !== entryId)
-      await dataService.saveWellnessEntries(user?.email || '', updatedEntries)
+      // await dataService.saveWellnessEntries(user?.email || '', updatedEntries)
       setEntries(updatedEntries)
-      toast.success('Entry deleted!')
+      // toast.success('Entry deleted!')
     } catch (error) {
       console.error('Error deleting entry:', error)
-      toast.error('Failed to delete entry')
+      // toast.error('Failed to delete entry')
     }
   }
 
@@ -183,10 +178,7 @@ const Wellness: React.FC = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
@@ -200,12 +192,9 @@ const Wellness: React.FC = () => {
               <Heart className="h-8 w-8 text-blue-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
@@ -219,12 +208,9 @@ const Wellness: React.FC = () => {
               <Moon className="h-8 w-8 text-purple-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
@@ -236,12 +222,9 @@ const Wellness: React.FC = () => {
               <Activity className="h-8 w-8 text-green-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <div className="flex items-center justify-between">
@@ -253,7 +236,7 @@ const Wellness: React.FC = () => {
               <Brain className="h-8 w-8 text-orange-600" />
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Filters and Search */}
@@ -289,9 +272,7 @@ const Wellness: React.FC = () => {
 
       {/* Add Entry Form */}
       {showAddEntry && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+        <div
           className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
         >
           <h3 className="text-xl font-semibold text-gray-900 mb-4">Add Wellness Entry</h3>
@@ -371,7 +352,7 @@ const Wellness: React.FC = () => {
               Cancel
             </button>
           </div>
-        </motion.div>
+        </div>
       )}
 
       {/* Entries List */}
@@ -384,11 +365,8 @@ const Wellness: React.FC = () => {
           </div>
         ) : (
           filteredEntries.map((entry, index) => (
-            <motion.div
+            <div
               key={entry.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
               className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300"
             >
               <div className="flex items-start justify-between">
@@ -443,7 +421,7 @@ const Wellness: React.FC = () => {
                   </button>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))
         )}
       </div>
