@@ -134,41 +134,41 @@ const DemoFreePlan: React.FC = () => {
       </header>
 
       {/* Dashboard */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         {/* Welcome Section */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-text mb-2">Welcome to SmartSolve!</h1>
-          <p className="text-gray-600">You're using the Free Plan. Upgrade to unlock unlimited features.</p>
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-text mb-2">Welcome to SmartSolve!</h1>
+          <p className="text-gray-600 text-sm sm:text-base">You're using the Free Plan. Upgrade to unlock unlimited features.</p>
         </div>
 
         {/* Stats Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="card text-center">
-            <div className="text-2xl font-bold text-primary mb-2">{tasks.length}/5</div>
-            <div className="text-sm text-gray-600">Tasks Used</div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
+          <div className="card text-center p-3 sm:p-4">
+            <div className="text-lg sm:text-2xl font-bold text-primary mb-1 sm:mb-2">{tasks.length}/5</div>
+            <div className="text-xs sm:text-sm text-gray-600">Tasks Used</div>
           </div>
-          <div className="card text-center">
-            <div className="text-2xl font-bold text-primary mb-2">{meals.length}/2</div>
-            <div className="text-sm text-gray-600">Meals Today</div>
+          <div className="card text-center p-3 sm:p-4">
+            <div className="text-lg sm:text-2xl font-bold text-primary mb-1 sm:mb-2">{meals.length}/2</div>
+            <div className="text-xs sm:text-sm text-gray-600">Meals Today</div>
           </div>
-          <div className="card text-center">
-            <div className="text-2xl font-bold text-primary mb-2">${budgetStats.expenses.toLocaleString()}</div>
-            <div className="text-sm text-gray-600">Monthly Expenses</div>
+          <div className="card text-center p-3 sm:p-4">
+            <div className="text-lg sm:text-2xl font-bold text-primary mb-1 sm:mb-2">${budgetStats.expenses.toLocaleString()}</div>
+            <div className="text-xs sm:text-sm text-gray-600">Monthly Expenses</div>
           </div>
-          <div className="card text-center">
-            <div className="text-2xl font-bold text-primary mb-2">{taskStats.completionRate}%</div>
-            <div className="text-sm text-gray-600">Task Completion</div>
+          <div className="card text-center p-3 sm:p-4">
+            <div className="text-lg sm:text-2xl font-bold text-primary mb-1 sm:mb-2">{taskStats.completionRate}%</div>
+            <div className="text-xs sm:text-sm text-gray-600">Task Completion</div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           {/* Tasks Section */}
           <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-text">Today's Tasks</h2>
-              <div className="flex items-center text-sm text-gray-600">
+            <div className="flex items-center justify-between mb-4 sm:mb-6">
+              <h2 className="text-lg sm:text-xl font-semibold text-text">Today's Tasks</h2>
+              <div className="flex items-center text-xs sm:text-sm text-gray-600">
                 <span className="mr-2">{taskStats.completed}/{tasks.length} completed</span>
-                <Lock className="h-4 w-4" />
+                <Lock className="h-3 w-3 sm:h-4 sm:w-4" />
               </div>
             </div>
             
@@ -181,11 +181,11 @@ const DemoFreePlan: React.FC = () => {
                   onChange={(e) => setNewTask(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && addTask()}
                   placeholder="Add a new task..."
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="flex-1 px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 />
                 <button
                   onClick={addTask}
-                  className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition-colors"
+                  className="px-3 sm:px-4 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition-colors"
                 >
                   <Plus className="h-4 w-4" />
                 </button>
@@ -239,28 +239,30 @@ const DemoFreePlan: React.FC = () => {
               ))}
             </div>
 
-            <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-              <div className="flex items-center">
-                <Lock className="h-5 w-5 text-yellow-600 mr-3" />
-                <div>
-                  <h3 className="font-semibold text-yellow-800">Task Limit Reached</h3>
-                  <p className="text-sm text-yellow-700">Upgrade to Standard Plan for unlimited tasks</p>
+            {tasks.length >= 5 && (
+              <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <div className="flex items-center">
+                  <Lock className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-600 mr-2 sm:mr-3" />
+                  <div>
+                    <h3 className="font-semibold text-yellow-800 text-sm sm:text-base">Task Limit Reached</h3>
+                    <p className="text-xs sm:text-sm text-yellow-700">Upgrade to Standard Plan for unlimited tasks</p>
+                  </div>
                 </div>
+                <button 
+                  onClick={() => setShowUpgradeModal(true)}
+                  className="btn btn-primary mt-2 sm:mt-3 w-full text-sm"
+                >
+                  Upgrade to Standard
+                </button>
               </div>
-              <button 
-                onClick={() => setShowUpgradeModal(true)}
-                className="btn btn-primary mt-3 w-full"
-              >
-                Upgrade to Standard
-              </button>
-            </div>
+            )}
           </div>
 
           {/* Budget Section */}
           <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-text">Budget Overview</h2>
-              <span className="text-sm text-gray-600">Basic Tracking</span>
+            <div className="flex items-center justify-between mb-4 sm:mb-6">
+              <h2 className="text-lg sm:text-xl font-semibold text-text">Budget Overview</h2>
+              <span className="text-xs sm:text-sm text-gray-600">Basic Tracking</span>
             </div>
 
             <div className="mb-6">
@@ -283,20 +285,20 @@ const DemoFreePlan: React.FC = () => {
             {/* Add budget item */}
             {budgetItems.length < 10 && (
               <div className="mb-4 space-y-2">
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <input
                     type="text"
                     value={newBudgetItem.name}
                     onChange={(e) => setNewBudgetItem({...newBudgetItem, name: e.target.value})}
                     placeholder="Item name..."
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="flex-1 px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                   <input
                     type="number"
                     value={newBudgetItem.amount}
                     onChange={(e) => setNewBudgetItem({...newBudgetItem, amount: parseFloat(e.target.value) || 0})}
                     placeholder="Amount"
-                    className="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full sm:w-24 px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
                 <div className="flex gap-2">
@@ -445,20 +447,53 @@ const DemoFreePlan: React.FC = () => {
           </div>
         </div>
 
+        {/* Pi Network Ad Section */}
+        <div className="mt-8 sm:mt-12">
+          <div className="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl p-4 sm:p-6 text-white">
+            <div className="flex flex-col sm:flex-row items-center justify-between">
+              <div className="text-center sm:text-left mb-4 sm:mb-0">
+                <h3 className="text-lg sm:text-xl font-bold mb-2">Powered by Pi Network</h3>
+                <p className="text-xs sm:text-sm opacity-90 mb-3 sm:mb-0">
+                  Experience secure, decentralized payments with Pi cryptocurrency
+                </p>
+              </div>
+              <div className="flex gap-2 sm:gap-3">
+                <div className="bg-white/20 rounded-lg p-2 sm:p-3 text-center">
+                  <div className="text-lg sm:text-2xl font-bold">π</div>
+                  <div className="text-xs">Crypto</div>
+                </div>
+                <div className="bg-white/20 rounded-lg p-2 sm:p-3 text-center">
+                  <div className="text-lg sm:text-2xl font-bold">🔒</div>
+                  <div className="text-xs">Secure</div>
+                </div>
+                <div className="bg-white/20 rounded-lg p-2 sm:p-3 text-center">
+                  <div className="text-lg sm:text-2xl font-bold">🌍</div>
+                  <div className="text-xs">Global</div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-3 sm:mt-4 text-center">
+              <button className="bg-white text-orange-600 px-4 sm:px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-xs sm:text-sm">
+                Learn More About Pi
+              </button>
+            </div>
+          </div>
+        </div>
+
         {/* Upgrade CTA */}
-        <div className="mt-12 card bg-gradient-to-r from-primary to-secondary text-white text-center">
-          <h2 className="text-2xl font-bold mb-4">Ready to Unlock More?</h2>
-          <p className="text-lg mb-6 opacity-90">
+        <div className="mt-8 sm:mt-12 card bg-gradient-to-r from-primary to-secondary text-white text-center">
+          <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Ready to Unlock More?</h2>
+          <p className="text-sm sm:text-lg mb-4 sm:mb-6 opacity-90">
             Upgrade to Standard Plan and get unlimited tasks, advanced budget tools, full meal planner, and more!
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <button 
               onClick={() => setShowUpgradeModal(true)}
-              className="btn bg-white text-primary hover:bg-gray-100 text-lg px-8 py-4"
+              className="btn bg-white text-primary hover:bg-gray-100 text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4"
             >
               Upgrade to Standard
             </button>
-            <Link to="/demo/standard" className="btn bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary text-lg px-8 py-4">
+            <Link to="/demo/standard" className="btn bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary text-sm sm:text-lg px-6 sm:px-8 py-3 sm:py-4">
               See Standard Demo
             </Link>
           </div>
@@ -467,45 +502,45 @@ const DemoFreePlan: React.FC = () => {
 
       {/* Upgrade Modal */}
       {showUpgradeModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
-            <div className="text-center mb-6">
-              <Lock className="h-12 w-12 text-primary mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-text mb-2">Upgrade Your Plan</h3>
-              <p className="text-gray-600">Unlock unlimited features and remove restrictions</p>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg p-4 sm:p-8 max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div className="text-center mb-4 sm:mb-6">
+              <Lock className="h-10 w-10 sm:h-12 sm:w-12 text-primary mx-auto mb-3 sm:mb-4" />
+              <h3 className="text-lg sm:text-xl font-bold text-text mb-2">Upgrade Your Plan</h3>
+              <p className="text-gray-600 text-sm sm:text-base">Unlock unlimited features and remove restrictions</p>
             </div>
 
-            <div className="space-y-4 mb-6">
+            <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
               <div className="flex items-center">
-                <Check className="h-5 w-5 text-green-500 mr-3" />
+                <Check className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 mr-2 sm:mr-3" />
                 <span className="text-sm">Unlimited tasks & planning</span>
               </div>
               <div className="flex items-center">
-                <Check className="h-5 w-5 text-green-500 mr-3" />
+                <Check className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 mr-2 sm:mr-3" />
                 <span className="text-sm">Advanced budget tools</span>
               </div>
               <div className="flex items-center">
-                <Check className="h-5 w-5 text-green-500 mr-3" />
+                <Check className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 mr-2 sm:mr-3" />
                 <span className="text-sm">Full meal planner</span>
               </div>
               <div className="flex items-center">
-                <Check className="h-5 w-5 text-green-500 mr-3" />
+                <Check className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 mr-2 sm:mr-3" />
                 <span className="text-sm">AI mood assistant</span>
               </div>
               <div className="flex items-center">
-                <Check className="h-5 w-5 text-green-500 mr-3" />
+                <Check className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 mr-2 sm:mr-3" />
                 <span className="text-sm">Ad-free experience</span>
               </div>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <button 
                 onClick={() => setShowUpgradeModal(false)}
-                className="btn btn-secondary flex-1"
+                className="btn btn-secondary flex-1 text-sm sm:text-base"
               >
                 Maybe Later
               </button>
-              <Link to="/pricing" className="btn btn-primary flex-1">
+              <Link to="/pricing" className="btn btn-primary flex-1 text-sm sm:text-base">
                 View Plans
               </Link>
             </div>
