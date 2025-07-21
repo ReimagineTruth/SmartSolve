@@ -134,7 +134,7 @@ const Home: React.FC = () => {
             </Link>
             <Link to="/demo/standard" className="btn btn-secondary text-lg px-8 py-4">
               See Demo
-            </Link>
+                </Link>
           </div>
         </div>
       </section>
@@ -171,11 +171,11 @@ const Home: React.FC = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-text mb-4">
               Choose Your Plan
-            </h2>
-            <p className="text-xl text-gray-600">
+          </h2>
+          <p className="text-xl text-gray-600">
               Start free or upgrade to unlock powerful features starting at 5 Pi/month.
-            </p>
-          </div>
+          </p>
+        </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Free Plan */}
@@ -283,7 +283,7 @@ const Home: React.FC = () => {
                   <i className="fas fa-check text-primary mr-2"></i>
                   TruthWeb & Cloudy Integrations
                 </li>
-              </ul>
+          </ul>
               <Link to="/demo/pro" className="btn btn-primary w-full">
                 Choose Pro
               </Link>
@@ -321,7 +321,7 @@ const Home: React.FC = () => {
                 {expandedFaq === index && (
                   <p className="mt-4 text-gray-600">{faq.answer}</p>
                 )}
-              </div>
+          </div>
             ))}
           </div>
         </div>
