@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Star, ArrowLeft, Linkedin, Twitter, Github, Mail, Users, Award, Zap, Shield } from 'lucide-react'
+import Footer from '../components/Footer'
 
 const Team: React.FC = () => {
   const teamMembers = [
@@ -329,6 +330,7 @@ const Team: React.FC = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

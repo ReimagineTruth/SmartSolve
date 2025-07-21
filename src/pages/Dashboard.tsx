@@ -23,6 +23,7 @@ import {
   LineChart
 } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
+import Footer from '../components/Footer'
 
 interface Task {
   id: string
@@ -562,6 +563,7 @@ const Dashboard: React.FC = () => {
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

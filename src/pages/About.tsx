@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Star, Target, Users, Globe, Heart, Award, ArrowLeft, Zap, Shield, Lightbulb } from 'lucide-react'
+import Footer from '../components/Footer'
 
 const About: React.FC = () => {
   return (
@@ -275,6 +276,7 @@ const About: React.FC = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

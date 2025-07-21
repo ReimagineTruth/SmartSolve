@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Star, Shield, Eye, Lock, Users, Globe, FileText, ArrowLeft } from 'lucide-react'
+import Footer from '../components/Footer'
 
 const Privacy: React.FC = () => {
   return (
@@ -30,7 +31,7 @@ const Privacy: React.FC = () => {
             <Shield className="h-8 w-8 text-white" />
           </div>
           <h1 className="text-4xl font-bold text-text mb-4">Privacy Policy</h1>
-          <p className="text-xl text-gray-600">Last updated: January 15, 2024</p>
+          <p className="text-xl text-gray-600">Last updated: January 15, 2025</p>
         </div>
 
         <div className="prose prose-lg max-w-none">
@@ -221,18 +222,11 @@ const Privacy: React.FC = () => {
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-8">
-            <h2 className="text-2xl font-bold text-text mb-6">Contact Us</h2>
-            <p className="text-gray-700 mb-4">
-              If you have any questions about this Privacy Policy or our data practices, please contact us:
-            </p>
-            <div className="space-y-2 text-gray-700">
-              <p><strong>Email:</strong> privacy@smartsolve.com</p>
-              <p><strong>Phone:</strong> +1 (555) 123-4567</p>
-              <p><strong>Address:</strong> Mrwain Organization, Pi Network</p>
-            </div>
+            {/* Contact section removed as requested */}
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

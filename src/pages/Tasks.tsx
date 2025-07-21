@@ -16,6 +16,7 @@ import {
   ListTodo,
   Edit
 } from 'lucide-react'
+import Footer from '../components/Footer'
 
 interface Task {
   id: string
@@ -171,7 +172,7 @@ const Tasks: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -428,6 +429,7 @@ const Tasks: React.FC = () => {
           ))
         )}
       </div>
+      <Footer />
     </div>
   )
 }

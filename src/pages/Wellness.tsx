@@ -14,6 +14,7 @@ import {
   Calendar,
   CheckCircle
 } from 'lucide-react'
+import Footer from '../components/Footer'
 
 interface WellnessEntry {
   id: string
@@ -160,7 +161,7 @@ const Wellness: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -425,6 +426,7 @@ const Wellness: React.FC = () => {
           ))
         )}
       </div>
+      <Footer />
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Star, Users, ArrowUp, Check, Building, Crown, MessageCircle, Calendar, Gift } from 'lucide-react'
+import Footer from '../components/Footer'
 
 const DemoPremiumPlan: React.FC = () => {
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
@@ -353,6 +354,7 @@ const DemoPremiumPlan: React.FC = () => {
           </div>
         </div>
       )}
+      <Footer />
     </div>
   )
 }

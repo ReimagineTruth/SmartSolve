@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { Eye, EyeOff, Mail, Lock, User, ArrowLeft, Target, Shield, Zap, CheckCircle, AlertCircle } from 'lucide-react'
+import Footer from '../components/Footer'
 
 interface LoginFormData {
   email: string
@@ -304,6 +305,7 @@ const Login: React.FC = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

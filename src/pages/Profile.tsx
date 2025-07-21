@@ -1,6 +1,7 @@
 import React from 'react'
 import { Settings, Shield, CreditCard } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
+import Footer from '../components/Footer'
 
 const Profile: React.FC = () => {
   const { user, subscription, renewSubscription, upgradeSubscription } = useAuth()
@@ -108,6 +109,7 @@ const Profile: React.FC = () => {
           </button>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

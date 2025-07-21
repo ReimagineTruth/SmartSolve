@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Star, ArrowLeft, Calendar, User, Clock, Tag, Search, Filter } from 'lucide-react'
+import Footer from '../components/Footer'
 
 const Blog: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -323,6 +324,7 @@ const Blog: React.FC = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

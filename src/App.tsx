@@ -16,6 +16,12 @@ import Contact from './pages/Contact'
 import About from './pages/About'
 import Team from './pages/Team'
 import Blog from './pages/Blog'
+import Careers from './pages/Careers'
+import Press from './pages/Press'
+import Partners from './pages/Partners'
+import Help from './pages/Help'
+import CookiePolicy from './pages/CookiePolicy'
+import Security from './pages/Security'
 
 function App() {
   const [showSplash, setShowSplash] = useState(true)
@@ -42,8 +48,13 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/team" element={<Team />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/press" element={<Press />} />
+          <Route path="/partners" element={<Partners />} />
+          <Route path="/help" element={<Help />} />
+          <Route path="/cookiepolicy" element={<CookiePolicy />} />
+          <Route path="/security" element={<Security />} />
         </Routes>
-        <Footer />
         <PaymentModal />
       </div>
     </Router>

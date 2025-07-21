@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Star, Lock, ArrowUp, Check, X, ArrowLeft, Plus, Trash2, Edit, Calendar, DollarSign, Utensils, Heart } from 'lucide-react'
 import localStorageService, { Task, BudgetItem, Meal } from '../lib/localStorage'
+import Footer from '../components/Footer'
 
 const DemoFreePlan: React.FC = () => {
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
@@ -547,6 +548,7 @@ const DemoFreePlan: React.FC = () => {
           </div>
         </div>
       )}
+      <Footer />
     </div>
   )
 }

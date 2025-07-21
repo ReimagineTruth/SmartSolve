@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Check, Star, Crown, Zap, Users, Building } from 'lucide-react'
+import Footer from '../components/Footer'
 
 const Pricing: React.FC = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly')
@@ -376,6 +377,7 @@ const Pricing: React.FC = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   )
 }

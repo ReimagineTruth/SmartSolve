@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Brain, Calendar, Wallet, Utensils, Heart, MapPin, BarChart3, ChevronDown, Menu, X } from 'lucide-react'
+import Footer from '../components/Footer'
 
 const Home: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -347,7 +348,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-
+      <Footer />
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Star, Zap, Users, Building, Crown, ArrowLeft } from 'lucide-react'
+import Footer from '../components/Footer'
 
 const PaymentModalDemo: React.FC = () => {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null)
@@ -407,6 +408,7 @@ paymentModal.onSuccess((details) => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   )
 }

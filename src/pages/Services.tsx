@@ -1,5 +1,6 @@
 import React from 'react'
 import { Users, Plus } from 'lucide-react'
+import Footer from '../components/Footer'
 
 const Services: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const Services: React.FC = () => {
           </p>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
