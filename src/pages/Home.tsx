@@ -347,58 +347,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center mb-4">
-                <div className="w-8 h-8 bg-gradient-to-r from-primary to-secondary rounded-lg mr-3 flex items-center justify-center">
-                  <Brain className="h-5 w-5 text-white" />
-                </div>
-                <h3 className="text-xl font-bold">SmartSolve</h3>
-              </div>
-              <p className="text-gray-400">
-                Your all-in-one productivity platform powered by Pi Network.
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Product</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link to="/demo/free" className="hover:text-white">Free Plan</Link></li>
-                <li><Link to="/demo/standard" className="hover:text-white">Standard Plan</Link></li>
-                <li><Link to="/demo/premium" className="hover:text-white">Premium Plan</Link></li>
-                <li><Link to="/demo/pro" className="hover:text-white">Pro Plan</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Company</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">About</a></li>
-                <li><a href="#" className="hover:text-white">Blog</a></li>
-                <li><a href="#" className="hover:text-white">Careers</a></li>
-                <li><a href="#" className="hover:text-white">Contact</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Support</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">Help Center</a></li>
-                <li><a href="#" className="hover:text-white">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-white">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-white">Pi Network</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 SmartSolve. All rights reserved. Powered by Pi Network.</p>
-          </div>
-        </div>
-      </footer>
+
     </div>
   )
 }
