@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import localStorageService from '../lib/localStorage'
 
 // Types
 interface DashboardStats {
@@ -465,15 +466,19 @@ export const DashboardProvider: React.FC<DashboardProviderProps> = ({ children }
         
         if (dataTypes.includes('tasks')) {
           newState.tasks = []
+          localStorageService.saveTasks([])
         }
         if (dataTypes.includes('budget')) {
           newState.budgetItems = []
+          localStorageService.saveBudgetItems([])
         }
         if (dataTypes.includes('meals')) {
           newState.meals = []
+          localStorageService.saveMeals([])
         }
         if (dataTypes.includes('mood')) {
           newState.moodEntries = []
+          localStorageService.saveWellnessData([])
         }
         if (dataTypes.includes('notifications')) {
           newState.notifications = []
@@ -486,6 +491,13 @@ export const DashboardProvider: React.FC<DashboardProviderProps> = ({ children }
             location: 'New York, NY',
             phone: '+1 (555) 123-4567'
           }
+          localStorageService.updateUserPreferences({
+            plan: 'free',
+            theme: 'light',
+            notifications: true,
+            language: 'en',
+            currency: 'Pi'
+          })
         }
         
         return newState
@@ -538,7 +550,15 @@ export const DashboardProvider: React.FC<DashboardProviderProps> = ({ children }
       .filter(item => item.type === 'expense')
       .reduce((sum, item) => sum + item.amount, 0),
 
-    netBalance: computed.totalIncome - computed.totalExpenses,
+    netBalance: (() => {
+      const totalIncome = state.budgetItems
+        .filter(item => item.type === 'income')
+        .reduce((sum, item) => sum + item.amount, 0)
+      const totalExpenses = state.budgetItems
+        .filter(item => item.type === 'expense')
+        .reduce((sum, item) => sum + item.amount, 0)
+      return totalIncome - totalExpenses
+    })(),
 
     taskCompletionRate: state.tasks.length > 0 
       ? (state.tasks.filter(task => task.status === 'completed').length / state.tasks.length) * 100
@@ -553,10 +573,131 @@ export const DashboardProvider: React.FC<DashboardProviderProps> = ({ children }
     unreadNotificationsCount: state.notifications.filter(notification => !notification.read).length
   }
 
-  // Load initial data
+  // Load initial data from localStorage
   useEffect(() => {
-    actions.refreshData()
+    const loadFromStorage = () => {
+      try {
+        // Load tasks from localStorageService
+        const tasks = localStorageService.getTasks().map(task => ({
+          id: task.id,
+          title: task.text,
+          description: '',
+          priority: task.priority,
+          status: task.completed ? 'completed' : 'pending',
+          dueDate: task.dueDate ? task.dueDate.toISOString() : new Date().toISOString(),
+          category: task.category || 'personal',
+          createdAt: task.createdAt.toISOString(),
+          updatedAt: task.createdAt.toISOString()
+        }))
+
+        // Load budget items from localStorageService
+        const budgetItems = localStorageService.getBudgetItems().map(item => ({
+          id: item.id,
+          title: item.name,
+          amount: item.amount,
+          type: item.type,
+          category: item.category,
+          date: item.date.toISOString(),
+          description: ''
+        }))
+
+        // Load meals from localStorageService
+        const meals = localStorageService.getMeals().map(meal => ({
+          id: meal.id,
+          name: meal.name,
+          type: meal.category,
+          date: new Date().toISOString(),
+          calories: 0,
+          ingredients: meal.ingredients,
+          instructions: meal.instructions,
+          prepTime: meal.prepTime,
+          cookTime: meal.cookTime
+        }))
+
+        // Load wellness data from localStorageService
+        const wellnessData = localStorageService.getWellnessData()
+        const moodEntries = wellnessData.map(entry => ({
+          id: Date.now().toString(),
+          date: entry.date.toISOString(),
+          mood: entry.mood,
+          notes: '',
+          activities: [],
+          sleepHours: entry.sleep,
+          exerciseMinutes: entry.exercise
+        }))
+
+        setState(prev => ({
+          ...prev,
+          tasks,
+          budgetItems,
+          meals,
+          moodEntries
+        }))
+      } catch (error) {
+        console.error('Error loading from localStorage:', error)
+      }
+    }
+
+    loadFromStorage()
   }, [])
+
+  // Save to localStorage whenever state changes
+  useEffect(() => {
+    try {
+      // Save tasks to localStorageService
+      const tasks = state.tasks.map(task => ({
+        id: task.id,
+        text: task.title,
+        completed: task.status === 'completed',
+        createdAt: new Date(task.createdAt),
+        dueDate: new Date(task.dueDate),
+        priority: task.priority,
+        category: task.category
+      }))
+      localStorageService.saveTasks(tasks)
+
+      // Save budget items to localStorageService
+      const budgetItems = state.budgetItems.map(item => ({
+        id: item.id,
+        name: item.title,
+        amount: item.amount,
+        type: item.type,
+        category: item.category,
+        date: new Date(item.date),
+        recurring: false
+      }))
+      localStorageService.saveBudgetItems(budgetItems)
+
+      // Save meals to localStorageService
+      const meals = state.meals.map(meal => ({
+        id: meal.id,
+        name: meal.name,
+        ingredients: meal.ingredients,
+        instructions: meal.instructions,
+        prepTime: meal.prepTime,
+        cookTime: meal.cookTime,
+        servings: 4,
+        cost: 0,
+        category: meal.type,
+        isFavorite: false
+      }))
+      localStorageService.saveMeals(meals)
+
+      // Save wellness data to localStorageService
+      const wellnessData = state.moodEntries.map(entry => ({
+        mood: entry.mood,
+        sleep: entry.sleepHours,
+        water: 8,
+        exercise: entry.exerciseMinutes,
+        date: new Date(entry.date)
+      }))
+      wellnessData.forEach(entry => {
+        localStorageService.addWellnessEntry(entry)
+      })
+    } catch (error) {
+      console.error('Error saving to localStorage:', error)
+    }
+  }, [state.tasks, state.budgetItems, state.meals, state.moodEntries])
 
   const value: DashboardContextType = {
     state,

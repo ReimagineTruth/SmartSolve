@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Star, Mail, Phone, MapPin, MessageCircle, Clock, ArrowLeft, Send, CheckCircle } from 'lucide-react'
+import { Star, Mail, MessageCircle, Clock, ArrowLeft, Send, CheckCircle } from 'lucide-react'
 import Footer from '../components/Footer'
 
 const Contact: React.FC = () => {
@@ -165,27 +165,7 @@ const Contact: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex items-start">
-                  <div className="w-10 h-10 bg-secondary rounded-full flex items-center justify-center mr-4">
-                    <Phone className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-text mb-1">Phone Support</h3>
-                    <p className="text-gray-600">+1 (555) 123-4567</p>
-                    <p className="text-sm text-gray-500">Available Monday-Friday, 9AM-6PM EST</p>
-                  </div>
-                </div>
 
-                <div className="flex items-start">
-                  <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-4">
-                    <MapPin className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-text mb-1">Location</h3>
-                    <p className="text-gray-600">Pi Network</p>
-                    <p className="text-sm text-gray-500">Mrwain Organization</p>
-                  </div>
-                </div>
               </div>
             </div>
 

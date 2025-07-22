@@ -74,6 +74,7 @@ import { useAuth } from '../contexts/AuthContext'
 import ProfileSettings from '../components/ProfileSettings'
 import Notifications from '../components/Notifications'
 import ResetData from '../components/ResetData'
+import UpgradeModal from '../components/UpgradeModal'
 import { useDashboard } from '../controllers/DashboardController'
 import Footer from '../components/Footer'
 import LoadingSpinner from '../components/LoadingSpinner'
@@ -153,6 +154,7 @@ interface DashboardStats {
 
 const Dashboard: React.FC = () => {
   const { subscription, renewSubscription, upgradeSubscription } = useAuth()
+  const { state, actions, computed } = useDashboard()
   const [stats, setStats] = useState<DashboardStats>({
     tasksCompleted: 0,
     totalTasks: 0,
@@ -187,6 +189,7 @@ const Dashboard: React.FC = () => {
   const [showProfileSettings, setShowProfileSettings] = useState(false)
   const [showNotifications, setShowNotifications] = useState(false)
   const [showResetData, setShowResetData] = useState(false)
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false)
 
   // Mock data for demonstration
   useEffect(() => {
@@ -439,11 +442,11 @@ const Dashboard: React.FC = () => {
             <div className="flex items-center space-x-4">
               <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
                 <Target className="h-6 w-6 text-white" />
-              </div>
-              <div>
+      </div>
+          <div>
                 <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
                 <p className="text-sm text-gray-500">Welcome back! Here's your productivity overview</p>
-              </div>
+          </div>
             </div>
             <div className="flex items-center space-x-3">
               <button 
@@ -476,8 +479,8 @@ const Dashboard: React.FC = () => {
               >
                 <User className="h-4 w-4 text-white" />
               </button>
-            </div>
-          </div>
+        </div>
+      </div>
         </div>
       </div>
 
@@ -489,17 +492,17 @@ const Dashboard: React.FC = () => {
               <div className="flex items-center space-x-4">
                 <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
                   <Crown className="h-6 w-6" />
-                </div>
-                <div>
+          </div>
+          <div>
                   <h2 className="text-xl font-bold">{subscription.plan.charAt(0).toUpperCase() + subscription.plan.slice(1)} Plan</h2>
-                  <p className="text-blue-100">
+            <p className="text-blue-100">
                     {subscription.status === 'active' ? 'Active' : 'Expired'} • 
                     {subscription.plan !== 'lifetime' && subscription.expiration && 
                       ` Expires ${new Date(subscription.expiration).toLocaleDateString()}`
                     }
-                  </p>
-                </div>
-              </div>
+            </p>
+          </div>
+        </div>
               <div className="flex space-x-3">
                 {subscription.status === 'expired' ? (
                   <button 
@@ -510,73 +513,73 @@ const Dashboard: React.FC = () => {
                   </button>
                 ) : (
                   <button 
-                    onClick={() => upgradeSubscription('premium', 'monthly')}
+                    onClick={() => setShowUpgradeModal(true)}
                     className="px-6 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors"
                   >
                     Upgrade
                   </button>
                 )}
-              </div>
-            </div>
+          </div>
           </div>
         </div>
+      </div>
 
         {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-            <div className="flex items-center justify-between">
-              <div>
+          <div className="flex items-center justify-between">
+            <div>
                 <p className="text-sm font-medium text-gray-600">Productivity Score</p>
                 <p className={`text-3xl font-bold ${getProductivityColor(stats.productivityScore)}`}>
                   {stats.productivityScore}%
                 </p>
                 <p className="text-xs text-gray-500 mt-1">+5% from last week</p>
-              </div>
+            </div>
               <div className="p-3 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600">
                 <TrendingUp className="h-8 w-8 text-white" />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Streak Days</p>
-                <p className="text-3xl font-bold text-orange-600">{stats.streakDays}</p>
-                <p className="text-xs text-gray-500 mt-1">Keep it going! 🔥</p>
-              </div>
-              <div className="p-3 rounded-xl bg-gradient-to-r from-orange-500 to-red-500">
-                <Zap className="h-8 w-8 text-white" />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Weekly Progress</p>
-                <p className="text-3xl font-bold text-green-600">{stats.weeklyProgress}/{stats.weeklyGoal}</p>
-                <p className="text-xs text-gray-500 mt-1">{Math.round((stats.weeklyProgress / stats.weeklyGoal) * 100)}% complete</p>
-              </div>
-              <div className="p-3 rounded-xl bg-gradient-to-r from-green-500 to-green-600">
-                <Target className="h-8 w-8 text-white" />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Average Mood</p>
-                <p className="text-3xl font-bold text-pink-600">{stats.averageMood}/10</p>
-                <p className="text-xs text-gray-500 mt-1">{getMoodEmoji(stats.averageMood)} Great week!</p>
-              </div>
-              <div className="p-3 rounded-xl bg-gradient-to-r from-pink-500 to-pink-600">
-                <Heart className="h-8 w-8 text-white" />
-              </div>
             </div>
           </div>
         </div>
+
+          <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+          <div className="flex items-center justify-between">
+            <div>
+                <p className="text-sm font-medium text-gray-600">Streak Days</p>
+                <p className="text-3xl font-bold text-orange-600">{stats.streakDays}</p>
+                <p className="text-xs text-gray-500 mt-1">Keep it going! 🔥</p>
+            </div>
+              <div className="p-3 rounded-xl bg-gradient-to-r from-orange-500 to-red-500">
+                <Zap className="h-8 w-8 text-white" />
+            </div>
+          </div>
+        </div>
+
+          <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+          <div className="flex items-center justify-between">
+            <div>
+                <p className="text-sm font-medium text-gray-600">Weekly Progress</p>
+                <p className="text-3xl font-bold text-green-600">{stats.weeklyProgress}/{stats.weeklyGoal}</p>
+                <p className="text-xs text-gray-500 mt-1">{Math.round((stats.weeklyProgress / stats.weeklyGoal) * 100)}% complete</p>
+            </div>
+              <div className="p-3 rounded-xl bg-gradient-to-r from-green-500 to-green-600">
+                <Target className="h-8 w-8 text-white" />
+            </div>
+          </div>
+        </div>
+
+          <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-600">Average Mood</p>
+                <p className="text-3xl font-bold text-pink-600">{stats.averageMood}/10</p>
+                <p className="text-xs text-gray-500 mt-1">{getMoodEmoji(stats.averageMood)} Great week!</p>
+            </div>
+              <div className="p-3 rounded-xl bg-gradient-to-r from-pink-500 to-pink-600">
+                <Heart className="h-8 w-8 text-white" />
+            </div>
+          </div>
+        </div>
+      </div>
 
         {/* Main Content Tabs */}
         <div className="bg-white rounded-2xl shadow-lg border border-gray-200 mb-8">
@@ -604,45 +607,45 @@ const Dashboard: React.FC = () => {
                 {/* Quick Actions */}
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <button
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <button
                       onClick={() => setShowAddTask(true)}
                       className="group flex flex-col items-center p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 bg-gradient-to-br from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200"
-                    >
-                      <div className="p-4 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <Plus className="h-8 w-8 text-white" />
-                      </div>
-                      <span className="text-sm font-medium text-gray-900 text-center">Add Task</span>
-                      {planFeatures.maxTasks !== Infinity && stats.recentTasks.length >= planFeatures.maxTasks && (
-                        <span className="text-xs text-red-500 mt-2">Upgrade for more</span>
-                      )}
-                    </button>
+          >
+            <div className="p-4 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 mb-4 group-hover:scale-110 transition-transform duration-300">
+              <Plus className="h-8 w-8 text-white" />
+            </div>
+            <span className="text-sm font-medium text-gray-900 text-center">Add Task</span>
+            {planFeatures.maxTasks !== Infinity && stats.recentTasks.length >= planFeatures.maxTasks && (
+              <span className="text-xs text-red-500 mt-2">Upgrade for more</span>
+            )}
+          </button>
 
                     <button className="group flex flex-col items-center p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 bg-gradient-to-br from-green-50 to-green-100 hover:from-green-100 hover:to-green-200">
-                      <div className="p-4 rounded-xl bg-gradient-to-r from-green-500 to-green-600 mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <DollarSign className="h-8 w-8 text-white" />
-                      </div>
-                      <span className="text-sm font-medium text-gray-900 text-center">Log Expense</span>
-                      {planFeatures.budget === 'basic' && <span className="text-xs text-red-500 mt-2">Upgrade for advanced</span>}
+            <div className="p-4 rounded-xl bg-gradient-to-r from-green-500 to-green-600 mb-4 group-hover:scale-110 transition-transform duration-300">
+              <DollarSign className="h-8 w-8 text-white" />
+            </div>
+            <span className="text-sm font-medium text-gray-900 text-center">Log Expense</span>
+            {planFeatures.budget === 'basic' && <span className="text-xs text-red-500 mt-2">Upgrade for advanced</span>}
                     </button>
 
                     <button className="group flex flex-col items-center p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 bg-gradient-to-br from-orange-50 to-orange-100 hover:from-orange-100 hover:to-orange-200">
-                      <div className="p-4 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <Utensils className="h-8 w-8 text-white" />
-                      </div>
-                      <span className="text-sm font-medium text-gray-900 text-center">Plan Meal</span>
-                      {planFeatures.maxMeals !== Infinity && <span className="text-xs text-red-500 mt-2">Upgrade for unlimited</span>}
+            <div className="p-4 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 mb-4 group-hover:scale-110 transition-transform duration-300">
+              <Utensils className="h-8 w-8 text-white" />
+            </div>
+            <span className="text-sm font-medium text-gray-900 text-center">Plan Meal</span>
+            {planFeatures.maxMeals !== Infinity && <span className="text-xs text-red-500 mt-2">Upgrade for unlimited</span>}
                     </button>
 
                     <button className="group flex flex-col items-center p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 bg-gradient-to-br from-pink-50 to-pink-100 hover:from-pink-100 hover:to-pink-200">
-                      <div className="p-4 rounded-xl bg-gradient-to-r from-pink-500 to-pink-600 mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <Heart className="h-8 w-8 text-white" />
-                      </div>
-                      <span className="text-sm font-medium text-gray-900 text-center">Track Mood</span>
-                      {!planFeatures.aiMood && <span className="text-xs text-red-500 mt-2">Upgrade for AI</span>}
+            <div className="p-4 rounded-xl bg-gradient-to-r from-pink-500 to-pink-600 mb-4 group-hover:scale-110 transition-transform duration-300">
+              <Heart className="h-8 w-8 text-white" />
+            </div>
+            <span className="text-sm font-medium text-gray-900 text-center">Track Mood</span>
+            {!planFeatures.aiMood && <span className="text-xs text-red-500 mt-2">Upgrade for AI</span>}
                     </button>
-                  </div>
-                </div>
+        </div>
+      </div>
 
                 {/* Plan-Specific Features */}
                 {planFeatures.family && (
@@ -651,18 +654,18 @@ const Dashboard: React.FC = () => {
                       <div className="flex items-center space-x-4">
                         <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-600 rounded-xl flex items-center justify-center">
                           <Users className="h-6 w-6 text-white" />
-                        </div>
-                        <div>
+        </div>
+          <div>
                           <h3 className="text-lg font-semibold text-gray-900">Family Sharing</h3>
                           <p className="text-gray-600">Share tasks, meals, and wellness with your family</p>
-                        </div>
+          </div>
                       </div>
                       <button className="px-6 py-2 bg-gradient-to-r from-green-500 to-blue-600 text-white rounded-lg hover:from-green-600 hover:to-blue-700 transition-all duration-300">
                         Manage Family
                       </button>
                     </div>
-                  </div>
-                )}
+        </div>
+      )}
 
                 {planFeatures.business && (
                   <div className="bg-gradient-to-r from-purple-50 to-yellow-50 rounded-xl p-6 border border-purple-200">
@@ -680,8 +683,8 @@ const Dashboard: React.FC = () => {
                         Business Dashboard
                       </button>
                     </div>
-                  </div>
-                )}
+        </div>
+      )}
 
                 {planFeatures.integrations && (
                   <div className="bg-gradient-to-r from-indigo-50 to-cyan-50 rounded-xl p-6 border border-indigo-200">
@@ -689,7 +692,7 @@ const Dashboard: React.FC = () => {
                       <div className="flex items-center space-x-4">
                         <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-cyan-600 rounded-xl flex items-center justify-center">
                           <Zap className="h-6 w-6 text-white" />
-                        </div>
+        </div>
                         <div>
                           <h3 className="text-lg font-semibold text-gray-900">Integrations</h3>
                           <p className="text-gray-600">Sync with TruthWeb, Cloudy, and other services</p>
@@ -699,8 +702,8 @@ const Dashboard: React.FC = () => {
                         Manage Integrations
                       </button>
                     </div>
-                  </div>
-                )}
+        </div>
+      )}
 
                 {/* Local Services */}
                 <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-6 border border-orange-200">
@@ -743,7 +746,7 @@ const Dashboard: React.FC = () => {
                 )}
 
                 {/* Virtual Assistant */}
-                {planFeatures.business && (
+      {planFeatures.business && (
                   <div className="bg-gradient-to-r from-teal-50 to-blue-50 rounded-xl p-6 border border-teal-200">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-4">
@@ -759,8 +762,8 @@ const Dashboard: React.FC = () => {
                         Book Assistant
                       </button>
                     </div>
-                  </div>
-                )}
+        </div>
+      )}
 
                 {/* AI Features */}
                 {planFeatures.aiMood ? (
@@ -769,16 +772,16 @@ const Dashboard: React.FC = () => {
                       <div className="flex items-center space-x-4">
                         <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-600 rounded-xl flex items-center justify-center">
                           <Brain className="h-6 w-6 text-white" />
-                        </div>
-                        <div>
+      </div>
+        <div>
                           <h3 className="text-lg font-semibold text-gray-900">AI Mood Assistant</h3>
                           <p className="text-gray-600">Get personalized insights and recommendations</p>
-                        </div>
-                      </div>
+        </div>
+      </div>
                       <button className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-lg hover:from-purple-600 hover:to-blue-700 transition-all duration-300">
                         Analyze Mood
                       </button>
-                    </div>
+      </div>
                   </div>
                 ) : (
                   <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl p-6 border border-purple-200">
@@ -787,11 +790,11 @@ const Dashboard: React.FC = () => {
                         <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-600 rounded-xl flex items-center justify-center">
                           <Brain className="h-6 w-6 text-white" />
                         </div>
-                        <div>
+        <div>
                           <h3 className="text-lg font-semibold text-gray-900">AI Mood Assistant</h3>
                           <p className="text-gray-600">Upgrade to Premium to unlock AI-powered insights</p>
-                        </div>
-                      </div>
+        </div>
+      </div>
                       <button 
                         onClick={() => upgradeSubscription('premium', 'monthly')}
                         className="px-6 py-2 bg-gradient-to-r from-purple-500 to-blue-600 text-white rounded-lg hover:from-purple-600 hover:to-blue-700 transition-all duration-300"
@@ -823,11 +826,11 @@ const Dashboard: React.FC = () => {
                         <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl flex items-center justify-center">
                           <ShoppingCart className="h-6 w-6 text-white" />
                         </div>
-                        <div>
+        <div>
                           <h3 className="text-lg font-semibold text-gray-900">Full Grocery Planner</h3>
                           <p className="text-gray-600">Plan meals and create shopping lists</p>
-                        </div>
-                      </div>
+        </div>
+      </div>
                       <button className="px-6 py-2 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-lg hover:from-emerald-600 hover:to-green-700 transition-all duration-300">
                         Plan Groceries
                       </button>
@@ -842,7 +845,7 @@ const Dashboard: React.FC = () => {
                       <div className="flex items-center space-x-4">
                         <div className="w-12 h-12 bg-gradient-to-r from-violet-500 to-purple-600 rounded-xl flex items-center justify-center">
                           <MessageCircle className="h-6 w-6 text-white" />
-                        </div>
+        </div>
                         <div>
                           <h3 className="text-lg font-semibold text-gray-900">Group Chat</h3>
                           <p className="text-gray-600">
@@ -881,62 +884,62 @@ const Dashboard: React.FC = () => {
 
             {activeTab === 'tasks' && (
               <div className="space-y-6">
-                {/* Add Task Form */}
-                {showAddTask && (
+        {/* Add Task Form */}
+        {showAddTask && (
                   <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 border border-blue-200">
                     <h3 className="font-semibold text-gray-900 mb-4 flex items-center">
                       <Plus className="h-5 w-5 mr-2 text-blue-600" />
                       Add New Task
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <input
-                        type="text"
-                        placeholder="Task title"
-                        value={newTask.title}
-                        onChange={(e) => setNewTask({...newTask, title: e.target.value})}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                placeholder="Task title"
+                value={newTask.title}
+                onChange={(e) => setNewTask({...newTask, title: e.target.value})}
                         className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                      />
-                      <input
-                        type="date"
-                        value={newTask.dueDate}
-                        onChange={(e) => setNewTask({...newTask, dueDate: e.target.value})}
+              />
+              <input
+                type="date"
+                value={newTask.dueDate}
+                onChange={(e) => setNewTask({...newTask, dueDate: e.target.value})}
                         className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                      />
-                      <select
-                        value={newTask.priority}
-                        onChange={(e) => setNewTask({...newTask, priority: e.target.value as any})}
+              />
+              <select
+                value={newTask.priority}
+                onChange={(e) => setNewTask({...newTask, priority: e.target.value as any})}
                         className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                      >
-                        <option value="low">Low Priority</option>
-                        <option value="medium">Medium Priority</option>
-                        <option value="high">High Priority</option>
-                      </select>
-                      <select
-                        value={newTask.category}
-                        onChange={(e) => setNewTask({...newTask, category: e.target.value})}
+              >
+                <option value="low">Low Priority</option>
+                <option value="medium">Medium Priority</option>
+                <option value="high">High Priority</option>
+              </select>
+              <select
+                value={newTask.category}
+                onChange={(e) => setNewTask({...newTask, category: e.target.value})}
                         className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                      >
-                        <option value="personal">Personal</option>
-                        <option value="work">Work</option>
-                        <option value="health">Health</option>
-                      </select>
-                    </div>
+              >
+                <option value="personal">Personal</option>
+                <option value="work">Work</option>
+                <option value="health">Health</option>
+              </select>
+            </div>
                     <div className="flex gap-3 mt-4">
-                      <button
+              <button
                         onClick={() => {/* Add task logic */}}
                         className="px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300"
-                      >
-                        Add Task
-                      </button>
-                      <button
-                        onClick={() => setShowAddTask(false)}
+              >
+                Add Task
+              </button>
+              <button
+                onClick={() => setShowAddTask(false)}
                         className="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition-all duration-300"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                )}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
 
                 {/* Tasks List */}
                 <div>
@@ -947,29 +950,29 @@ const Dashboard: React.FC = () => {
                     </button>
                   </div>
                   <div className="space-y-3">
-                    {stats.recentTasks.map((task) => (
+          {stats.recentTasks.map((task) => (
                       <div key={task.id} className="flex items-center justify-between p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-all duration-300 border border-gray-200">
-                        <div className="flex items-center flex-1">
+              <div className="flex items-center flex-1">
                           <button className="mr-3 p-1 hover:bg-gray-200 rounded-full transition-colors">
-                            {task.completed ? (
-                              <CheckCircle className="h-5 w-5 text-green-500" />
-                            ) : (
-                              <Circle className="h-5 w-5 text-gray-400" />
-                            )}
-                          </button>
-                          <div className="flex-1">
+                  {task.completed ? (
+                    <CheckCircle className="h-5 w-5 text-green-500" />
+                  ) : (
+                    <Circle className="h-5 w-5 text-gray-400" />
+                  )}
+                </button>
+                <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
-                              <span className={`${task.completed ? 'line-through text-gray-500' : 'text-gray-900'} font-medium`}>
-                                {task.title}
-                              </span>
+                    <span className={`${task.completed ? 'line-through text-gray-500' : 'text-gray-900'} font-medium`}>
+                      {task.title}
+                    </span>
                               <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getPriorityColor(task.priority)}`}>
-                                {task.priority}
-                              </span>
-                              <div className="flex items-center text-gray-500">
-                                {getCategoryIcon(task.category)}
-                              </div>
-                            </div>
-                            {task.description && (
+                      {task.priority}
+                    </span>
+                    <div className="flex items-center text-gray-500">
+                      {getCategoryIcon(task.category)}
+                    </div>
+                  </div>
+                  {task.description && (
                               <p className="text-sm text-gray-600">{task.description}</p>
                             )}
                             <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
@@ -982,22 +985,22 @@ const Dashboard: React.FC = () => {
                                   <Clock className="h-3 w-3 mr-1" />
                                   {task.estimatedTime}min
                                 </span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
+                  )}
+                </div>
+              </div>
+                </div>
                         <div className="flex items-center gap-2">
                           <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
                             <Edit className="h-4 w-4" />
                           </button>
                           <button className="p-2 text-red-400 hover:text-red-600 transition-colors">
-                            <Trash2 className="h-4 w-4" />
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
               </div>
             )}
 
@@ -1008,7 +1011,7 @@ const Dashboard: React.FC = () => {
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="text-lg font-semibold text-gray-900">Monthly Income</h3>
                       <DollarSign className="h-6 w-6 text-green-600" />
-                    </div>
+        </div>
                     <p className="text-3xl font-bold text-green-600">${stats.monthlyIncome}</p>
                     <p className="text-sm text-gray-600 mt-2">+12% from last month</p>
                   </div>
@@ -1073,7 +1076,7 @@ const Dashboard: React.FC = () => {
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">Upcoming Transactions</h3>
                   <div className="space-y-3">
-                    {stats.upcomingExpenses.map((expense) => (
+          {stats.upcomingExpenses.map((expense) => (
                       <div key={expense.id} className="flex items-center justify-between p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition-all duration-300 border border-gray-200">
                         <div className="flex items-center space-x-4">
                           <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
@@ -1081,22 +1084,22 @@ const Dashboard: React.FC = () => {
                           }`}>
                             <DollarSign className={`h-5 w-5 ${expense.type === 'income' ? 'text-green-600' : 'text-red-600'}`} />
                           </div>
-                          <div>
-                            <p className="font-medium text-gray-900">{expense.title}</p>
-                            <p className="text-sm text-gray-500 flex items-center">
+              <div>
+                <p className="font-medium text-gray-900">{expense.title}</p>
+                <p className="text-sm text-gray-500 flex items-center">
                               <Calendar className="h-4 w-4 mr-1" />
-                              Due {new Date(expense.date).toLocaleDateString()}
+                  Due {new Date(expense.date).toLocaleDateString()}
                               {expense.recurring && <span className="ml-2 text-blue-600">Recurring</span>}
-                            </p>
+                </p>
                           </div>
-                        </div>
-                        <span className={`text-lg font-semibold ${expense.type === 'income' ? 'text-green-600' : 'text-red-600'}`}>
-                          {expense.type === 'income' ? '+' : '-'}${expense.amount}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+              </div>
+              <span className={`text-lg font-semibold ${expense.type === 'income' ? 'text-green-600' : 'text-red-600'}`}>
+                {expense.type === 'income' ? '+' : '-'}${expense.amount}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
               </div>
             )}
 
@@ -1447,6 +1450,15 @@ const Dashboard: React.FC = () => {
           actions.resetData(dataTypes)
           setShowResetData(false)
         }}
+      />
+      <UpgradeModal 
+        isOpen={showUpgradeModal} 
+        onClose={() => setShowUpgradeModal(false)}
+        onUpgrade={(plan, billing) => {
+          upgradeSubscription(plan, billing)
+          setShowUpgradeModal(false)
+        }}
+        currentPlan={subscription.plan}
       />
     </div>
   )
