@@ -125,7 +125,7 @@ const UpgradeModal: React.FC<UpgradeModalProps> = ({
     {
       id: 'standard',
       name: 'Standard',
-      price: 4.99,
+      price: 5,
       period: 'month',
       description: 'Great for individuals',
       features: [
@@ -148,7 +148,7 @@ const UpgradeModal: React.FC<UpgradeModalProps> = ({
     {
       id: 'premium',
       name: 'Premium',
-      price: 9.99,
+      price: 10,
       period: 'month',
       description: 'Most popular choice',
       features: [
@@ -171,7 +171,7 @@ const UpgradeModal: React.FC<UpgradeModalProps> = ({
     {
       id: 'pro',
       name: 'Pro',
-      price: 19.99,
+      price: 20,
       period: 'month',
       description: 'For power users & teams',
       features: [
@@ -323,12 +323,12 @@ const UpgradeModal: React.FC<UpgradeModalProps> = ({
                           </div>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="text-2xl font-bold text-gray-900">
-                          ${plan.price}
-                        </div>
-                        <div className="text-sm text-gray-500">per {plan.period}</div>
-                      </div>
+                                             <div className="text-right">
+                         <div className="text-2xl font-bold text-gray-900">
+                           {plan.price === 0 ? 'Free' : `${plan.price} π`}
+                         </div>
+                         <div className="text-sm text-gray-500">per {plan.period}</div>
+                       </div>
                     </div>
                   </div>
                 ))}
@@ -380,17 +380,17 @@ const UpgradeModal: React.FC<UpgradeModalProps> = ({
                       {billingOptions.find(opt => opt.id === selectedBilling)?.name}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-600">Price:</span>
-                    <span className="font-bold text-lg text-purple-600">
-                      ${calculatePrice(selectedPlanData, selectedBilling).toFixed(2)}
-                    </span>
-                  </div>
-                  {selectedBilling === 'yearly' && (
-                    <div className="text-sm text-green-600 font-medium">
-                      You save ${(selectedPlanData.price * 12 * 0.2).toFixed(2)} per year
-                    </div>
-                  )}
+                                     <div className="flex items-center justify-between">
+                     <span className="text-gray-600">Price:</span>
+                     <span className="font-bold text-lg text-purple-600">
+                       {calculatePrice(selectedPlanData, selectedBilling) === 0 ? 'Free' : `${calculatePrice(selectedPlanData, selectedBilling).toFixed(0)} π`}
+                     </span>
+                   </div>
+                                     {selectedBilling === 'yearly' && (
+                     <div className="text-sm text-green-600 font-medium">
+                       You save {(selectedPlanData.price * 12 * 0.2).toFixed(0)} π per year
+                     </div>
+                   )}
                   {selectedBilling === 'lifetime' && (
                     <div className="text-sm text-green-600 font-medium">
                       One-time payment, lifetime access
@@ -407,10 +407,10 @@ const UpgradeModal: React.FC<UpgradeModalProps> = ({
                     <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                       <CreditCard className="h-4 w-4 text-white" />
                     </div>
-                    <div className="flex-1">
-                      <div className="font-medium text-gray-900">Pi Network Wallet</div>
-                      <div className="text-sm text-gray-600">Secure payment through Pi Network</div>
-                    </div>
+                                       <div className="flex-1">
+                     <div className="font-medium text-gray-900">Pi Network Wallet</div>
+                     <div className="text-sm text-gray-600">Pay with Pi (π) cryptocurrency</div>
+                   </div>
                     <Lock className="h-4 w-4 text-gray-400" />
                   </div>
                 </div>

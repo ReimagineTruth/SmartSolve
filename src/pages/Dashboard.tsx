@@ -1033,7 +1033,7 @@ const Dashboard: React.FC = () => {
                       <h3 className="text-lg font-semibold text-gray-900">Monthly Income</h3>
                       <DollarSign className="h-6 w-6 text-green-600" />
         </div>
-                    <p className="text-3xl font-bold text-green-600">${stats.monthlyIncome}</p>
+                    <p className="text-3xl font-bold text-green-600">{stats.monthlyIncome} π</p>
                     <p className="text-sm text-gray-600 mt-2">+12% from last month</p>
                   </div>
 
@@ -1042,7 +1042,7 @@ const Dashboard: React.FC = () => {
                       <h3 className="text-lg font-semibold text-gray-900">Monthly Expenses</h3>
                       <TrendingDown className="h-6 w-6 text-red-600" />
                     </div>
-                    <p className="text-3xl font-bold text-red-600">${stats.monthlyExpenses}</p>
+                    <p className="text-3xl font-bold text-red-600">{stats.monthlyExpenses} π</p>
                     <p className="text-sm text-gray-600 mt-2">-5% from last month</p>
                   </div>
 
@@ -1051,7 +1051,7 @@ const Dashboard: React.FC = () => {
                       <h3 className="text-lg font-semibold text-gray-900">Net Balance</h3>
                       <TrendingUp className="h-6 w-6 text-blue-600" />
                     </div>
-                    <p className="text-3xl font-bold text-blue-600">${stats.monthlyIncome - stats.monthlyExpenses}</p>
+                    <p className="text-3xl font-bold text-blue-600">{stats.monthlyIncome - stats.monthlyExpenses} π</p>
                     <p className="text-sm text-gray-600 mt-2">+8% from last month</p>
                   </div>
                 </div>
@@ -1115,7 +1115,7 @@ const Dashboard: React.FC = () => {
                           </div>
               </div>
               <span className={`text-lg font-semibold ${expense.type === 'income' ? 'text-green-600' : 'text-red-600'}`}>
-                {expense.type === 'income' ? '+' : '-'}${expense.amount}
+                {expense.type === 'income' ? '+' : '-'}{expense.amount} π
               </span>
             </div>
           ))}
