@@ -71,6 +71,10 @@ import {
   MessageCircle
 } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
+import ProfileSettings from '../components/ProfileSettings'
+import Notifications from '../components/Notifications'
+import ResetData from '../components/ResetData'
+import { useDashboard } from '../controllers/DashboardController'
 import Footer from '../components/Footer'
 import LoadingSpinner from '../components/LoadingSpinner'
 
@@ -180,6 +184,9 @@ const Dashboard: React.FC = () => {
     estimatedTime: 0,
     tags: [] as string[]
   })
+  const [showProfileSettings, setShowProfileSettings] = useState(false)
+  const [showNotifications, setShowNotifications] = useState(false)
+  const [showResetData, setShowResetData] = useState(false)
 
   // Mock data for demonstration
   useEffect(() => {
@@ -439,15 +446,36 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
-                <Bell className="h-5 w-5" />
+              <button 
+                onClick={() => setShowResetData(true)}
+                className="p-2 text-gray-400 hover:text-orange-600 transition-colors"
+                title="Reset Dashboard Data"
+              >
+                <RefreshCw className="h-5 w-5" />
               </button>
-              <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
+              <button 
+                onClick={() => setShowNotifications(true)}
+                className="p-2 text-gray-400 hover:text-gray-600 transition-colors relative"
+              >
+                <Bell className="h-5 w-5" />
+                {computed.unreadNotificationsCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                    {computed.unreadNotificationsCount}
+                  </span>
+                )}
+              </button>
+              <button 
+                onClick={() => setShowProfileSettings(true)}
+                className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+              >
                 <Settings className="h-5 w-5" />
               </button>
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+              <button 
+                onClick={() => setShowProfileSettings(true)}
+                className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center hover:scale-105 transition-transform"
+              >
                 <User className="h-4 w-4 text-white" />
-              </div>
+              </button>
             </div>
           </div>
         </div>
@@ -1398,6 +1426,28 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Modals */}
+      <ProfileSettings 
+        isOpen={showProfileSettings} 
+        onClose={() => setShowProfileSettings(false)}
+        onResetData={(dataTypes) => {
+          actions.resetData(dataTypes)
+          setShowProfileSettings(false)
+        }}
+      />
+      <Notifications 
+        isOpen={showNotifications} 
+        onClose={() => setShowNotifications(false)} 
+      />
+      <ResetData 
+        isOpen={showResetData} 
+        onClose={() => setShowResetData(false)}
+        onReset={(dataTypes) => {
+          actions.resetData(dataTypes)
+          setShowResetData(false)
+        }}
+      />
     </div>
   )
 }
