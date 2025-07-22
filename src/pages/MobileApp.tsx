@@ -12,7 +12,6 @@ import {
   ArrowRight,
   Play,
   Shield,
-  RefreshCw,
   Bell,
   Settings,
   User,

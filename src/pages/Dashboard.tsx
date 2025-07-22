@@ -156,22 +156,61 @@ const Dashboard: React.FC = () => {
   const { subscription, renewSubscription, upgradeSubscription } = useAuth()
   const { state, actions, computed } = useDashboard()
   const [stats, setStats] = useState<DashboardStats>({
-    tasksCompleted: 0,
-    totalTasks: 0,
-    totalBudget: 0,
-    monthlyExpenses: 0,
-    monthlyIncome: 0,
-    mealsPlanned: 0,
-    wellnessDays: 0,
-    averageMood: 0,
-    recentTasks: [],
-    upcomingExpenses: [],
-    recentMeals: [],
-    wellnessEntries: [],
-    productivityScore: 0,
-    streakDays: 0,
-    weeklyGoal: 0,
-    weeklyProgress: 0
+    tasksCompleted: computed.taskCompletionRate * 100 || 0,
+    totalTasks: state.tasks.length,
+    totalBudget: computed.netBalance || 0,
+    monthlyExpenses: computed.totalExpenses || 0,
+    monthlyIncome: computed.totalIncome || 0,
+    mealsPlanned: state.meals.length,
+    wellnessDays: state.moodEntries.length,
+    averageMood: computed.averageMood || 0,
+    recentTasks: computed.filteredTasks.slice(0, 5).map(task => ({
+      id: task.id,
+      title: task.title,
+      description: task.description,
+      completed: task.status === 'completed',
+      dueDate: task.dueDate,
+      priority: task.priority,
+      category: task.category,
+      createdAt: task.createdAt,
+      estimatedTime: 0,
+      tags: []
+    })),
+    upcomingExpenses: computed.filteredBudgetItems.slice(0, 5).map(item => ({
+      id: item.id,
+      title: item.title,
+      amount: item.amount,
+      category: item.category,
+      date: item.date,
+      type: item.type,
+      recurring: false
+    })),
+    recentMeals: computed.filteredMeals.slice(0, 5).map(meal => ({
+      id: meal.id,
+      name: meal.name,
+      ingredients: meal.ingredients,
+      instructions: meal.instructions,
+      prepTime: meal.prepTime,
+      cookTime: meal.cookTime,
+      servings: 4,
+      category: meal.type,
+      date: meal.date,
+      nutrition: { calories: 0, protein: 0, carbs: 0, fat: 0 }
+    })),
+    wellnessEntries: computed.filteredMoodEntries.slice(0, 5).map(entry => ({
+      id: entry.id,
+      date: entry.date,
+      mood: entry.mood,
+      sleep: entry.sleepHours,
+      exercise: entry.exerciseMinutes > 0,
+      meditation: false,
+      notes: entry.notes,
+      activities: entry.activities
+    })),
+    productivityScore: 85,
+    streakDays: 7,
+    weeklyGoal: 10,
+    weeklyProgress: 8
   })
   const [loading, setLoading] = useState(true)
   const [showAddTask, setShowAddTask] = useState(false)
@@ -191,87 +230,69 @@ const Dashboard: React.FC = () => {
   const [showResetData, setShowResetData] = useState(false)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
 
-  // Mock data for demonstration
+  // Update stats when dashboard state changes
   useEffect(() => {
-    const mockStats: DashboardStats = {
-      tasksCompleted: 8,
-      totalTasks: 12,
-      totalBudget: 2500,
-      monthlyExpenses: 1800,
-      monthlyIncome: 3500,
-      mealsPlanned: 5,
-      wellnessDays: 7,
-      averageMood: 8,
-      recentTasks: [
-        {
-          id: '1',
-          title: 'Complete project proposal',
-          description: 'Finish the Q1 project proposal for the marketing team',
-          completed: true,
-          dueDate: '2024-01-15',
-          priority: 'high',
-          category: 'work',
-          createdAt: '2024-01-10',
-          estimatedTime: 120,
-          tags: ['work', 'urgent']
-        },
-        {
-          id: '2',
-          title: 'Grocery shopping',
-          description: 'Buy ingredients for weekly meal prep',
-          completed: false,
-          dueDate: '2024-01-16',
-          priority: 'medium',
-          category: 'personal',
-          createdAt: '2024-01-12',
-          estimatedTime: 45,
-          tags: ['personal', 'shopping']
-        },
-        {
-          id: '3',
-          title: 'Morning workout',
-          description: '30-minute cardio session',
-          completed: true,
-          dueDate: '2024-01-15',
-          priority: 'medium',
-          category: 'health',
-          createdAt: '2024-01-15',
-          estimatedTime: 30,
-          tags: ['health', 'fitness']
-        }
-      ],
-      upcomingExpenses: [
-        {
-          id: '1',
-          title: 'Rent Payment',
-          amount: 1200,
-          category: 'housing',
-          date: '2024-01-20',
-          type: 'expense',
-          recurring: true
-        },
-        {
-          id: '2',
-          title: 'Freelance Income',
-          amount: 800,
-          category: 'work',
-          date: '2024-01-25',
-          type: 'income'
-        }
-      ],
-      recentMeals: [],
-      wellnessEntries: [],
+    const updatedStats: DashboardStats = {
+      tasksCompleted: computed.taskCompletionRate * 100 || 0,
+      totalTasks: state.tasks.length,
+      totalBudget: computed.netBalance || 0,
+      monthlyExpenses: computed.totalExpenses || 0,
+      monthlyIncome: computed.totalIncome || 0,
+      mealsPlanned: state.meals.length,
+      wellnessDays: state.moodEntries.length,
+      averageMood: computed.averageMood || 0,
+      recentTasks: computed.filteredTasks.slice(0, 5).map(task => ({
+        id: task.id,
+        title: task.title,
+        description: task.description,
+        completed: task.status === 'completed',
+        dueDate: task.dueDate,
+        priority: task.priority,
+        category: task.category,
+        createdAt: task.createdAt,
+        estimatedTime: 0,
+        tags: []
+      })),
+      upcomingExpenses: computed.filteredBudgetItems.slice(0, 5).map(item => ({
+        id: item.id,
+        title: item.title,
+        amount: item.amount,
+        category: item.category,
+        date: item.date,
+        type: item.type,
+        recurring: false
+      })),
+      recentMeals: computed.filteredMeals.slice(0, 5).map(meal => ({
+        id: meal.id,
+        name: meal.name,
+        ingredients: meal.ingredients,
+        instructions: meal.instructions,
+        prepTime: meal.prepTime,
+        cookTime: meal.cookTime,
+        servings: 4,
+        category: meal.type,
+        date: meal.date,
+        nutrition: { calories: 0, protein: 0, carbs: 0, fat: 0 }
+      })),
+      wellnessEntries: computed.filteredMoodEntries.slice(0, 5).map(entry => ({
+        id: entry.id,
+        date: entry.date,
+        mood: entry.mood,
+        sleep: entry.sleepHours,
+        exercise: entry.exerciseMinutes > 0,
+        meditation: false,
+        notes: entry.notes,
+        activities: entry.activities
+      })),
       productivityScore: 85,
-      streakDays: 12,
-      weeklyGoal: 20,
-      weeklyProgress: 15
+      streakDays: 7,
+      weeklyGoal: 10,
+      weeklyProgress: 8
     }
-    
-    setTimeout(() => {
-      setStats(mockStats)
-      setLoading(false)
-    }, 1000)
-  }, [])
+
+    setStats(updatedStats)
+    setLoading(false)
+  }, [state.tasks, state.budgetItems, state.meals, state.moodEntries, computed])
 
   const PLAN_FEATURES = {
     free: {
