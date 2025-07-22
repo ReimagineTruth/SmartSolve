@@ -345,13 +345,14 @@ const ResetData: React.FC<ResetDataProps> = ({ isOpen, onClose, onReset }) => {
                 <div className="space-y-2">
                   {selectedDataTypes.map(dataTypeId => {
                     const dataType = dataTypes.find(type => type.id === dataTypeId)
+                    if (!dataType) return null
                     return (
                       <div key={dataTypeId} className="flex items-center space-x-2">
-                        <div className={`w-4 h-4 ${getColorClasses(dataType!.color).split(' ')[0]} rounded-full flex items-center justify-center`}>
-                          <dataType!.icon className="h-2 w-2 text-white" />
+                        <div className={`w-4 h-4 ${getColorClasses(dataType.color).split(' ')[0]} rounded-full flex items-center justify-center`}>
+                          <dataType.icon className="h-2 w-2 text-white" />
                         </div>
-                        <span className="text-sm text-red-700">{dataType!.name}</span>
-                        <span className="text-xs text-red-500">({dataType!.count} items)</span>
+                        <span className="text-sm text-red-700">{dataType.name}</span>
+                        <span className="text-xs text-red-500">({dataType.count} items)</span>
                       </div>
                     )
                   })}
